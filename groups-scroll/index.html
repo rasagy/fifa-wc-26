@@ -714,6 +714,8 @@
       transition: border-color 220ms ease, transform 220ms ease, background 220ms ease;
       position: relative;
       overflow: hidden;
+      cursor: pointer;
+      outline: none;
     }
 
     .chapter::before {
@@ -731,6 +733,13 @@
       border-color: rgba(70,245,255,0.32);
       transform: translateY(-1px);
       background: linear-gradient(180deg, rgba(13, 16, 31, 0.94), rgba(9, 10, 18, 0.95));
+    }
+
+    .chapter:focus-visible {
+      border-color: rgba(70,245,255,0.66);
+      box-shadow:
+        0 0 0 2px rgba(70, 245, 255, 0.16),
+        var(--shadow);
     }
 
     .chapter .kicker {
@@ -993,7 +1002,7 @@
         <div class="board-top">
           <p class="board-kicker" id="boardKicker">Live margin spectrum</p>
           <p class="board-status" id="boardStatus">
-            Scroll the story cards to swap the visual mode. Hover or focus any match card to inspect the scoreline.
+            Click a story card on the right to swap the visual mode. Hover or focus any match card to inspect the scoreline.
           </p>
         </div>
 
@@ -1016,7 +1025,7 @@
       </section>
 
       <section aria-label="Story spine">
-        <article class="chapter active" data-phase="spectrum" data-match="algeria-austria">
+        <article class="chapter active" data-phase="spectrum" data-match="algeria-austria" role="button" tabindex="0" aria-pressed="true">
           <p class="kicker">Chapter 1</p>
           <h3>The 3-3 that bent the table</h3>
           <p>
@@ -1030,7 +1039,7 @@
           </ul>
         </article>
 
-        <article class="chapter" data-phase="ribbon" data-match="canada-qatar">
+        <article class="chapter" data-phase="ribbon" data-match="canada-qatar" role="button" tabindex="0" aria-pressed="false">
           <p class="kicker">Chapter 2</p>
           <h3>Then the floor gave way</h3>
           <p>
@@ -1044,7 +1053,7 @@
           </ul>
         </article>
 
-        <article class="chapter" data-phase="groups" data-match="spain-cape-verde">
+        <article class="chapter" data-phase="groups" data-match="spain-cape-verde" role="button" tabindex="0" aria-pressed="false">
           <p class="kicker">Chapter 3</p>
           <h3>The tables hid the real difference</h3>
           <p>
@@ -1060,7 +1069,7 @@
           </div>
         </article>
 
-        <article class="chapter" data-phase="summary" data-match="overview">
+        <article class="chapter" data-phase="summary" data-match="overview" role="button" tabindex="0" aria-pressed="false">
           <p class="kicker">Chapter 4</p>
           <h3>The sentence the data keeps saying</h3>
           <p>
@@ -1415,7 +1424,11 @@
       if (phase === "ribbon") viewRibbon.classList.add("active");
       if (phase === "groups" || phase === "summary") viewGroups.classList.add("active");
 
-      chapterEls.forEach(ch => ch.classList.toggle("active", ch.dataset.phase === phase));
+      chapterEls.forEach(ch => {
+        const isActive = ch.dataset.phase === phase;
+        ch.classList.toggle("active", isActive);
+        ch.setAttribute("aria-pressed", String(isActive));
+      });
       if (matchKey && detail[matchKey]) {
         setDetail(matchKey);
       }
@@ -1437,20 +1450,17 @@
       }
     }
 
-    const observer = new IntersectionObserver(entries => {
-      const visible = entries
-        .filter(entry => entry.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (!visible) return;
-      const phase = visible.target.dataset.phase;
-      const matchKey = visible.target.dataset.match;
-      setPhase(phase, matchKey);
-    }, {
-      rootMargin: "-30% 0px -30% 0px",
-      threshold: [0.15, 0.3, 0.45, 0.6, 0.75]
+    chapterEls.forEach(el => {
+      el.addEventListener("click", () => {
+        setPhase(el.dataset.phase, el.dataset.match);
+      });
+      el.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          setPhase(el.dataset.phase, el.dataset.match);
+        }
+      });
     });
-
-    chapterEls.forEach(el => observer.observe(el));
 
     renderSpectrum();
     renderRibbon();
@@ -1458,11 +1468,10 @@
     renderSummary();
     setPhase("spectrum", "algeria-austria");
 
-    // Keep the currently selected match synced to the nearest visible card.
     document.addEventListener("keydown", e => {
       if (e.key === "Escape") {
         setPhase("spectrum", "algeria-austria");
-        boardStatus.textContent = "Reset to the opening match. Scroll to continue the story.";
+        boardStatus.textContent = "Reset to the opening match. Click another card on the right to continue.";
       }
     });
   </script>
