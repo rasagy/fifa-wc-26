@@ -1,0 +1,867 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FIFA World Cup 2026 Group Stage Atlas</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-soft: #0d1c32;
+      --panel: rgba(10, 20, 36, 0.82);
+      --panel-strong: rgba(12, 25, 44, 0.96);
+      --line: rgba(255, 255, 255, 0.12);
+      --text: #eef4ff;
+      --muted: rgba(238, 244, 255, 0.7);
+      --subtle: rgba(238, 244, 255, 0.52);
+      --accent: #f6c945;
+      --accent-2: #62d4ff;
+      --accent-3: #7df0b7;
+      --danger: #ff6b77;
+      --shadow: 0 20px 55px rgba(0, 0, 0, 0.35);
+      --radius: 22px;
+      --radius-sm: 14px;
+      --transition: 180ms ease;
+      --font-heading: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      --font-body: "Avenir Next", "Segoe UI", "Trebuchet MS", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: var(--font-body);
+      background:
+        radial-gradient(circle at 20% 15%, rgba(98, 212, 255, 0.18), transparent 24%),
+        radial-gradient(circle at 85% 10%, rgba(246, 201, 69, 0.14), transparent 20%),
+        radial-gradient(circle at 50% 80%, rgba(125, 240, 183, 0.12), transparent 24%),
+        linear-gradient(160deg, #040913, var(--bg) 45%, #081629 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(circle at center, rgba(0,0,0,0.95), transparent 88%);
+      pointer-events: none;
+      opacity: 0.35;
+    }
+
+    .page {
+      width: min(1440px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 40px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.9fr);
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+
+    .hero-card, .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero-card {
+      border-radius: 28px;
+      padding: 30px 30px 26px;
+      position: relative;
+      overflow: hidden;
+      min-height: 240px;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -30% auto;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(246, 201, 69, 0.22), transparent 68%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      color: var(--accent-2);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    h1 {
+      margin: 14px 0 10px;
+      font-family: var(--font-heading);
+      font-size: clamp(36px, 4vw, 60px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+    }
+
+    .lede {
+      max-width: 68ch;
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--muted);
+      margin: 0 0 18px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 13px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    .meta-chip strong { color: var(--accent); font-weight: 700; }
+
+    .hero-aside {
+      display: grid;
+      gap: 18px;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stat {
+      border-radius: 22px;
+      padding: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.08);
+      min-height: 110px;
+    }
+
+    .stat .kicker {
+      color: var(--subtle);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .stat .value {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 34px;
+      line-height: 1;
+      margin: 10px 0 6px;
+      letter-spacing: -0.03em;
+    }
+
+    .stat .label {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .panel {
+      border-radius: 28px;
+      padding: 18px;
+    }
+
+    .group-picker {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .group-btn {
+      appearance: none;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      border-radius: 16px;
+      padding: 12px 10px;
+      min-height: 68px;
+      text-align: left;
+      cursor: pointer;
+      transition: transform var(--transition), border-color var(--transition), background var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .group-btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(246, 201, 69, 0.35);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .group-btn[aria-pressed="true"] {
+      background: linear-gradient(135deg, rgba(246, 201, 69, 0.22), rgba(98, 212, 255, 0.14));
+      border-color: rgba(246, 201, 69, 0.5);
+      box-shadow: inset 0 0 0 1px rgba(246, 201, 69, 0.12);
+    }
+
+    .group-btn .letter {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .group-btn .mini {
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .group-view {
+      display: grid;
+      grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.85fr);
+      gap: 16px;
+    }
+
+    .group-summary, .detail-card {
+      border-radius: 24px;
+      background: var(--panel-strong);
+      border: 1px solid rgba(255,255,255,0.09);
+      padding: 20px;
+      min-height: 100%;
+    }
+
+    .group-heading {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .group-title {
+      margin: 0;
+      font-family: var(--font-heading);
+      font-size: clamp(30px, 3vw, 42px);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .group-subtitle {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 62ch;
+    }
+
+    .flag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 9px 12px;
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .pill strong {
+      color: var(--accent);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 11px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 640px;
+    }
+
+    th, td {
+      padding: 13px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 14px;
+      text-align: left;
+    }
+
+    th {
+      color: var(--subtle);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: rgba(255,255,255,0.03);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .place {
+      width: 40px;
+      color: var(--subtle);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .team-cell {
+      font-weight: 650;
+    }
+
+    .team-cell .sub {
+      display: block;
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--subtle);
+      font-weight: 500;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .badge.winner { background: rgba(125, 240, 183, 0.14); color: #bdf9da; }
+    .badge.runner { background: rgba(98, 212, 255, 0.12); color: #bbeeff; }
+    .badge.third { background: rgba(246, 201, 69, 0.13); color: #ffe8a1; }
+    .badge.out { background: rgba(255, 107, 119, 0.13); color: #ffc0c6; }
+
+    .progress {
+      position: relative;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+      margin-top: 6px;
+    }
+
+    .progress span {
+      position: absolute;
+      inset: 0 auto 0 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, rgba(246, 201, 69, 0.95), rgba(98, 212, 255, 0.95));
+    }
+
+    .detail-card h3 {
+      margin: 0 0 12px;
+      font-family: var(--font-heading);
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .detail-card p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .list .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      margin-top: 7px;
+      background: var(--accent-2);
+      flex: 0 0 auto;
+      box-shadow: 0 0 0 4px rgba(98, 212, 255, 0.12);
+    }
+
+    .sources {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      color: var(--subtle);
+      font-size: 13px;
+    }
+
+    .sources a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.22);
+    }
+
+    .sources a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+
+    .footer-note {
+      margin-top: 10px;
+      color: var(--subtle);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    @media (max-width: 1080px) {
+      .hero,
+      .group-view {
+        grid-template-columns: 1fr;
+      }
+
+      .group-picker {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page { width: min(100vw - 18px, 1440px); padding-top: 10px; }
+      .hero-card, .panel { border-radius: 22px; }
+      .hero-card { padding: 22px 18px; }
+      .group-picker { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .stat-grid { grid-template-columns: 1fr; }
+      th, td { padding: 11px 10px; }
+      table { min-width: 560px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <article class="hero-card">
+        <div class="eyebrow">FIFA World Cup 2026 group stage</div>
+        <h1>From 48 teams to 32, with every group telling its own story.</h1>
+        <p class="lede">
+          This interactive atlas summarizes the final group-stage standings for the 2026 FIFA World Cup.
+          Click a group to explore the table, qualification path, and the tiebreaks that decided tight finishes.
+        </p>
+        <div class="meta-row">
+          <div class="meta-chip"><strong>12</strong> groups</div>
+          <div class="meta-chip"><strong>48</strong> teams</div>
+          <div class="meta-chip"><strong>32</strong> knockout qualifiers</div>
+          <div class="meta-chip">Updated for <strong>July 2, 2026</strong></div>
+        </div>
+      </article>
+      <aside class="hero-aside">
+        <div class="stat-grid" id="stats"></div>
+      </aside>
+    </section>
+
+    <section class="panel">
+      <div class="group-picker" id="groupPicker" aria-label="Select a group"></div>
+      <div class="group-view">
+        <div class="group-summary">
+          <div class="group-heading">
+            <div>
+              <h2 class="group-title" id="groupTitle"></h2>
+              <p class="group-subtitle" id="groupSubtitle"></p>
+            </div>
+            <div id="groupTag"></div>
+          </div>
+
+          <div class="flag-row" id="groupFacts"></div>
+
+          <div class="table-wrap">
+            <table aria-label="Group standings">
+              <thead>
+                <tr>
+                  <th>Pos</th>
+                  <th>Team</th>
+                  <th>Record</th>
+                  <th>GF:GA</th>
+                  <th>GD</th>
+                  <th>Pts</th>
+                  <th>Standing</th>
+                </tr>
+              </thead>
+              <tbody id="standingsBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <aside class="detail-card">
+          <h3>Knockout Path</h3>
+          <p id="pathIntro"></p>
+          <ul class="list" id="pathList"></ul>
+          <div class="footer-note" id="groupNote"></div>
+        </aside>
+      </div>
+
+      <div class="sources">
+        <span>Sources:</span>
+        <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup" target="_blank" rel="noreferrer">2026 FIFA World Cup</a>
+        <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_Group_A" target="_blank" rel="noreferrer">Group A</a>
+        <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_Group_B" target="_blank" rel="noreferrer">Group B</a>
+        <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_Group_C" target="_blank" rel="noreferrer">Group C</a>
+        <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_Group_D" target="_blank" rel="noreferrer">Group D</a>
+        <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_Group_E" target="_blank" rel="noreferrer">Group E</a>
+        <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_Group_F" target="_blank" rel="noreferrer">Group F</a>
+        <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_Group_G" target="_blank" rel="noreferrer">Group G</a>
+        <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_Group_H" target="_blank" rel="noreferrer">Group H</a>
+        <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_Group_I" target="_blank" rel="noreferrer">Group I</a>
+        <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_Group_J" target="_blank" rel="noreferrer">Group J</a>
+        <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_Group_K" target="_blank" rel="noreferrer">Group K</a>
+        <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_Group_L" target="_blank" rel="noreferrer">Group L</a>
+      </div>
+      <div class="footer-note">
+        Group standings and qualification notes are taken from the 2026 FIFA World Cup group pages as published on Wikipedia, which summarize FIFA match reports and final standings.
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const data = {
+      A: {
+        title: "Group A",
+        subtitle: "Mexico topped the group at home, with South Africa advancing as runner-up. South Korea and Czech Republic were eliminated.",
+        note: "No tiebreaker was needed in the top two. Mexico finished with a perfect defense, conceding zero goals.",
+        facts: ["Winner: Mexico", "Runner-up: South Africa", "Eliminated: South Korea, Czech Republic"],
+        pathIntro: "Group A sent Mexico into the round of 32 as group winner, while South Africa advanced in second place.",
+        path: [
+          "Mexico advanced to play the third-place team from Group E, Ecuador.",
+          "South Africa advanced to play the runner-up of Group B, Canada."
+        ],
+        teams: [
+          { name: "Mexico", pts: 9, w: 3, d: 0, l: 0, gf: 6, ga: 0, gd: 6, status: "winner" },
+          { name: "South Africa", pts: 4, w: 1, d: 1, l: 1, gf: 2, ga: 3, gd: -1, status: "runner" },
+          { name: "South Korea", pts: 3, w: 1, d: 0, l: 2, gf: 2, ga: 3, gd: -1, status: "out" },
+          { name: "Czech Republic", pts: 1, w: 0, d: 1, l: 2, gf: 2, ga: 6, gd: -4, status: "out" }
+        ]
+      },
+      B: {
+        title: "Group B",
+        subtitle: "Switzerland won the group, while Canada edged Bosnia and Herzegovina on goal difference after a head-to-head draw.",
+        note: "Tied on head-to-head result between Canada and Bosnia and Herzegovina; overall goal difference settled second place.",
+        facts: ["Winner: Switzerland", "Runner-up: Canada", "Third-place qualifier: Bosnia and Herzegovina"],
+        pathIntro: "A tight Group B produced a winner, a runner-up, and one of the eight best third-place teams.",
+        path: [
+          "Switzerland advanced to play the third-place team from Group J, Algeria.",
+          "Canada advanced to play the runner-up of Group A, South Africa.",
+          "Bosnia and Herzegovina advanced to play the United States, winner of Group D."
+        ],
+        teams: [
+          { name: "Switzerland", pts: 7, w: 2, d: 1, l: 0, gf: 7, ga: 3, gd: 4, status: "winner" },
+          { name: "Canada", pts: 4, w: 1, d: 1, l: 1, gf: 8, ga: 3, gd: 5, status: "runner" },
+          { name: "Bosnia and Herzegovina", pts: 4, w: 1, d: 1, l: 1, gf: 5, ga: 6, gd: -1, status: "third" },
+          { name: "Qatar", pts: 1, w: 0, d: 1, l: 2, gf: 2, ga: 10, gd: -8, status: "out" }
+        ]
+      },
+      C: {
+        title: "Group C",
+        subtitle: "Brazil and Morocco both finished on seven points, with Brazil taking first place on head-to-head tiebreak criteria.",
+        note: "Brazil and Morocco were level on points and head-to-head, so overall goal difference decided the group winner.",
+        facts: ["Winner: Brazil", "Runner-up: Morocco", "Eliminated: Scotland, Haiti"],
+        pathIntro: "Two teams stayed unbeaten, but only Brazil topped the section.",
+        path: [
+          "Brazil advanced to play the runner-up of Group F, Japan.",
+          "Morocco advanced to play the winner of Group F, the Netherlands."
+        ],
+        teams: [
+          { name: "Brazil", pts: 7, w: 2, d: 1, l: 0, gf: 7, ga: 1, gd: 6, status: "winner" },
+          { name: "Morocco", pts: 7, w: 2, d: 1, l: 0, gf: 6, ga: 3, gd: 3, status: "runner" },
+          { name: "Scotland", pts: 3, w: 1, d: 0, l: 2, gf: 1, ga: 4, gd: -3, status: "out" },
+          { name: "Haiti", pts: 0, w: 0, d: 0, l: 3, gf: 2, ga: 8, gd: -6, status: "out" }
+        ]
+      },
+      D: {
+        title: "Group D",
+        subtitle: "The United States won the group, while Australia beat Paraguay on goal difference after both finished with four points.",
+        note: "Australia and Paraguay finished level on points and head-to-head, so overall goal difference separated them.",
+        facts: ["Winner: United States", "Runner-up: Australia", "Third-place qualifier: Paraguay"],
+        pathIntro: "Group D sent one host through as leader and another three-point third-place qualifier onward.",
+        path: [
+          "United States advanced to play Bosnia and Herzegovina, the runner-up from Group B.",
+          "Australia advanced to play Egypt, the runner-up of Group G.",
+          "Paraguay advanced to play Germany, winner of Group E."
+        ],
+        teams: [
+          { name: "United States", pts: 6, w: 2, d: 0, l: 1, gf: 8, ga: 4, gd: 4, status: "winner" },
+          { name: "Australia", pts: 4, w: 1, d: 1, l: 1, gf: 2, ga: 2, gd: 0, status: "runner" },
+          { name: "Paraguay", pts: 4, w: 1, d: 1, l: 1, gf: 2, ga: 4, gd: -2, status: "third" },
+          { name: "Turkey", pts: 3, w: 1, d: 0, l: 2, gf: 3, ga: 5, gd: -2, status: "out" }
+        ]
+      },
+      E: {
+        title: "Group E",
+        subtitle: "Germany and Ivory Coast both finished on six points, with Germany taking first by head-to-head result.",
+        note: "Germany and Ivory Coast were level on points; the head-to-head win gave Germany the top spot.",
+        facts: ["Winner: Germany", "Runner-up: Ivory Coast", "Third-place qualifier: Ecuador"],
+        pathIntro: "Group E was tight enough to send one of the strongest third-place teams through.",
+        path: [
+          "Germany advanced to play Paraguay, third in Group D.",
+          "Ivory Coast advanced to play Norway, runner-up of Group I.",
+          "Ecuador advanced to play Mexico, winner of Group A."
+        ],
+        teams: [
+          { name: "Germany", pts: 6, w: 2, d: 0, l: 1, gf: 10, ga: 4, gd: 6, status: "winner" },
+          { name: "Ivory Coast", pts: 6, w: 2, d: 0, l: 1, gf: 4, ga: 2, gd: 2, status: "runner" },
+          { name: "Ecuador", pts: 4, w: 1, d: 1, l: 1, gf: 2, ga: 2, gd: 0, status: "third" },
+          { name: "Curaçao", pts: 1, w: 0, d: 1, l: 2, gf: 1, ga: 9, gd: -8, status: "out" }
+        ]
+      },
+      F: {
+        title: "Group F",
+        subtitle: "The Netherlands stayed unbeaten, Japan finished second, and Sweden qualified as one of the best third-place teams.",
+        note: "No tiebreaker was needed at the top. Japan’s two draws gave it enough to hold second place.",
+        facts: ["Winner: Netherlands", "Runner-up: Japan", "Third-place qualifier: Sweden"],
+        pathIntro: "This group balanced control at the top with a narrow third-place qualification lane.",
+        path: [
+          "Netherlands advanced to play Morocco, runner-up of Group C.",
+          "Japan advanced to play Brazil, winner of Group C.",
+          "Sweden advanced to play France, winner of Group I."
+        ],
+        teams: [
+          { name: "Netherlands", pts: 7, w: 2, d: 1, l: 0, gf: 10, ga: 4, gd: 6, status: "winner" },
+          { name: "Japan", pts: 5, w: 1, d: 2, l: 0, gf: 7, ga: 3, gd: 4, status: "runner" },
+          { name: "Sweden", pts: 4, w: 1, d: 1, l: 1, gf: 7, ga: 7, gd: 0, status: "third" },
+          { name: "Tunisia", pts: 0, w: 0, d: 0, l: 3, gf: 2, ga: 12, gd: -10, status: "out" }
+        ]
+      },
+      G: {
+        title: "Group G",
+        subtitle: "Belgium and Egypt both finished on five points, with Belgium winning the group on goal difference.",
+        note: "Belgium and Egypt were level on points and head-to-head, so overall goal difference was decisive.",
+        facts: ["Winner: Belgium", "Runner-up: Egypt", "Eliminated: Iran, New Zealand"],
+        pathIntro: "The group was competitive at the top but did not produce a third-place qualifier.",
+        path: [
+          "Belgium advanced to play Senegal, third in Group I.",
+          "Egypt advanced to play Australia, runner-up of Group D."
+        ],
+        teams: [
+          { name: "Belgium", pts: 5, w: 1, d: 2, l: 0, gf: 6, ga: 2, gd: 4, status: "winner" },
+          { name: "Egypt", pts: 5, w: 1, d: 2, l: 0, gf: 5, ga: 3, gd: 2, status: "runner" },
+          { name: "Iran", pts: 3, w: 0, d: 3, l: 0, gf: 3, ga: 3, gd: 0, status: "out" },
+          { name: "New Zealand", pts: 1, w: 0, d: 1, l: 2, gf: 4, ga: 10, gd: -6, status: "out" }
+        ]
+      },
+      H: {
+        title: "Group H",
+        subtitle: "Spain went unbeaten to win the group, Cape Verde impressed with three draws, and Uruguay edged Saudi Arabia for third.",
+        note: "Uruguay and Saudi Arabia were separated by goal difference after a head-to-head draw.",
+        facts: ["Winner: Spain", "Runner-up: Cape Verde", "No third-place qualifier"],
+        pathIntro: "Spain and Cape Verde advanced, but the third-place battle ended just short of qualification.",
+        path: [
+          "Spain advanced to play Austria, runner-up of Group J.",
+          "Cape Verde advanced to play Argentina, winner of Group J."
+        ],
+        teams: [
+          { name: "Spain", pts: 7, w: 2, d: 1, l: 0, gf: 5, ga: 0, gd: 5, status: "winner" },
+          { name: "Cape Verde", pts: 3, w: 0, d: 3, l: 0, gf: 2, ga: 2, gd: 0, status: "runner" },
+          { name: "Uruguay", pts: 2, w: 0, d: 2, l: 1, gf: 3, ga: 4, gd: -1, status: "out" },
+          { name: "Saudi Arabia", pts: 2, w: 0, d: 2, l: 1, gf: 1, ga: 5, gd: -4, status: "out" }
+        ]
+      },
+      I: {
+        title: "Group I",
+        subtitle: "France stayed perfect to win the group, with Norway taking second and Senegal advancing as a third-place qualifier.",
+        note: "France were the only team to win all three matches in the group.",
+        facts: ["Winner: France", "Runner-up: Norway", "Third-place qualifier: Senegal"],
+        pathIntro: "Group I produced a clear winner and two knockout-bound challengers.",
+        path: [
+          "France advanced to play Sweden, third in Group F.",
+          "Norway advanced to play Ivory Coast, runner-up of Group E.",
+          "Senegal advanced to play Belgium, winner of Group G."
+        ],
+        teams: [
+          { name: "France", pts: 9, w: 3, d: 0, l: 0, gf: 10, ga: 2, gd: 8, status: "winner" },
+          { name: "Norway", pts: 6, w: 2, d: 0, l: 1, gf: 8, ga: 7, gd: 1, status: "runner" },
+          { name: "Senegal", pts: 3, w: 1, d: 0, l: 2, gf: 8, ga: 6, gd: 2, status: "third" },
+          { name: "Iraq", pts: 0, w: 0, d: 0, l: 3, gf: 1, ga: 12, gd: -11, status: "out" }
+        ]
+      },
+      J: {
+        title: "Group J",
+        subtitle: "Argentina marched through with three wins, while Austria advanced on goal difference after a 3-3 draw with Algeria.",
+        note: "Austria and Algeria were tied on points; overall goal difference separated the two after their head-to-head draw.",
+        facts: ["Winner: Argentina", "Runner-up: Austria", "Third-place qualifier: Algeria"],
+        pathIntro: "This group featured one perfect leader, one resilient runner-up, and one high-scoring third-place qualifier.",
+        path: [
+          "Argentina advanced to play Cape Verde, runner-up of Group H.",
+          "Austria advanced to play Spain, winner of Group H.",
+          "Algeria advanced to play Switzerland, winner of Group B."
+        ],
+        teams: [
+          { name: "Argentina", pts: 9, w: 3, d: 0, l: 0, gf: 8, ga: 1, gd: 7, status: "winner" },
+          { name: "Austria", pts: 4, w: 1, d: 1, l: 1, gf: 6, ga: 6, gd: 0, status: "runner" },
+          { name: "Algeria", pts: 4, w: 1, d: 1, l: 1, gf: 5, ga: 7, gd: -2, status: "third" },
+          { name: "Jordan", pts: 0, w: 0, d: 0, l: 3, gf: 3, ga: 8, gd: -5, status: "out" }
+        ]
+      },
+      K: {
+        title: "Group K",
+        subtitle: "Colombia won the group, Portugal took second, and DR Congo advanced from third with four points.",
+        note: "Colombia stayed unbeaten. Portugal’s five points were enough for second, while DR Congo secured third.",
+        facts: ["Winner: Colombia", "Runner-up: Portugal", "Third-place qualifier: DR Congo"],
+        pathIntro: "The group sent all three of its strongest teams into the knockout stage.",
+        path: [
+          "Colombia advanced to play Ghana, third in Group L.",
+          "Portugal advanced to play Croatia, runner-up of Group L.",
+          "DR Congo advanced to play England, winner of Group L."
+        ],
+        teams: [
+          { name: "Colombia", pts: 7, w: 2, d: 1, l: 0, gf: 4, ga: 1, gd: 3, status: "winner" },
+          { name: "Portugal", pts: 5, w: 1, d: 2, l: 0, gf: 6, ga: 1, gd: 5, status: "runner" },
+          { name: "DR Congo", pts: 4, w: 1, d: 1, l: 1, gf: 4, ga: 3, gd: 1, status: "third" },
+          { name: "Uzbekistan", pts: 0, w: 0, d: 0, l: 3, gf: 2, ga: 11, gd: -9, status: "out" }
+        ]
+      },
+      L: {
+        title: "Group L",
+        subtitle: "England won the group, Croatia finished second, and Ghana claimed the final best-third-place berth.",
+        note: "Ghana’s four points were enough to secure the last qualifying third-place slot.",
+        facts: ["Winner: England", "Runner-up: Croatia", "Third-place qualifier: Ghana"],
+        pathIntro: "Group L closed the round-robin phase by locking in the final third-place qualifier.",
+        path: [
+          "England advanced to play DR Congo, third in Group K.",
+          "Croatia advanced to play Portugal, runner-up of Group K.",
+          "Ghana advanced to play Colombia, winner of Group K."
+        ],
+        teams: [
+          { name: "England", pts: 7, w: 2, d: 1, l: 0, gf: 6, ga: 2, gd: 4, status: "winner" },
+          { name: "Croatia", pts: 6, w: 2, d: 0, l: 1, gf: 5, ga: 5, gd: 0, status: "runner" },
+          { name: "Ghana", pts: 4, w: 1, d: 1, l: 1, gf: 2, ga: 2, gd: 0, status: "third" },
+          { name: "Panama", pts: 0, w: 0, d: 0, l: 3, gf: 0, ga: 4, gd: -4, status: "out" }
+        ]
+      }
+    };
+
+    const order = Object.keys(data);
+    const statusLabel = {
+      winner: "Group winner",
+      runner: "Runner-up",
+      third: "Third-place qualifier",
+      out: "Eliminated"
+    };
+
+    const statConfig = [
+      { key: "groups", label: "Groups", value: "12", text: "One card per group, from A to L." },
+      { key: "teams", label: "Teams", value: "48", text: "The expanded tournament field." },
+      { key: "qualifiers", label: "Knockout teams", value: "32", text: "Top two plus eight best third-place teams." },
+      { key: "thirds", label: "Third-place qualifiers", value: "8", text: "The most competitive safety net in the format." }
+    ];
+
+    const statsEl = document.getElementById("stats");
+    statsEl.innerHTML = statConfig.map((stat) => `
+      <div class="stat">
+        <div class="kicker">${stat.label}</div>
+        <span class="value">${stat.value}</span>
+        <div class="label">${stat.text}</div>
+      </div>
+    `).join("");
+
+    const picker = document.getElementById("groupPicker");
+    const titleEl = document.getElementById("groupTitle");
+    const subtitleEl = document.getElementById("groupSubtitle");
+    const tagEl = document.getElementById("groupTag");
+    const factsEl = document.getElementById("groupFacts");
+    const standingsBody = document.getElementById("standingsBody");
+    const pathIntro = document.getElementById("pathIntro");
+    const pathList = document.getElementById("pathList");
+    const groupNote = document.getElementById("groupNote");
+
+    const maxPts = Math.max(...order.flatMap((key) => data[key].teams.map((team) => team.pts)));
+
+    function teamClass(status) {
+      return status === "winner" ? "winner" : status === "runner" ? "runner" : status === "third" ? "third" : "out";
+    }
+
+    function selectGroup(key) {
+      const group = data[key];
+      document.querySelectorAll(".group-btn").forEach((btn) => {
+        btn.setAttribute("aria-pressed", btn.dataset.group === key ? "true" : "false");
+      });
+
+      titleEl.textContent = group.title;
+      subtitleEl.textContent = group.subtitle;
+      tagEl.innerHTML = `<span class="pill"><strong>Note</strong> ${group.note}</span>`;
+      factsEl.innerHTML = group.facts.map((fact) => `<span class="pill">${fact}</span>`).join("");
+      standingsBody.innerHTML = group.teams.map((team, idx) => {
+        const width = Math.max(8, (team.pts / maxPts) * 100);
+        return `
+          <tr>
+            <td class="place">${idx + 1}</td>
+            <td class="team-cell">${team.name}<span class="sub">${statusLabel[team.status]}</span></td>
+            <td>
+              ${team.w}-${team.d}-${team.l}
+              <div class="progress" aria-hidden="true"><span style="width:${width}%"></span></div>
+            </td>
+            <td>${team.gf}:${team.ga}</td>
+            <td>${team.gd > 0 ? "+" + team.gd : team.gd}</td>
+            <td><strong>${team.pts}</strong></td>
+            <td><span class="badge ${teamClass(team.status)}">${statusLabel[team.status]}</span></td>
+          </tr>
+        `;
+      }).join("");
+
+      pathIntro.textContent = group.pathIntro;
+      pathList.innerHTML = group.path.map((item) => `<li><span class="dot"></span><span>${item}</span></li>`).join("");
+      groupNote.textContent = group.note;
+    }
+
+    picker.innerHTML = order.map((key) => {
+      const group = data[key];
+      const top = group.teams[0];
+      const runner = group.teams[1];
+      return `
+        <button class="group-btn" data-group="${key}" aria-pressed="false" type="button">
+          <span class="letter">${key}</span>
+          <span class="mini">${top.name} · ${runner.name}</span>
+        </button>
+      `;
+    }).join("");
+
+    picker.addEventListener("click", (event) => {
+      const btn = event.target.closest(".group-btn");
+      if (!btn) return;
+      selectGroup(btn.dataset.group);
+    });
+
+    selectGroup("A");
+  </script>
+</body>
+</html>

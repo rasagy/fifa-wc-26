@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chart options — Form vs. Chalk</title>
+<style>:root {
+  --chalk: #f7f5ee;
+  --ink: #14261c;
+  --ink-soft: #3d5347;
+  --pitch: #1e6f4c;
+  --pitch-dark: #123d2b;
+  --gold: #c9a227;
+  --card-yellow: #e8b923;
+  --card-red: #c8433a;
+  --line: rgba(20, 38, 28, 0.14);
+  --card-bg: #ffffff;
+  --shadow: 0 1px 2px rgba(20, 38, 28, 0.06), 0 8px 24px rgba(20, 38, 28, 0.06);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--chalk);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+}
+
+h1, h2 {
+  font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+
+.opt-header {
+  padding: 56px 24px 36px;
+  text-align: center;
+  background: linear-gradient(180deg, var(--pitch-dark), var(--pitch));
+  color: var(--chalk);
+}
+
+.opt-header .kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.opt-header h1 { color: var(--chalk); font-size: 2.2rem; }
+.opt-header .deck { color: rgba(247,245,238,0.85); max-width: 520px; margin: 0 auto; }
+
+.opt-main { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+.opt-block { margin: 64px 0; }
+.opt-block h2 { font-size: 1.5rem; }
+.opt-note { color: var(--ink-soft); max-width: 640px; margin-bottom: 24px; }
+
+.dark-block {
+  background: var(--pitch-dark);
+  color: var(--chalk);
+  margin-left: -24px;
+  margin-right: -24px;
+  padding: 40px 24px;
+  border-radius: 12px;
+}
+.dark-block h2 { color: var(--chalk); }
+.dark-block .opt-note { color: rgba(247,245,238,0.75); }
+
+/* ---------- A: slope chart ---------- */
+
+.slope-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.slope-card {
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  padding: 14px 16px 10px;
+}
+
+.slope-card .sc-title {
+  font-family: Georgia, serif;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.slope-card .sc-title .sc-sub {
+  font-family: -apple-system, sans-serif;
+  font-weight: 400;
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.slope-axis-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  padding: 0 4px;
+}
+
+/* ---------- B: radial wheel ---------- */
+
+.wheel-wrap { display: flex; justify-content: center; }
+
+/* ---------- C: heat-strip ---------- */
+
+.heat-wrap { display: flex; flex-direction: column; gap: 8px; }
+
+.heat-row {
+  display: grid;
+  grid-template-columns: 70px repeat(6, 1fr);
+  gap: 6px;
+  align-items: center;
+}
+
+.heat-row .hg {
+  font-family: Georgia, serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.heat-row .hg .hg-rank {
+  display: block;
+  font-family: -apple-system, sans-serif;
+  font-weight: 400;
+  font-size: 0.65rem;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+}
+
+.heat-cell {
+  border-radius: 6px;
+  padding: 8px 6px;
+  color: #fff;
+  font-size: 0.72rem;
+  text-align: center;
+  line-height: 1.25;
+  font-weight: 600;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.25);
+}
+
+.heat-cell .hc-margin {
+  display: block;
+  font-weight: 400;
+  font-size: 0.62rem;
+  opacity: 0.85;
+}
+
+@media (max-width: 700px) {
+  .heat-row { grid-template-columns: 54px repeat(6, 1fr); }
+  .heat-cell { font-size: 0.62rem; padding: 6px 3px; }
+}
+</style>
+</head>
+<body>
+<header class="opt-header">
+  <p class="kicker">Designer option board — not final</p>
+  <h1>Three chart directions</h1>
+  <p class="deck">Prototypes only, for comparison. Pick one (or mix) and I'll build it into the real artifact.</p>
+</header>
+
+<main class="opt-main">
+
+  <section class="opt-block">
+    <h2>A — Slope chart: expected vs. actual rank</h2>
+    <p class="opt-note">Each group is a small panel with four teams. A line runs from each team's Elo-expected rank (left) to its actual final rank (right). Rising = overperformed, falling = underperformed, flat = held serve.</p>
+    <div class="slope-grid" id="slope-grid"></div>
+  </section>
+
+  <section class="opt-block dark-block">
+    <h2>B — Radial wheel: closeness by group</h2>
+    <p class="opt-note">All 12 groups arranged like a tournament draw. Spoke length and color = average goal margin — short and green is a nail-biter, long and red is a blowout group.</p>
+    <div class="wheel-wrap" id="wheel-wrap"></div>
+  </section>
+
+  <section class="opt-block">
+    <h2>C — Match-margin heat-strip</h2>
+    <p class="opt-note">Every group's six matches as a row of colored cells (green = tight, red = blowout), instead of a single averaged bar. Rows sorted tightest group first.</p>
+    <div class="heat-wrap" id="heat-wrap"></div>
+  </section>
+
+</main>
+
+<script>window.FIFA_DATA = {"groups": [{"group": "H", "avg_margin": 0.83, "draws": 4, "blowouts": 1, "total_goals": 11, "pts_spread": 5, "table": [{"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 5, "ga": 0, "pts": 7, "gd": 5, "team": "Spain", "fifa_code": "ESP", "fifa_ranking_pre_tournament": 2, "elo_rating": 2120, "group": "H", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 0, "drawn": 3, "lost": 0, "gf": 2, "ga": 2, "pts": 3, "gd": 0, "team": "Cabo Verde", "fifa_code": "CPV", "fifa_ranking_pre_tournament": 67, "elo_rating": 1640, "group": "H", "actual_rank": 2, "expected_rank": 4, "upset_score": 2}, {"played": 3, "won": 0, "drawn": 2, "lost": 1, "gf": 3, "ga": 4, "pts": 2, "gd": -1, "team": "Uruguay", "fifa_code": "URU", "fifa_ranking_pre_tournament": 16, "elo_rating": 1960, "group": "H", "actual_rank": 3, "expected_rank": 2, "upset_score": -1}, {"played": 3, "won": 0, "drawn": 2, "lost": 1, "gf": 1, "ga": 5, "pts": 2, "gd": -4, "team": "Saudi Arabia", "fifa_code": "KSA", "fifa_ranking_pre_tournament": 58, "elo_rating": 1660, "group": "H", "actual_rank": 4, "expected_rank": 3, "upset_score": -1}], "matches": [{"match_id": "13", "date": "2026-06-15", "home_team_name": "Spain", "home_fifa_code": "ESP", "away_team_name": "Cabo Verde", "away_fifa_code": "CPV", "home_score": "0", "away_score": "0", "margin": 0}, {"match_id": "15", "date": "2026-06-15", "home_team_name": "Saudi Arabia", "home_fifa_code": "KSA", "away_team_name": "Uruguay", "away_fifa_code": "URU", "home_score": "1", "away_score": "1", "margin": 0}, {"match_id": "39", "date": "2026-06-21", "home_team_name": "Spain", "home_fifa_code": "ESP", "away_team_name": "Saudi Arabia", "away_fifa_code": "KSA", "home_score": "4", "away_score": "0", "margin": 4}, {"match_id": "40", "date": "2026-06-21", "home_team_name": "Uruguay", "home_fifa_code": "URU", "away_team_name": "Cabo Verde", "away_fifa_code": "CPV", "home_score": "2", "away_score": "2", "margin": 0}, {"match_id": "63", "date": "2026-06-27", "home_team_name": "Uruguay", "home_fifa_code": "URU", "away_team_name": "Spain", "away_fifa_code": "ESP", "home_score": "0", "away_score": "1", "margin": 1}, {"match_id": "64", "date": "2026-06-27", "home_team_name": "Cabo Verde", "home_fifa_code": "CPV", "away_team_name": "Saudi Arabia", "away_fifa_code": "KSA", "home_score": "0", "away_score": "0", "margin": 0}], "closeness_rank": 1}, {"group": "G", "avg_margin": 1.0, "draws": 4, "blowouts": 1, "total_goals": 18, "pts_spread": 4, "table": [{"played": 3, "won": 1, "drawn": 2, "lost": 0, "gf": 6, "ga": 2, "pts": 5, "gd": 4, "team": "Belgium", "fifa_code": "BEL", "fifa_ranking_pre_tournament": 9, "elo_rating": 1950, "group": "G", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 2, "lost": 0, "gf": 5, "ga": 3, "pts": 5, "gd": 2, "team": "Egypt", "fifa_code": "EGY", "fifa_ranking_pre_tournament": 36, "elo_rating": 1730, "group": "G", "actual_rank": 2, "expected_rank": 3, "upset_score": 1}, {"played": 3, "won": 0, "drawn": 3, "lost": 0, "gf": 3, "ga": 3, "pts": 3, "gd": 0, "team": "IR Iran", "fifa_code": "IRN", "fifa_ranking_pre_tournament": 20, "elo_rating": 1820, "group": "G", "actual_rank": 3, "expected_rank": 2, "upset_score": -1}, {"played": 3, "won": 0, "drawn": 1, "lost": 2, "gf": 4, "ga": 10, "pts": 1, "gd": -6, "team": "New Zealand", "fifa_code": "NZL", "fifa_ranking_pre_tournament": 85, "elo_rating": 1510, "group": "G", "actual_rank": 4, "expected_rank": 4, "upset_score": 0}], "matches": [{"match_id": "14", "date": "2026-06-15", "home_team_name": "Belgium", "home_fifa_code": "BEL", "away_team_name": "Egypt", "away_fifa_code": "EGY", "home_score": "1", "away_score": "1", "margin": 0}, {"match_id": "16", "date": "2026-06-15", "home_team_name": "IR Iran", "home_fifa_code": "IRN", "away_team_name": "New Zealand", "away_fifa_code": "NZL", "home_score": "2", "away_score": "2", "margin": 0}, {"match_id": "37", "date": "2026-06-21", "home_team_name": "Belgium", "home_fifa_code": "BEL", "away_team_name": "IR Iran", "away_fifa_code": "IRN", "home_score": "0", "away_score": "0", "margin": 0}, {"match_id": "38", "date": "2026-06-21", "home_team_name": "New Zealand", "home_fifa_code": "NZL", "away_team_name": "Egypt", "away_fifa_code": "EGY", "home_score": "1", "away_score": "3", "margin": 2}, {"match_id": "61", "date": "2026-06-27", "home_team_name": "New Zealand", "home_fifa_code": "NZL", "away_team_name": "Belgium", "away_fifa_code": "BEL", "home_score": "1", "away_score": "5", "margin": 4}, {"match_id": "62", "date": "2026-06-27", "home_team_name": "Egypt", "home_fifa_code": "EGY", "away_team_name": "IR Iran", "away_fifa_code": "IRN", "home_score": "1", "away_score": "1", "margin": 0}], "closeness_rank": 2}, {"group": "L", "avg_margin": 1.17, "draws": 1, "blowouts": 0, "total_goals": 13, "pts_spread": 7, "table": [{"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 6, "ga": 2, "pts": 7, "gd": 4, "team": "England", "fifa_code": "ENG", "fifa_ranking_pre_tournament": 4, "elo_rating": 2050, "group": "L", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 2, "drawn": 0, "lost": 1, "gf": 5, "ga": 5, "pts": 6, "gd": 0, "team": "Croatia", "fifa_code": "CRO", "fifa_ranking_pre_tournament": 11, "elo_rating": 1940, "group": "L", "actual_rank": 2, "expected_rank": 2, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 2, "ga": 2, "pts": 4, "gd": 0, "team": "Ghana", "fifa_code": "GHA", "fifa_ranking_pre_tournament": 49, "elo_rating": 1690, "group": "L", "actual_rank": 3, "expected_rank": 3, "upset_score": 0}, {"played": 3, "won": 0, "drawn": 0, "lost": 3, "gf": 0, "ga": 4, "pts": 0, "gd": -4, "team": "Panama", "fifa_code": "PAN", "fifa_ranking_pre_tournament": 34, "elo_rating": 1680, "group": "L", "actual_rank": 4, "expected_rank": 4, "upset_score": 0}], "matches": [{"match_id": "22", "date": "2026-06-17", "home_team_name": "England", "home_fifa_code": "ENG", "away_team_name": "Croatia", "away_fifa_code": "CRO", "home_score": "4", "away_score": "2", "margin": 2}, {"match_id": "23", "date": "2026-06-17", "home_team_name": "Ghana", "home_fifa_code": "GHA", "away_team_name": "Panama", "away_fifa_code": "PAN", "home_score": "1", "away_score": "0", "margin": 1}, {"match_id": "47", "date": "2026-06-23", "home_team_name": "England", "home_fifa_code": "ENG", "away_team_name": "Ghana", "away_fifa_code": "GHA", "home_score": "0", "away_score": "0", "margin": 0}, {"match_id": "48", "date": "2026-06-23", "home_team_name": "Panama", "home_fifa_code": "PAN", "away_team_name": "Croatia", "away_fifa_code": "CRO", "home_score": "0", "away_score": "1", "margin": 1}, {"match_id": "71", "date": "2026-06-28", "home_team_name": "Panama", "home_fifa_code": "PAN", "away_team_name": "England", "away_fifa_code": "ENG", "home_score": "0", "away_score": "2", "margin": 2}, {"match_id": "72", "date": "2026-06-28", "home_team_name": "Croatia", "home_fifa_code": "CRO", "away_team_name": "Ghana", "away_fifa_code": "GHA", "home_score": "2", "away_score": "1", "margin": 1}], "closeness_rank": 3}, {"group": "A", "avg_margin": 1.33, "draws": 1, "blowouts": 1, "total_goals": 12, "pts_spread": 8, "table": [{"played": 3, "won": 3, "drawn": 0, "lost": 0, "gf": 6, "ga": 0, "pts": 9, "gd": 6, "team": "Mexico", "fifa_code": "MEX", "fifa_ranking_pre_tournament": 14, "elo_rating": 1810, "group": "A", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 2, "ga": 3, "pts": 4, "gd": -1, "team": "South Africa", "fifa_code": "RSA", "fifa_ranking_pre_tournament": 60, "elo_rating": 1620, "group": "A", "actual_rank": 2, "expected_rank": 4, "upset_score": 2}, {"played": 3, "won": 1, "drawn": 0, "lost": 2, "gf": 2, "ga": 3, "pts": 3, "gd": -1, "team": "South Korea", "fifa_code": "KOR", "fifa_ranking_pre_tournament": 22, "elo_rating": 1800, "group": "A", "actual_rank": 3, "expected_rank": 2, "upset_score": -1}, {"played": 3, "won": 0, "drawn": 1, "lost": 2, "gf": 2, "ga": 6, "pts": 1, "gd": -4, "team": "Czechia", "fifa_code": "CZE", "fifa_ranking_pre_tournament": 40, "elo_rating": 1740, "group": "A", "actual_rank": 4, "expected_rank": 3, "upset_score": -1}], "matches": [{"match_id": "1", "date": "2026-06-11", "home_team_name": "Mexico", "home_fifa_code": "MEX", "away_team_name": "South Africa", "away_fifa_code": "RSA", "home_score": "2", "away_score": "0", "margin": 2}, {"match_id": "2", "date": "2026-06-11", "home_team_name": "South Korea", "home_fifa_code": "KOR", "away_team_name": "Czechia", "away_fifa_code": "CZE", "home_score": "2", "away_score": "1", "margin": 1}, {"match_id": "25", "date": "2026-06-18", "home_team_name": "Mexico", "home_fifa_code": "MEX", "away_team_name": "South Korea", "away_fifa_code": "KOR", "home_score": "1", "away_score": "0", "margin": 1}, {"match_id": "26", "date": "2026-06-18", "home_team_name": "Czechia", "home_fifa_code": "CZE", "away_team_name": "South Africa", "away_fifa_code": "RSA", "home_score": "1", "away_score": "1", "margin": 0}, {"match_id": "49", "date": "2026-06-24", "home_team_name": "Czechia", "home_fifa_code": "CZE", "away_team_name": "Mexico", "away_fifa_code": "MEX", "home_score": "0", "away_score": "3", "margin": 3}, {"match_id": "50", "date": "2026-06-24", "home_team_name": "South Africa", "home_fifa_code": "RSA", "away_team_name": "South Korea", "away_fifa_code": "KOR", "home_score": "1", "away_score": "0", "margin": 1}], "closeness_rank": 4}, {"group": "D", "avg_margin": 1.5, "draws": 1, "blowouts": 1, "total_goals": 15, "pts_spread": 3, "table": [{"played": 3, "won": 2, "drawn": 0, "lost": 1, "gf": 8, "ga": 4, "pts": 6, "gd": 4, "team": "USA", "fifa_code": "USA", "fifa_ranking_pre_tournament": 17, "elo_rating": 1850, "group": "D", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 2, "ga": 2, "pts": 4, "gd": 0, "team": "Australia", "fifa_code": "AUS", "fifa_ranking_pre_tournament": 27, "elo_rating": 1790, "group": "D", "actual_rank": 2, "expected_rank": 2, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 2, "ga": 4, "pts": 4, "gd": -2, "team": "Paraguay", "fifa_code": "PAR", "fifa_ranking_pre_tournament": 54, "elo_rating": 1725, "group": "D", "actual_rank": 3, "expected_rank": 4, "upset_score": 1}, {"played": 3, "won": 1, "drawn": 0, "lost": 2, "gf": 3, "ga": 5, "pts": 3, "gd": -2, "team": "T\u00fcrkiye", "fifa_code": "TUR", "fifa_ranking_pre_tournament": 26, "elo_rating": 1780, "group": "D", "actual_rank": 4, "expected_rank": 3, "upset_score": -1}], "matches": [{"match_id": "4", "date": "2026-06-12", "home_team_name": "USA", "home_fifa_code": "USA", "away_team_name": "Paraguay", "away_fifa_code": "PAR", "home_score": "4", "away_score": "1", "margin": 3}, {"match_id": "8", "date": "2026-06-13", "home_team_name": "Australia", "home_fifa_code": "AUS", "away_team_name": "T\u00fcrkiye", "away_fifa_code": "TUR", "home_score": "2", "away_score": "0", "margin": 2}, {"match_id": "31", "date": "2026-06-19", "home_team_name": "USA", "home_fifa_code": "USA", "away_team_name": "Australia", "away_fifa_code": "AUS", "home_score": "2", "away_score": "0", "margin": 2}, {"match_id": "32", "date": "2026-06-19", "home_team_name": "T\u00fcrkiye", "home_fifa_code": "TUR", "away_team_name": "Paraguay", "away_fifa_code": "PAR", "home_score": "0", "away_score": "1", "margin": 1}, {"match_id": "55", "date": "2026-06-25", "home_team_name": "T\u00fcrkiye", "home_fifa_code": "TUR", "away_team_name": "USA", "away_fifa_code": "USA", "home_score": "3", "away_score": "2", "margin": 1}, {"match_id": "56", "date": "2026-06-25", "home_team_name": "Paraguay", "home_fifa_code": "PAR", "away_team_name": "Australia", "away_fifa_code": "AUS", "home_score": "0", "away_score": "0", "margin": 0}], "closeness_rank": 5}, {"group": "C", "avg_margin": 1.67, "draws": 1, "blowouts": 2, "total_goals": 16, "pts_spread": 7, "table": [{"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 7, "ga": 1, "pts": 7, "gd": 6, "team": "Brazil", "fifa_code": "BRA", "fifa_ranking_pre_tournament": 6, "elo_rating": 2030, "group": "C", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 6, "ga": 3, "pts": 7, "gd": 3, "team": "Morocco", "fifa_code": "MAR", "fifa_ranking_pre_tournament": 7, "elo_rating": 1920, "group": "C", "actual_rank": 2, "expected_rank": 2, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 0, "lost": 2, "gf": 1, "ga": 4, "pts": 3, "gd": -3, "team": "Scotland", "fifa_code": "SCO", "fifa_ranking_pre_tournament": 39, "elo_rating": 1720, "group": "C", "actual_rank": 3, "expected_rank": 3, "upset_score": 0}, {"played": 3, "won": 0, "drawn": 0, "lost": 3, "gf": 2, "ga": 8, "pts": 0, "gd": -6, "team": "Haiti", "fifa_code": "HAI", "fifa_ranking_pre_tournament": 83, "elo_rating": 1530, "group": "C", "actual_rank": 4, "expected_rank": 4, "upset_score": 0}], "matches": [{"match_id": "6", "date": "2026-06-13", "home_team_name": "Brazil", "home_fifa_code": "BRA", "away_team_name": "Morocco", "away_fifa_code": "MAR", "home_score": "1", "away_score": "1", "margin": 0}, {"match_id": "7", "date": "2026-06-13", "home_team_name": "Haiti", "home_fifa_code": "HAI", "away_team_name": "Scotland", "away_fifa_code": "SCO", "home_score": "0", "away_score": "1", "margin": 1}, {"match_id": "29", "date": "2026-06-19", "home_team_name": "Brazil", "home_fifa_code": "BRA", "away_team_name": "Haiti", "away_fifa_code": "HAI", "home_score": "3", "away_score": "0", "margin": 3}, {"match_id": "30", "date": "2026-06-19", "home_team_name": "Scotland", "home_fifa_code": "SCO", "away_team_name": "Morocco", "away_fifa_code": "MAR", "home_score": "0", "away_score": "1", "margin": 1}, {"match_id": "53", "date": "2026-06-25", "home_team_name": "Scotland", "home_fifa_code": "SCO", "away_team_name": "Brazil", "away_fifa_code": "BRA", "home_score": "0", "away_score": "3", "margin": 3}, {"match_id": "54", "date": "2026-06-25", "home_team_name": "Morocco", "home_fifa_code": "MAR", "away_team_name": "Haiti", "away_fifa_code": "HAI", "home_score": "4", "away_score": "2", "margin": 2}], "closeness_rank": 6}, {"group": "J", "avg_margin": 1.67, "draws": 1, "blowouts": 1, "total_goals": 22, "pts_spread": 9, "table": [{"played": 3, "won": 3, "drawn": 0, "lost": 0, "gf": 8, "ga": 1, "pts": 9, "gd": 7, "team": "Argentina", "fifa_code": "ARG", "fifa_ranking_pre_tournament": 1, "elo_rating": 2150, "group": "J", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 6, "ga": 6, "pts": 4, "gd": 0, "team": "Austria", "fifa_code": "AUT", "fifa_ranking_pre_tournament": 24, "elo_rating": 1830, "group": "J", "actual_rank": 2, "expected_rank": 2, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 5, "ga": 7, "pts": 4, "gd": -2, "team": "Algeria", "fifa_code": "ALG", "fifa_ranking_pre_tournament": 28, "elo_rating": 1760, "group": "J", "actual_rank": 3, "expected_rank": 3, "upset_score": 0}, {"played": 3, "won": 0, "drawn": 0, "lost": 3, "gf": 3, "ga": 8, "pts": 0, "gd": -5, "team": "Jordan", "fifa_code": "JOR", "fifa_ranking_pre_tournament": 63, "elo_rating": 1610, "group": "J", "actual_rank": 4, "expected_rank": 4, "upset_score": 0}], "matches": [{"match_id": "19", "date": "2026-06-16", "home_team_name": "Argentina", "home_fifa_code": "ARG", "away_team_name": "Algeria", "away_fifa_code": "ALG", "home_score": "3", "away_score": "0", "margin": 3}, {"match_id": "20", "date": "2026-06-16", "home_team_name": "Austria", "home_fifa_code": "AUT", "away_team_name": "Jordan", "away_fifa_code": "JOR", "home_score": "3", "away_score": "1", "margin": 2}, {"match_id": "43", "date": "2026-06-22", "home_team_name": "Argentina", "home_fifa_code": "ARG", "away_team_name": "Austria", "away_fifa_code": "AUT", "home_score": "2", "away_score": "0", "margin": 2}, {"match_id": "44", "date": "2026-06-22", "home_team_name": "Jordan", "home_fifa_code": "JOR", "away_team_name": "Algeria", "away_fifa_code": "ALG", "home_score": "1", "away_score": "2", "margin": 1}, {"match_id": "67", "date": "2026-06-27", "home_team_name": "Jordan", "home_fifa_code": "JOR", "away_team_name": "Argentina", "away_fifa_code": "ARG", "home_score": "1", "away_score": "3", "margin": 2}, {"match_id": "68", "date": "2026-06-27", "home_team_name": "Algeria", "home_fifa_code": "ALG", "away_team_name": "Austria", "away_fifa_code": "AUT", "home_score": "3", "away_score": "3", "margin": 0}], "closeness_rank": 7}, {"group": "K", "avg_margin": 1.67, "draws": 2, "blowouts": 1, "total_goals": 16, "pts_spread": 7, "table": [{"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 4, "ga": 1, "pts": 7, "gd": 3, "team": "Colombia", "fifa_code": "COL", "fifa_ranking_pre_tournament": 13, "elo_rating": 1990, "group": "K", "actual_rank": 1, "expected_rank": 2, "upset_score": 1}, {"played": 3, "won": 1, "drawn": 2, "lost": 0, "gf": 6, "ga": 1, "pts": 5, "gd": 5, "team": "Portugal", "fifa_code": "POR", "fifa_ranking_pre_tournament": 5, "elo_rating": 2010, "group": "K", "actual_rank": 2, "expected_rank": 1, "upset_score": -1}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 4, "ga": 3, "pts": 4, "gd": 1, "team": "Congo DR", "fifa_code": "COD", "fifa_ranking_pre_tournament": 61, "elo_rating": 1670, "group": "K", "actual_rank": 3, "expected_rank": 3, "upset_score": 0}, {"played": 3, "won": 0, "drawn": 0, "lost": 3, "gf": 2, "ga": 11, "pts": 0, "gd": -9, "team": "Uzbekistan", "fifa_code": "UZB", "fifa_ranking_pre_tournament": 50, "elo_rating": 1650, "group": "K", "actual_rank": 4, "expected_rank": 4, "upset_score": 0}], "matches": [{"match_id": "21", "date": "2026-06-17", "home_team_name": "Portugal", "home_fifa_code": "POR", "away_team_name": "Congo DR", "away_fifa_code": "COD", "home_score": "1", "away_score": "1", "margin": 0}, {"match_id": "24", "date": "2026-06-17", "home_team_name": "Uzbekistan", "home_fifa_code": "UZB", "away_team_name": "Colombia", "away_fifa_code": "COL", "home_score": "1", "away_score": "3", "margin": 2}, {"match_id": "45", "date": "2026-06-23", "home_team_name": "Portugal", "home_fifa_code": "POR", "away_team_name": "Uzbekistan", "away_fifa_code": "UZB", "home_score": "5", "away_score": "0", "margin": 5}, {"match_id": "46", "date": "2026-06-23", "home_team_name": "Colombia", "home_fifa_code": "COL", "away_team_name": "Congo DR", "away_fifa_code": "COD", "home_score": "1", "away_score": "0", "margin": 1}, {"match_id": "69", "date": "2026-06-28", "home_team_name": "Colombia", "home_fifa_code": "COL", "away_team_name": "Portugal", "away_fifa_code": "POR", "home_score": "0", "away_score": "0", "margin": 0}, {"match_id": "70", "date": "2026-06-28", "home_team_name": "Congo DR", "home_fifa_code": "COD", "away_team_name": "Uzbekistan", "away_fifa_code": "UZB", "home_score": "3", "away_score": "1", "margin": 2}], "closeness_rank": 8}, {"group": "E", "avg_margin": 1.83, "draws": 1, "blowouts": 1, "total_goals": 17, "pts_spread": 5, "table": [{"played": 3, "won": 2, "drawn": 0, "lost": 1, "gf": 10, "ga": 4, "pts": 6, "gd": 6, "team": "Germany", "fifa_code": "GER", "fifa_ranking_pre_tournament": 10, "elo_rating": 1970, "group": "E", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 2, "drawn": 0, "lost": 1, "gf": 4, "ga": 2, "pts": 6, "gd": 2, "team": "C\u00f4te d'Ivoire", "fifa_code": "CIV", "fifa_ranking_pre_tournament": 38, "elo_rating": 1750, "group": "E", "actual_rank": 2, "expected_rank": 3, "upset_score": 1}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 2, "ga": 2, "pts": 4, "gd": 0, "team": "Ecuador", "fifa_code": "ECU", "fifa_ranking_pre_tournament": 23, "elo_rating": 1870, "group": "E", "actual_rank": 3, "expected_rank": 2, "upset_score": -1}, {"played": 3, "won": 0, "drawn": 1, "lost": 2, "gf": 1, "ga": 9, "pts": 1, "gd": -8, "team": "Cura\u00e7ao", "fifa_code": "CUW", "fifa_ranking_pre_tournament": 82, "elo_rating": 1520, "group": "E", "actual_rank": 4, "expected_rank": 4, "upset_score": 0}], "matches": [{"match_id": "9", "date": "2026-06-14", "home_team_name": "Germany", "home_fifa_code": "GER", "away_team_name": "Cura\u00e7ao", "away_fifa_code": "CUW", "home_score": "7", "away_score": "1", "margin": 6}, {"match_id": "11", "date": "2026-06-14", "home_team_name": "C\u00f4te d'Ivoire", "home_fifa_code": "CIV", "away_team_name": "Ecuador", "away_fifa_code": "ECU", "home_score": "1", "away_score": "0", "margin": 1}, {"match_id": "33", "date": "2026-06-20", "home_team_name": "Germany", "home_fifa_code": "GER", "away_team_name": "C\u00f4te d'Ivoire", "away_fifa_code": "CIV", "home_score": "2", "away_score": "1", "margin": 1}, {"match_id": "34", "date": "2026-06-20", "home_team_name": "Ecuador", "home_fifa_code": "ECU", "away_team_name": "Cura\u00e7ao", "away_fifa_code": "CUW", "home_score": "0", "away_score": "0", "margin": 0}, {"match_id": "57", "date": "2026-06-26", "home_team_name": "Ecuador", "home_fifa_code": "ECU", "away_team_name": "Germany", "away_fifa_code": "GER", "home_score": "2", "away_score": "1", "margin": 1}, {"match_id": "58", "date": "2026-06-26", "home_team_name": "Cura\u00e7ao", "home_fifa_code": "CUW", "away_team_name": "C\u00f4te d'Ivoire", "away_fifa_code": "CIV", "home_score": "0", "away_score": "2", "margin": 2}], "closeness_rank": 9}, {"group": "B", "avg_margin": 2.0, "draws": 2, "blowouts": 2, "total_goals": 22, "pts_spread": 6, "table": [{"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 7, "ga": 3, "pts": 7, "gd": 4, "team": "Switzerland", "fifa_code": "SUI", "fifa_ranking_pre_tournament": 19, "elo_rating": 1860, "group": "B", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 8, "ga": 3, "pts": 4, "gd": 5, "team": "Canada", "fifa_code": "CAN", "fifa_ranking_pre_tournament": 33, "elo_rating": 1795, "group": "B", "actual_rank": 2, "expected_rank": 2, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 5, "ga": 6, "pts": 4, "gd": -1, "team": "Bosnia and Herzegovina", "fifa_code": "BIH", "fifa_ranking_pre_tournament": 64, "elo_rating": 1645, "group": "B", "actual_rank": 3, "expected_rank": 3, "upset_score": 0}, {"played": 3, "won": 0, "drawn": 1, "lost": 2, "gf": 2, "ga": 10, "pts": 1, "gd": -8, "team": "Qatar", "fifa_code": "QAT", "fifa_ranking_pre_tournament": 56, "elo_rating": 1600, "group": "B", "actual_rank": 4, "expected_rank": 4, "upset_score": 0}], "matches": [{"match_id": "3", "date": "2026-06-12", "home_team_name": "Canada", "home_fifa_code": "CAN", "away_team_name": "Bosnia and Herzegovina", "away_fifa_code": "BIH", "home_score": "1", "away_score": "1", "margin": 0}, {"match_id": "5", "date": "2026-06-13", "home_team_name": "Qatar", "home_fifa_code": "QAT", "away_team_name": "Switzerland", "away_fifa_code": "SUI", "home_score": "1", "away_score": "1", "margin": 0}, {"match_id": "27", "date": "2026-06-18", "home_team_name": "Canada", "home_fifa_code": "CAN", "away_team_name": "Qatar", "away_fifa_code": "QAT", "home_score": "6", "away_score": "0", "margin": 6}, {"match_id": "28", "date": "2026-06-18", "home_team_name": "Switzerland", "home_fifa_code": "SUI", "away_team_name": "Bosnia and Herzegovina", "away_fifa_code": "BIH", "home_score": "4", "away_score": "1", "margin": 3}, {"match_id": "51", "date": "2026-06-24", "home_team_name": "Switzerland", "home_fifa_code": "SUI", "away_team_name": "Canada", "away_fifa_code": "CAN", "home_score": "2", "away_score": "1", "margin": 1}, {"match_id": "52", "date": "2026-06-24", "home_team_name": "Bosnia and Herzegovina", "home_fifa_code": "BIH", "away_team_name": "Qatar", "away_fifa_code": "QAT", "home_score": "3", "away_score": "1", "margin": 2}], "closeness_rank": 10}, {"group": "F", "avg_margin": 2.33, "draws": 2, "blowouts": 3, "total_goals": 26, "pts_spread": 7, "table": [{"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 10, "ga": 4, "pts": 7, "gd": 6, "team": "Netherlands", "fifa_code": "NED", "fifa_ranking_pre_tournament": 8, "elo_rating": 1980, "group": "F", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 2, "lost": 0, "gf": 7, "ga": 3, "pts": 5, "gd": 4, "team": "Japan", "fifa_code": "JPN", "fifa_ranking_pre_tournament": 18, "elo_rating": 1880, "group": "F", "actual_rank": 2, "expected_rank": 2, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 7, "ga": 7, "pts": 4, "gd": 0, "team": "Sweden", "fifa_code": "SWE", "fifa_ranking_pre_tournament": 25, "elo_rating": 1815, "group": "F", "actual_rank": 3, "expected_rank": 3, "upset_score": 0}, {"played": 3, "won": 0, "drawn": 0, "lost": 3, "gf": 2, "ga": 12, "pts": 0, "gd": -10, "team": "Tunisia", "fifa_code": "TUN", "fifa_ranking_pre_tournament": 45, "elo_rating": 1710, "group": "F", "actual_rank": 4, "expected_rank": 4, "upset_score": 0}], "matches": [{"match_id": "10", "date": "2026-06-14", "home_team_name": "Netherlands", "home_fifa_code": "NED", "away_team_name": "Japan", "away_fifa_code": "JPN", "home_score": "2", "away_score": "2", "margin": 0}, {"match_id": "12", "date": "2026-06-14", "home_team_name": "Sweden", "home_fifa_code": "SWE", "away_team_name": "Tunisia", "away_fifa_code": "TUN", "home_score": "5", "away_score": "1", "margin": 4}, {"match_id": "35", "date": "2026-06-20", "home_team_name": "Netherlands", "home_fifa_code": "NED", "away_team_name": "Sweden", "away_fifa_code": "SWE", "home_score": "5", "away_score": "1", "margin": 4}, {"match_id": "36", "date": "2026-06-20", "home_team_name": "Tunisia", "home_fifa_code": "TUN", "away_team_name": "Japan", "away_fifa_code": "JPN", "home_score": "0", "away_score": "4", "margin": 4}, {"match_id": "59", "date": "2026-06-26", "home_team_name": "Tunisia", "home_fifa_code": "TUN", "away_team_name": "Netherlands", "away_fifa_code": "NED", "home_score": "1", "away_score": "3", "margin": 2}, {"match_id": "60", "date": "2026-06-26", "home_team_name": "Japan", "home_fifa_code": "JPN", "away_team_name": "Sweden", "away_fifa_code": "SWE", "home_score": "1", "away_score": "1", "margin": 0}], "closeness_rank": 11}, {"group": "I", "avg_margin": 2.83, "draws": 0, "blowouts": 4, "total_goals": 27, "pts_spread": 9, "table": [{"played": 3, "won": 3, "drawn": 0, "lost": 0, "gf": 10, "ga": 2, "pts": 9, "gd": 8, "team": "France", "fifa_code": "FRA", "fifa_ranking_pre_tournament": 3, "elo_rating": 2100, "group": "I", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 2, "drawn": 0, "lost": 1, "gf": 8, "ga": 7, "pts": 6, "gd": 1, "team": "Norway", "fifa_code": "NOR", "fifa_ranking_pre_tournament": 44, "elo_rating": 1775, "group": "I", "actual_rank": 2, "expected_rank": 3, "upset_score": 1}, {"played": 3, "won": 1, "drawn": 0, "lost": 2, "gf": 8, "ga": 6, "pts": 3, "gd": 2, "team": "Senegal", "fifa_code": "SEN", "fifa_ranking_pre_tournament": 15, "elo_rating": 1840, "group": "I", "actual_rank": 3, "expected_rank": 2, "upset_score": -1}, {"played": 3, "won": 0, "drawn": 0, "lost": 3, "gf": 1, "ga": 12, "pts": 0, "gd": -11, "team": "Iraq", "fifa_code": "IRQ", "fifa_ranking_pre_tournament": 55, "elo_rating": 1630, "group": "I", "actual_rank": 4, "expected_rank": 4, "upset_score": 0}], "matches": [{"match_id": "17", "date": "2026-06-16", "home_team_name": "France", "home_fifa_code": "FRA", "away_team_name": "Senegal", "away_fifa_code": "SEN", "home_score": "3", "away_score": "1", "margin": 2}, {"match_id": "18", "date": "2026-06-16", "home_team_name": "Iraq", "home_fifa_code": "IRQ", "away_team_name": "Norway", "away_fifa_code": "NOR", "home_score": "1", "away_score": "4", "margin": 3}, {"match_id": "41", "date": "2026-06-22", "home_team_name": "France", "home_fifa_code": "FRA", "away_team_name": "Iraq", "away_fifa_code": "IRQ", "home_score": "3", "away_score": "0", "margin": 3}, {"match_id": "42", "date": "2026-06-22", "home_team_name": "Norway", "home_fifa_code": "NOR", "away_team_name": "Senegal", "away_fifa_code": "SEN", "home_score": "3", "away_score": "2", "margin": 1}, {"match_id": "65", "date": "2026-06-26", "home_team_name": "Norway", "home_fifa_code": "NOR", "away_team_name": "France", "away_fifa_code": "FRA", "home_score": "1", "away_score": "4", "margin": 3}, {"match_id": "66", "date": "2026-06-26", "home_team_name": "Senegal", "home_fifa_code": "SEN", "away_team_name": "Iraq", "away_fifa_code": "IRQ", "home_score": "5", "away_score": "0", "margin": 5}], "closeness_rank": 12}], "upsets_ranked": [{"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 2, "ga": 3, "pts": 4, "gd": -1, "team": "South Africa", "fifa_code": "RSA", "fifa_ranking_pre_tournament": 60, "elo_rating": 1620, "group": "A", "actual_rank": 2, "expected_rank": 4, "upset_score": 2}, {"played": 3, "won": 0, "drawn": 3, "lost": 0, "gf": 2, "ga": 2, "pts": 3, "gd": 0, "team": "Cabo Verde", "fifa_code": "CPV", "fifa_ranking_pre_tournament": 67, "elo_rating": 1640, "group": "H", "actual_rank": 2, "expected_rank": 4, "upset_score": 2}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 2, "ga": 4, "pts": 4, "gd": -2, "team": "Paraguay", "fifa_code": "PAR", "fifa_ranking_pre_tournament": 54, "elo_rating": 1725, "group": "D", "actual_rank": 3, "expected_rank": 4, "upset_score": 1}, {"played": 3, "won": 2, "drawn": 0, "lost": 1, "gf": 4, "ga": 2, "pts": 6, "gd": 2, "team": "C\u00f4te d'Ivoire", "fifa_code": "CIV", "fifa_ranking_pre_tournament": 38, "elo_rating": 1750, "group": "E", "actual_rank": 2, "expected_rank": 3, "upset_score": 1}, {"played": 3, "won": 1, "drawn": 2, "lost": 0, "gf": 5, "ga": 3, "pts": 5, "gd": 2, "team": "Egypt", "fifa_code": "EGY", "fifa_ranking_pre_tournament": 36, "elo_rating": 1730, "group": "G", "actual_rank": 2, "expected_rank": 3, "upset_score": 1}, {"played": 3, "won": 2, "drawn": 0, "lost": 1, "gf": 8, "ga": 7, "pts": 6, "gd": 1, "team": "Norway", "fifa_code": "NOR", "fifa_ranking_pre_tournament": 44, "elo_rating": 1775, "group": "I", "actual_rank": 2, "expected_rank": 3, "upset_score": 1}, {"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 4, "ga": 1, "pts": 7, "gd": 3, "team": "Colombia", "fifa_code": "COL", "fifa_ranking_pre_tournament": 13, "elo_rating": 1990, "group": "K", "actual_rank": 1, "expected_rank": 2, "upset_score": 1}, {"played": 3, "won": 3, "drawn": 0, "lost": 0, "gf": 6, "ga": 0, "pts": 9, "gd": 6, "team": "Mexico", "fifa_code": "MEX", "fifa_ranking_pre_tournament": 14, "elo_rating": 1810, "group": "A", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 7, "ga": 3, "pts": 7, "gd": 4, "team": "Switzerland", "fifa_code": "SUI", "fifa_ranking_pre_tournament": 19, "elo_rating": 1860, "group": "B", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 8, "ga": 3, "pts": 4, "gd": 5, "team": "Canada", "fifa_code": "CAN", "fifa_ranking_pre_tournament": 33, "elo_rating": 1795, "group": "B", "actual_rank": 2, "expected_rank": 2, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 5, "ga": 6, "pts": 4, "gd": -1, "team": "Bosnia and Herzegovina", "fifa_code": "BIH", "fifa_ranking_pre_tournament": 64, "elo_rating": 1645, "group": "B", "actual_rank": 3, "expected_rank": 3, "upset_score": 0}, {"played": 3, "won": 0, "drawn": 1, "lost": 2, "gf": 2, "ga": 10, "pts": 1, "gd": -8, "team": "Qatar", "fifa_code": "QAT", "fifa_ranking_pre_tournament": 56, "elo_rating": 1600, "group": "B", "actual_rank": 4, "expected_rank": 4, "upset_score": 0}, {"played": 3, "won": 2, "drawn": 0, "lost": 1, "gf": 8, "ga": 4, "pts": 6, "gd": 4, "team": "USA", "fifa_code": "USA", "fifa_ranking_pre_tournament": 17, "elo_rating": 1850, "group": "D", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 2, "ga": 2, "pts": 4, "gd": 0, "team": "Australia", "fifa_code": "AUS", "fifa_ranking_pre_tournament": 27, "elo_rating": 1790, "group": "D", "actual_rank": 2, "expected_rank": 2, "upset_score": 0}, {"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 7, "ga": 1, "pts": 7, "gd": 6, "team": "Brazil", "fifa_code": "BRA", "fifa_ranking_pre_tournament": 6, "elo_rating": 2030, "group": "C", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 6, "ga": 3, "pts": 7, "gd": 3, "team": "Morocco", "fifa_code": "MAR", "fifa_ranking_pre_tournament": 7, "elo_rating": 1920, "group": "C", "actual_rank": 2, "expected_rank": 2, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 0, "lost": 2, "gf": 1, "ga": 4, "pts": 3, "gd": -3, "team": "Scotland", "fifa_code": "SCO", "fifa_ranking_pre_tournament": 39, "elo_rating": 1720, "group": "C", "actual_rank": 3, "expected_rank": 3, "upset_score": 0}, {"played": 3, "won": 0, "drawn": 0, "lost": 3, "gf": 2, "ga": 8, "pts": 0, "gd": -6, "team": "Haiti", "fifa_code": "HAI", "fifa_ranking_pre_tournament": 83, "elo_rating": 1530, "group": "C", "actual_rank": 4, "expected_rank": 4, "upset_score": 0}, {"played": 3, "won": 2, "drawn": 0, "lost": 1, "gf": 10, "ga": 4, "pts": 6, "gd": 6, "team": "Germany", "fifa_code": "GER", "fifa_ranking_pre_tournament": 10, "elo_rating": 1970, "group": "E", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 0, "drawn": 1, "lost": 2, "gf": 1, "ga": 9, "pts": 1, "gd": -8, "team": "Cura\u00e7ao", "fifa_code": "CUW", "fifa_ranking_pre_tournament": 82, "elo_rating": 1520, "group": "E", "actual_rank": 4, "expected_rank": 4, "upset_score": 0}, {"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 10, "ga": 4, "pts": 7, "gd": 6, "team": "Netherlands", "fifa_code": "NED", "fifa_ranking_pre_tournament": 8, "elo_rating": 1980, "group": "F", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 2, "lost": 0, "gf": 7, "ga": 3, "pts": 5, "gd": 4, "team": "Japan", "fifa_code": "JPN", "fifa_ranking_pre_tournament": 18, "elo_rating": 1880, "group": "F", "actual_rank": 2, "expected_rank": 2, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 7, "ga": 7, "pts": 4, "gd": 0, "team": "Sweden", "fifa_code": "SWE", "fifa_ranking_pre_tournament": 25, "elo_rating": 1815, "group": "F", "actual_rank": 3, "expected_rank": 3, "upset_score": 0}, {"played": 3, "won": 0, "drawn": 0, "lost": 3, "gf": 2, "ga": 12, "pts": 0, "gd": -10, "team": "Tunisia", "fifa_code": "TUN", "fifa_ranking_pre_tournament": 45, "elo_rating": 1710, "group": "F", "actual_rank": 4, "expected_rank": 4, "upset_score": 0}, {"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 5, "ga": 0, "pts": 7, "gd": 5, "team": "Spain", "fifa_code": "ESP", "fifa_ranking_pre_tournament": 2, "elo_rating": 2120, "group": "H", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 2, "lost": 0, "gf": 6, "ga": 2, "pts": 5, "gd": 4, "team": "Belgium", "fifa_code": "BEL", "fifa_ranking_pre_tournament": 9, "elo_rating": 1950, "group": "G", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 0, "drawn": 1, "lost": 2, "gf": 4, "ga": 10, "pts": 1, "gd": -6, "team": "New Zealand", "fifa_code": "NZL", "fifa_ranking_pre_tournament": 85, "elo_rating": 1510, "group": "G", "actual_rank": 4, "expected_rank": 4, "upset_score": 0}, {"played": 3, "won": 3, "drawn": 0, "lost": 0, "gf": 10, "ga": 2, "pts": 9, "gd": 8, "team": "France", "fifa_code": "FRA", "fifa_ranking_pre_tournament": 3, "elo_rating": 2100, "group": "I", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 0, "drawn": 0, "lost": 3, "gf": 1, "ga": 12, "pts": 0, "gd": -11, "team": "Iraq", "fifa_code": "IRQ", "fifa_ranking_pre_tournament": 55, "elo_rating": 1630, "group": "I", "actual_rank": 4, "expected_rank": 4, "upset_score": 0}, {"played": 3, "won": 3, "drawn": 0, "lost": 0, "gf": 8, "ga": 1, "pts": 9, "gd": 7, "team": "Argentina", "fifa_code": "ARG", "fifa_ranking_pre_tournament": 1, "elo_rating": 2150, "group": "J", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 6, "ga": 6, "pts": 4, "gd": 0, "team": "Austria", "fifa_code": "AUT", "fifa_ranking_pre_tournament": 24, "elo_rating": 1830, "group": "J", "actual_rank": 2, "expected_rank": 2, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 5, "ga": 7, "pts": 4, "gd": -2, "team": "Algeria", "fifa_code": "ALG", "fifa_ranking_pre_tournament": 28, "elo_rating": 1760, "group": "J", "actual_rank": 3, "expected_rank": 3, "upset_score": 0}, {"played": 3, "won": 0, "drawn": 0, "lost": 3, "gf": 3, "ga": 8, "pts": 0, "gd": -5, "team": "Jordan", "fifa_code": "JOR", "fifa_ranking_pre_tournament": 63, "elo_rating": 1610, "group": "J", "actual_rank": 4, "expected_rank": 4, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 4, "ga": 3, "pts": 4, "gd": 1, "team": "Congo DR", "fifa_code": "COD", "fifa_ranking_pre_tournament": 61, "elo_rating": 1670, "group": "K", "actual_rank": 3, "expected_rank": 3, "upset_score": 0}, {"played": 3, "won": 0, "drawn": 0, "lost": 3, "gf": 2, "ga": 11, "pts": 0, "gd": -9, "team": "Uzbekistan", "fifa_code": "UZB", "fifa_ranking_pre_tournament": 50, "elo_rating": 1650, "group": "K", "actual_rank": 4, "expected_rank": 4, "upset_score": 0}, {"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 6, "ga": 2, "pts": 7, "gd": 4, "team": "England", "fifa_code": "ENG", "fifa_ranking_pre_tournament": 4, "elo_rating": 2050, "group": "L", "actual_rank": 1, "expected_rank": 1, "upset_score": 0}, {"played": 3, "won": 2, "drawn": 0, "lost": 1, "gf": 5, "ga": 5, "pts": 6, "gd": 0, "team": "Croatia", "fifa_code": "CRO", "fifa_ranking_pre_tournament": 11, "elo_rating": 1940, "group": "L", "actual_rank": 2, "expected_rank": 2, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 2, "ga": 2, "pts": 4, "gd": 0, "team": "Ghana", "fifa_code": "GHA", "fifa_ranking_pre_tournament": 49, "elo_rating": 1690, "group": "L", "actual_rank": 3, "expected_rank": 3, "upset_score": 0}, {"played": 3, "won": 0, "drawn": 0, "lost": 3, "gf": 0, "ga": 4, "pts": 0, "gd": -4, "team": "Panama", "fifa_code": "PAN", "fifa_ranking_pre_tournament": 34, "elo_rating": 1680, "group": "L", "actual_rank": 4, "expected_rank": 4, "upset_score": 0}, {"played": 3, "won": 1, "drawn": 0, "lost": 2, "gf": 2, "ga": 3, "pts": 3, "gd": -1, "team": "South Korea", "fifa_code": "KOR", "fifa_ranking_pre_tournament": 22, "elo_rating": 1800, "group": "A", "actual_rank": 3, "expected_rank": 2, "upset_score": -1}, {"played": 3, "won": 0, "drawn": 1, "lost": 2, "gf": 2, "ga": 6, "pts": 1, "gd": -4, "team": "Czechia", "fifa_code": "CZE", "fifa_ranking_pre_tournament": 40, "elo_rating": 1740, "group": "A", "actual_rank": 4, "expected_rank": 3, "upset_score": -1}, {"played": 3, "won": 1, "drawn": 0, "lost": 2, "gf": 3, "ga": 5, "pts": 3, "gd": -2, "team": "T\u00fcrkiye", "fifa_code": "TUR", "fifa_ranking_pre_tournament": 26, "elo_rating": 1780, "group": "D", "actual_rank": 4, "expected_rank": 3, "upset_score": -1}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 2, "ga": 2, "pts": 4, "gd": 0, "team": "Ecuador", "fifa_code": "ECU", "fifa_ranking_pre_tournament": 23, "elo_rating": 1870, "group": "E", "actual_rank": 3, "expected_rank": 2, "upset_score": -1}, {"played": 3, "won": 0, "drawn": 2, "lost": 1, "gf": 3, "ga": 4, "pts": 2, "gd": -1, "team": "Uruguay", "fifa_code": "URU", "fifa_ranking_pre_tournament": 16, "elo_rating": 1960, "group": "H", "actual_rank": 3, "expected_rank": 2, "upset_score": -1}, {"played": 3, "won": 0, "drawn": 2, "lost": 1, "gf": 1, "ga": 5, "pts": 2, "gd": -4, "team": "Saudi Arabia", "fifa_code": "KSA", "fifa_ranking_pre_tournament": 58, "elo_rating": 1660, "group": "H", "actual_rank": 4, "expected_rank": 3, "upset_score": -1}, {"played": 3, "won": 0, "drawn": 3, "lost": 0, "gf": 3, "ga": 3, "pts": 3, "gd": 0, "team": "IR Iran", "fifa_code": "IRN", "fifa_ranking_pre_tournament": 20, "elo_rating": 1820, "group": "G", "actual_rank": 3, "expected_rank": 2, "upset_score": -1}, {"played": 3, "won": 1, "drawn": 0, "lost": 2, "gf": 8, "ga": 6, "pts": 3, "gd": 2, "team": "Senegal", "fifa_code": "SEN", "fifa_ranking_pre_tournament": 15, "elo_rating": 1840, "group": "I", "actual_rank": 3, "expected_rank": 2, "upset_score": -1}, {"played": 3, "won": 1, "drawn": 2, "lost": 0, "gf": 6, "ga": 1, "pts": 5, "gd": 5, "team": "Portugal", "fifa_code": "POR", "fifa_ranking_pre_tournament": 5, "elo_rating": 2010, "group": "K", "actual_rank": 2, "expected_rank": 1, "upset_score": -1}]};</script>
+<script>(function () {
+  const DATA = window.FIFA_DATA;
+  const groups = DATA.groups;
+
+  function hexToRgb(hex) {
+    const n = parseInt(hex.slice(1), 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+  function interpolate(c1, c2, t) {
+    const a = hexToRgb(c1), b = hexToRgb(c2);
+    const r = Math.round(a[0] + (b[0] - a[0]) * t);
+    const g = Math.round(a[1] + (b[1] - a[1]) * t);
+    const bl = Math.round(a[2] + (b[2] - a[2]) * t);
+    return `rgb(${r},${g},${bl})`;
+  }
+  function marginColor(margin, max) {
+    const t = Math.min(margin / max, 1);
+    if (t < 0.5) return interpolate("#1e6f4c", "#e8b923", t / 0.5);
+    return interpolate("#e8b923", "#c8433a", (t - 0.5) / 0.5);
+  }
+
+  // ================= A: slope chart =================
+  const slopeGrid = document.getElementById("slope-grid");
+  const rankY = (r) => 15 + (r - 1) * 40; // ranks 1..4 -> y 15..135
+
+  groups
+    .slice()
+    .sort((a, b) => a.group.localeCompare(b.group))
+    .forEach((g) => {
+      const card = document.createElement("div");
+      card.className = "slope-card";
+      const teams = g.table.slice().sort((a, b) => a.actual_rank - b.actual_rank);
+
+      let svgLines = "";
+      let svgDots = "";
+      let svgLabels = "";
+      teams.forEach((t) => {
+        const y1 = rankY(t.expected_rank);
+        const y2 = rankY(t.actual_rank);
+        const color = t.upset_score > 0 ? "#c9a227" : t.upset_score < 0 ? "#c8433a" : "#9aab9f";
+        svgLines += `<line x1="40" y1="${y1}" x2="160" y2="${y2}" stroke="${color}" stroke-width="2.5" stroke-linecap="round" />`;
+        svgDots += `<circle cx="40" cy="${y1}" r="4" fill="#9aab9f" />`;
+        svgDots += `<circle cx="160" cy="${y2}" r="4.5" fill="${color}" />`;
+        svgLabels += `<text x="168" y="${y2 + 3}" font-size="9.5" fill="#14261c" font-family="-apple-system,sans-serif">${t.fifa_code}</text>`;
+      });
+
+      card.innerHTML = `
+        <div class="sc-title">Group ${g.group} <span class="sc-sub">closeness rank ${g.closeness_rank}/12</span></div>
+        <div class="slope-axis-labels"><span>Expected</span><span>Actual</span></div>
+        <svg viewBox="0 0 220 150" width="100%" height="150">${svgLines}${svgDots}${svgLabels}</svg>
+      `;
+      slopeGrid.appendChild(card);
+    });
+
+  // ================= B: radial wheel =================
+  const wheelWrap = document.getElementById("wheel-wrap");
+  const cx = 260, cy = 260;
+  const innerR = 70, maxOuterR = 230;
+  const maxMargin = Math.max(...groups.map((g) => g.avg_margin));
+  const sortedG = groups.slice().sort((a, b) => a.group.localeCompare(b.group));
+  const n = sortedG.length;
+
+  let spokes = "";
+  let labels = "";
+  sortedG.forEach((g, i) => {
+    const angle = (-90 + (360 / n) * i) * (Math.PI / 180);
+    const outerR = innerR + (g.avg_margin / maxMargin) * (maxOuterR - innerR);
+    const x1 = cx + innerR * Math.cos(angle);
+    const y1 = cy + innerR * Math.sin(angle);
+    const x2 = cx + outerR * Math.cos(angle);
+    const y2 = cy + outerR * Math.sin(angle);
+    const color = marginColor(g.avg_margin, maxMargin);
+    spokes += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="22" stroke-linecap="round" />`;
+
+    const labelR = maxOuterR + 26;
+    const lx = cx + labelR * Math.cos(angle);
+    const ly = cy + labelR * Math.sin(angle);
+    labels += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="#f7f5ee">${g.group}</text>`;
+    labels += `<text x="${lx}" y="${ly + 14}" text-anchor="middle" dominant-baseline="middle" font-family="-apple-system,sans-serif" font-size="10" fill="rgba(247,245,238,0.7)">${g.avg_margin.toFixed(2)}</text>`;
+  });
+
+  wheelWrap.innerHTML = `
+    <svg viewBox="0 0 520 520" width="480" height="480">
+      <circle cx="${cx}" cy="${cy}" r="${innerR - 4}" fill="none" stroke="rgba(247,245,238,0.25)" stroke-width="1.5" />
+      <circle cx="${cx}" cy="${cy}" r="${maxOuterR + 4}" fill="none" stroke="rgba(247,245,238,0.12)" stroke-width="1" stroke-dasharray="2 5" />
+      ${spokes}
+      ${labels}
+      <text x="${cx}" y="${cy - 6}" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#f7f5ee" font-weight="700">CLOSENESS</text>
+      <text x="${cx}" y="${cy + 12}" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="9.5" fill="rgba(247,245,238,0.7)">avg goal margin</text>
+    </svg>
+  `;
+
+  // ================= C: heat-strip =================
+  const heatWrap = document.getElementById("heat-wrap");
+  const allMargins = groups.flatMap((g) => g.matches.map((m) => m.margin));
+  const maxCellMargin = Math.max(...allMargins);
+
+  groups
+    .slice()
+    .sort((a, b) => a.closeness_rank - b.closeness_rank)
+    .forEach((g) => {
+      const row = document.createElement("div");
+      row.className = "heat-row";
+      const cells = g.matches
+        .map((m) => {
+          const color = marginColor(m.margin, maxCellMargin);
+          return `<div class="heat-cell" style="background:${color}">${m.home_fifa_code} ${m.home_score}&ndash;${m.away_score} ${m.away_fifa_code}<span class="hc-margin">${m.margin === 0 ? "draw" : "margin " + m.margin}</span></div>`;
+        })
+        .join("");
+      row.innerHTML = `<div class="hg">Grp ${g.group}<span class="hg-rank">#${g.closeness_rank} closest</span></div>${cells}`;
+      heatWrap.appendChild(row);
+    });
+})();
+</script>
+</body>
+</html>

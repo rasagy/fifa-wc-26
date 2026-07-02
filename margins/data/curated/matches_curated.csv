@@ -1,0 +1,73 @@
+group,date,matchday,home_team,home_score,away_team,away_score,margin,total_goals,is_draw,winner,loser
+A,2026-06-11,1,Mexico,2,South Africa,0,2,2,False,Mexico,South Africa
+A,2026-06-11,1,South Korea,2,Czech Republic,1,1,3,False,South Korea,Czech Republic
+A,2026-06-18,2,Czech Republic,1,South Africa,1,0,2,True,Draw,Draw
+A,2026-06-18,2,Mexico,1,South Korea,0,1,1,False,Mexico,South Korea
+A,2026-06-24,3,Czech Republic,0,Mexico,3,3,3,False,Mexico,Czech Republic
+A,2026-06-24,3,South Africa,1,South Korea,0,1,1,False,South Africa,South Korea
+B,2026-06-12,1,Canada,1,Bosnia and Herzegovina,1,0,2,True,Draw,Draw
+B,2026-06-13,1,Qatar,1,Switzerland,1,0,2,True,Draw,Draw
+B,2026-06-18,2,Switzerland,4,Bosnia and Herzegovina,1,3,5,False,Switzerland,Bosnia and Herzegovina
+B,2026-06-18,2,Canada,6,Qatar,0,6,6,False,Canada,Qatar
+B,2026-06-24,3,Switzerland,2,Canada,1,1,3,False,Switzerland,Canada
+B,2026-06-24,3,Bosnia and Herzegovina,3,Qatar,1,2,4,False,Bosnia and Herzegovina,Qatar
+C,2026-06-13,1,Brazil,1,Morocco,1,0,2,True,Draw,Draw
+C,2026-06-13,1,Haiti,0,Scotland,1,1,1,False,Scotland,Haiti
+C,2026-06-19,2,Scotland,0,Morocco,1,1,1,False,Morocco,Scotland
+C,2026-06-19,2,Brazil,3,Haiti,0,3,3,False,Brazil,Haiti
+C,2026-06-24,3,Scotland,0,Brazil,3,3,3,False,Brazil,Scotland
+C,2026-06-24,3,Morocco,4,Haiti,2,2,6,False,Morocco,Haiti
+D,2026-06-12,1,United States,4,Paraguay,1,3,5,False,United States,Paraguay
+D,2026-06-13,1,Australia,2,Turkey,0,2,2,False,Australia,Turkey
+D,2026-06-19,2,United States,2,Australia,0,2,2,False,United States,Australia
+D,2026-06-19,2,Turkey,0,Paraguay,1,1,1,False,Paraguay,Turkey
+D,2026-06-25,3,Turkey,3,United States,2,1,5,False,Turkey,United States
+D,2026-06-25,3,Paraguay,0,Australia,0,0,0,True,Draw,Draw
+E,2026-06-14,1,Germany,7,Curacao,1,6,8,False,Germany,Curacao
+E,2026-06-14,1,Ivory Coast,1,Ecuador,0,1,1,False,Ivory Coast,Ecuador
+E,2026-06-20,2,Germany,2,Ivory Coast,1,1,3,False,Germany,Ivory Coast
+E,2026-06-20,2,Ecuador,0,Curacao,0,0,0,True,Draw,Draw
+E,2026-06-25,3,Curacao,0,Ivory Coast,2,2,2,False,Ivory Coast,Curacao
+E,2026-06-25,3,Ecuador,2,Germany,1,1,3,False,Ecuador,Germany
+F,2026-06-14,1,Netherlands,2,Japan,2,0,4,True,Draw,Draw
+F,2026-06-14,1,Sweden,5,Tunisia,1,4,6,False,Sweden,Tunisia
+F,2026-06-20,2,Netherlands,5,Sweden,1,4,6,False,Netherlands,Sweden
+F,2026-06-20,2,Tunisia,0,Japan,4,4,4,False,Japan,Tunisia
+F,2026-06-25,3,Japan,1,Sweden,1,0,2,True,Draw,Draw
+F,2026-06-25,3,Tunisia,1,Netherlands,3,2,4,False,Netherlands,Tunisia
+G,2026-06-15,1,Belgium,1,Egypt,1,0,2,True,Draw,Draw
+G,2026-06-15,1,Iran,2,New Zealand,2,0,4,True,Draw,Draw
+G,2026-06-21,2,Belgium,0,Iran,0,0,0,True,Draw,Draw
+G,2026-06-21,2,New Zealand,1,Egypt,3,2,4,False,Egypt,New Zealand
+G,2026-06-26,3,Egypt,1,Iran,1,0,2,True,Draw,Draw
+G,2026-06-26,3,New Zealand,1,Belgium,5,4,6,False,Belgium,New Zealand
+H,2026-06-15,1,Spain,0,Cape Verde,0,0,0,True,Draw,Draw
+H,2026-06-15,1,Saudi Arabia,1,Uruguay,1,0,2,True,Draw,Draw
+H,2026-06-21,2,Spain,4,Saudi Arabia,0,4,4,False,Spain,Saudi Arabia
+H,2026-06-21,2,Uruguay,2,Cape Verde,2,0,4,True,Draw,Draw
+H,2026-06-26,3,Cape Verde,0,Saudi Arabia,0,0,0,True,Draw,Draw
+H,2026-06-26,3,Uruguay,0,Spain,1,1,1,False,Spain,Uruguay
+I,2026-06-16,1,France,3,Senegal,1,2,4,False,France,Senegal
+I,2026-06-16,1,Iraq,1,Norway,4,3,5,False,Norway,Iraq
+I,2026-06-22,2,France,3,Iraq,0,3,3,False,France,Iraq
+I,2026-06-22,2,Norway,3,Senegal,2,1,5,False,Norway,Senegal
+I,2026-06-26,3,Norway,1,France,4,3,5,False,France,Norway
+I,2026-06-26,3,Senegal,5,Iraq,0,5,5,False,Senegal,Iraq
+J,2026-06-16,1,Argentina,3,Algeria,0,3,3,False,Argentina,Algeria
+J,2026-06-16,1,Austria,3,Jordan,1,2,4,False,Austria,Jordan
+J,2026-06-22,2,Argentina,2,Austria,0,2,2,False,Argentina,Austria
+J,2026-06-22,2,Jordan,1,Algeria,2,1,3,False,Algeria,Jordan
+J,2026-06-27,3,Algeria,3,Austria,3,0,6,True,Draw,Draw
+J,2026-06-27,3,Jordan,1,Argentina,3,2,4,False,Argentina,Jordan
+K,2026-06-17,1,Portugal,1,DR Congo,1,0,2,True,Draw,Draw
+K,2026-06-17,1,Uzbekistan,1,Colombia,3,2,4,False,Colombia,Uzbekistan
+K,2026-06-23,2,Portugal,5,Uzbekistan,0,5,5,False,Portugal,Uzbekistan
+K,2026-06-23,2,Colombia,1,DR Congo,0,1,1,False,Colombia,DR Congo
+K,2026-06-27,3,Colombia,0,Portugal,0,0,0,True,Draw,Draw
+K,2026-06-27,3,DR Congo,3,Uzbekistan,1,2,4,False,DR Congo,Uzbekistan
+L,2026-06-17,1,England,4,Croatia,2,2,6,False,England,Croatia
+L,2026-06-17,1,Ghana,1,Panama,0,1,1,False,Ghana,Panama
+L,2026-06-23,2,England,0,Ghana,0,0,0,True,Draw,Draw
+L,2026-06-23,2,Panama,0,Croatia,1,1,1,False,Croatia,Panama
+L,2026-06-27,3,Panama,0,England,2,2,2,False,England,Panama
+L,2026-06-27,3,Croatia,2,Ghana,1,1,3,False,Croatia,Ghana

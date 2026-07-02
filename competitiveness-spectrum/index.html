@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Group Stage Spectrum — FIFA World Cup 2026</title>
+<meta name="description" content="An interactive scrollytelling breakdown of every FIFA World Cup 2026 group, ranked from the tightest three-way dogfights to the most one-sided groups, using real match margins.">
+<meta property="og:title" content="The Group Stage Spectrum — FIFA World Cup 2026">
+<meta property="og:description" content="12 groups, 72 matches, ranked from closest competition to clearest separation.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b0e14">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230b0e14'/%3E%3Cpath d='M50 15 L80 35 L68 75 L32 75 L20 35 Z' fill='none' stroke='%232dd4bf' stroke-width='6'/%3E%3Ccircle cx='50' cy='50' r='10' fill='%232dd4bf'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0e14;
+  --bg-elev: #12151f;
+  --text: #f2f4f8;
+  --text-muted: #94a0b3;
+  --text-faint: #5b6478;
+  --border: rgba(255,255,255,0.08);
+  --tight: #2dd4bf;
+  --mid: #f5b83d;
+  --loose: #ef5757;
+  --good: #34d399;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-num: 'Archivo Black', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+html.light {
+  --bg: #f6f4ef;
+  --bg-elev: #ffffff;
+  --text: #14161c;
+  --text-muted: #4a5163;
+  --text-faint: #8a92a3;
+  --border: rgba(20,22,28,0.1);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  scroll-behavior: smooth;
+}
+
+#scroller {
+  scroll-snap-type: y proximity;
+}
+
+.panel {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 6vw;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+}
+
+/* ---------- HERO ---------- */
+.hero { justify-content: flex-start; align-items: center; text-align: center; flex-direction: column; }
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(45,212,191,0.18), transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(239,87,87,0.14), transparent 50%);
+  animation: drift 18s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  from { transform: scale(1) translate(0,0); }
+  to { transform: scale(1.08) translate(-2%, 2%); }
+}
+.hero-content { max-width: 780px; position: relative; z-index: 1; }
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 9vw, 6.5rem);
+  line-height: 0.95;
+  margin: 0 0 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.accent-text {
+  background: linear-gradient(90deg, var(--tight), var(--mid), var(--loose));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero-sub {
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 620px;
+  margin: 0 auto 2.5rem;
+}
+.hero-stats {
+  display: flex; gap: 3rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap;
+}
+.hero-stats div { display: flex; flex-direction: column; align-items: center; }
+.hero-stats strong { font-family: var(--font-num); font-size: 2.2rem; }
+.hero-stats span { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.25rem; }
+.scroll-cue { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: var(--text-faint); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.scroll-cue-line { width: 1px; height: 40px; background: linear-gradient(var(--text-faint), transparent); animation: pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+/* ---------- OVERVIEW ---------- */
+.overview { flex-direction: column; align-items: flex-start; }
+.overview-content { max-width: 980px; width: 100%; margin: 0 auto; }
+h2 { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 3rem); margin: 0 0 1rem; font-weight: 700; letter-spacing: -0.01em; }
+.overview-sub { color: var(--text-muted); max-width: 640px; line-height: 1.6; margin-bottom: 2.5rem; }
+.overview-chart { display: flex; flex-direction: column; gap: 0.6rem; }
+.ov-row {
+  display: grid;
+  grid-template-columns: 2.2rem 6.5rem 1fr 4.5rem;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+.ov-row:hover { background: var(--bg-elev); }
+.ov-rank { font-family: var(--font-num); font-size: 0.95rem; color: var(--text-faint); }
+.ov-group { font-family: var(--font-display); font-weight: 700; font-size: 1rem; }
+.ov-bar-track { height: 10px; background: var(--bg-elev); border-radius: 6px; overflow: hidden; border: 1px solid var(--border); }
+.ov-bar-fill { height: 100%; width: 0; border-radius: 6px; transition: width 1.1s cubic-bezier(.16,.84,.44,1); }
+.ov-val { font-family: var(--font-num); font-size: 0.85rem; text-align: right; color: var(--text-muted); }
+.overview-note { margin-top: 1.5rem; color: var(--text-faint); font-size: 0.85rem; }
+
+/* ---------- GROUP SECTIONS ---------- */
+.group-panel {
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+}
+.group-panel::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 30% 0%, var(--gaccent-10), transparent 60%);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.group-inner { max-width: 1080px; width: 100%; margin: 0 auto; position: relative; z-index: 1; }
+.group-head { display: flex; align-items: baseline; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+.group-rank-badge {
+  font-family: var(--font-num);
+  font-size: 1rem;
+  color: var(--bg);
+  background: var(--gaccent);
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+}
+.group-letter { font-family: var(--font-num); font-size: clamp(3.5rem, 10vw, 7rem); line-height: 0.9; color: var(--gaccent); }
+.group-label { font-family: var(--font-display); font-size: clamp(1.3rem, 2.4vw, 1.9rem); font-weight: 600; margin: 0 0 2rem; color: var(--text); }
+.group-grid { display: grid; grid-template-columns: 1.1fr 1.4fr; gap: 3rem; align-items: start; }
+@media (max-width: 860px) { .group-grid { grid-template-columns: 1fr; } }
+
+.gstats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.gstat { background: var(--bg-elev); border: 1px solid var(--border); border-radius: 10px; padding: 0.9rem 1rem; }
+.gstat strong { display: block; font-family: var(--font-num); font-size: 1.6rem; }
+.gstat span { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+table.standings { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+table.standings th, table.standings td { padding: 0.5rem 0.4rem; text-align: right; border-bottom: 1px solid var(--border); }
+table.standings th:first-child, table.standings td:first-child { text-align: left; }
+table.standings th { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-faint); font-weight: 600; }
+table.standings td.team-cell { font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+table.standings tr.top2 td.team-cell::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--good); flex-shrink: 0; }
+table.standings tr:not(.top2) td.team-cell::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--text-faint); flex-shrink: 0; }
+.standings-note { font-size: 0.72rem; color: var(--text-faint); margin-top: 0.6rem; }
+
+.matches-col h3 { font-family: var(--font-display); font-size: 1rem; margin: 0 0 1rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+.match-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.7rem;
+  background: var(--bg-elev);
+  transition: transform 0.2s;
+}
+.match-card:hover { transform: translateX(4px); }
+.match-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 0.6rem; font-family: var(--font-display); font-weight: 600; font-size: 0.95rem; }
+.match-row .home { text-align: right; }
+.match-row .away { text-align: left; }
+.match-score { font-family: var(--font-num); font-size: 1.1rem; padding: 0.1rem 0.6rem; border-radius: 6px; background: var(--bg); border: 1px solid var(--border); white-space: nowrap; }
+.match-meta { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-faint); margin-top: 0.5rem; }
+.margin-track { height: 5px; background: var(--bg); border-radius: 4px; margin-top: 0.6rem; overflow: hidden; }
+.margin-fill { height: 100%; width: 0; border-radius: 4px; transition: width 0.9s cubic-bezier(.16,.84,.44,1); }
+
+/* ---------- CLOSING ---------- */
+.closing { flex-direction: column; align-items: flex-start; }
+.closing-content { max-width: 900px; margin: 0 auto; }
+.closing-sub { color: var(--text-muted); line-height: 1.7; max-width: 680px; margin-bottom: 2.5rem; }
+.closing-strip { display: flex; gap: 0.4rem; margin-bottom: 3rem; flex-wrap: wrap; }
+.strip-chip {
+  flex: 1; min-width: 60px;
+  padding: 0.6rem 0.3rem;
+  text-align: center;
+  border-radius: 8px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--bg);
+}
+.source-note { border-top: 1px solid var(--border); padding-top: 1.5rem; font-size: 0.82rem; color: var(--text-faint); line-height: 1.6; }
+.source-note a { color: var(--tight); }
+.caveat { font-style: italic; margin-top: 0.5rem; }
+
+/* ---------- NAV RAIL ---------- */
+.railnav {
+  position: fixed; right: 1.4rem; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 0.4rem; z-index: 50;
+  align-items: center;
+}
+.rail-dots { display: flex; flex-direction: column; gap: 0.28rem; }
+.rail-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--text-faint); border: none; cursor: pointer; padding: 0;
+  opacity: 0.5; transition: all 0.25s;
+}
+.rail-dot.active { opacity: 1; background: var(--tight); transform: scale(1.5); }
+.rail-dot--hero, .rail-dot--close { width: 8px; height: 8px; }
+
+.darkToggle {
+  position: fixed; top: 1.4rem; right: 1.4rem; z-index: 60;
+  background: var(--bg-elev); border: 1px solid var(--border); color: var(--text);
+  width: 2.4rem; height: 2.4rem; border-radius: 50%; cursor: pointer; font-size: 1rem;
+}
+
+@media (max-width: 640px) {
+  .panel { padding: 5rem 5vw; }
+  .railnav { display: none; }
+  table.standings { font-size: 0.78rem; }
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap;
+}
+
+</style>
+</head>
+<body>
+
+<nav class="railnav" aria-label="Group navigation">
+  <button class="rail-dot rail-dot--hero active" data-target="hero" aria-label="Intro"></button>
+  <button class="rail-dot" data-target="overview" aria-label="Overview"></button>
+  <div class="rail-dots" id="railGroups"></div>
+  <button class="rail-dot rail-dot--close" data-target="closing" aria-label="Closing"></button>
+</nav>
+
+<button class="darkToggle" id="darkToggle" aria-label="Toggle light mode">☀</button>
+
+<main id="scroller">
+
+  <section class="panel hero" id="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-content">
+      <p class="eyebrow">FIFA World Cup 2026 · Group Stage</p>
+      <h1>The Group Stage<br><span class="accent-text">Spectrum</span></h1>
+      <p class="hero-sub">72 matches. 12 groups. Some were decided by a single moment — others were over before the final whistle. This is every group, ranked from the tightest three-way dogfight to the most one-sided draw, using nothing but the scorelines.</p>
+      <div class="hero-stats">
+        <div><strong id="statMatches">72</strong><span>matches analyzed</span></div>
+        <div><strong id="statGoals">0</strong><span>goals scored</span></div>
+        <div><strong id="statOneGoal">0</strong><span>one-goal games</span></div>
+      </div>
+      <div class="scroll-cue"><span>Scroll</span><div class="scroll-cue-line"></div></div>
+    </div>
+  </section>
+
+  <section class="panel overview" id="overview">
+    <div class="overview-content">
+      <p class="eyebrow">The Ranking</p>
+      <h2>From dead heat to daylight</h2>
+      <p class="overview-sub">Every group's six matches, boiled down to one number: the average goal margin per game. Lower means the games stayed close. Higher means one or two teams pulled away early.</p>
+      <div class="overview-chart" id="overviewChart"></div>
+      <p class="overview-note">Tap any group to jump to its full breakdown.</p>
+    </div>
+  </section>
+
+  <div id="groupSections"></div>
+
+  <section class="panel closing" id="closing">
+    <div class="closing-content">
+      <p class="eyebrow">The Spectrum, End to End</p>
+      <h2>Twelve groups, one continuum</h2>
+      <p class="closing-sub">Group H played out almost like a round robin among equals — four teams separated by a single point at the mercy of a Cabo Verde back line that conceded twice all tournament. Group I was the opposite story: a group of haves and have-nots, decided well before matchday three.</p>
+      <div class="closing-strip" id="closingStrip"></div>
+      <div class="source-note">
+        <p><strong>Source:</strong> <a href="https://www.kaggle.com/datasets/mominullptr/fifa-world-cup-2026-dataset" target="_blank" rel="noopener">FIFA World Cup 2026 Dataset</a> (Kaggle / GitHub, mominullptr) — group-stage match results, scores, and squad data for all 48 teams.</p>
+        <p class="caveat">Caveat: this dataset covers a tournament dated in the system's current period (July 2026), beyond the assistant's training cutoff. It was retrieved live from Kaggle/GitHub rather than recalled from memory, and per its README is a generated/simulated dataset rather than an official FIFA feed — treat figures as illustrative, not authoritative.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+const GROUPS = [{"group": "H", "avg_margin": 0.83, "draws": 4, "one_goal_games": 5, "blowouts": 1, "pts_spread": 5, "gd_spread": 9, "total_goals": 11, "table": [{"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 5, "ga": 0, "pts": 7, "gd": 5, "team": "Spain", "fifa_code": "ESP"}, {"played": 3, "won": 0, "drawn": 3, "lost": 0, "gf": 2, "ga": 2, "pts": 3, "gd": 0, "team": "Cabo Verde", "fifa_code": "CPV"}, {"played": 3, "won": 0, "drawn": 2, "lost": 1, "gf": 3, "ga": 4, "pts": 2, "gd": -1, "team": "Uruguay", "fifa_code": "URU"}, {"played": 3, "won": 0, "drawn": 2, "lost": 1, "gf": 1, "ga": 5, "pts": 2, "gd": -4, "team": "Saudi Arabia", "fifa_code": "KSA"}], "matches": [{"match_id": "13", "date": "2026-06-15", "stage_name": "Group Stage", "stadium_name": "Miami Stadium (Hard Rock Stadium)", "city": "Miami Gardens", "country": "USA", "home_team_name": "Spain", "home_fifa_code": "ESP", "away_team_name": "Cabo Verde", "away_fifa_code": "CPV", "home_score": "0", "away_score": "0", "player_of_the_match_name": "Jos\u00e9 Vozinha"}, {"match_id": "15", "date": "2026-06-15", "stage_name": "Group Stage", "stadium_name": "Monterrey Stadium (Estadio BBVA)", "city": "Guadalupe", "country": "MEX", "home_team_name": "Saudi Arabia", "home_fifa_code": "KSA", "away_team_name": "Uruguay", "away_fifa_code": "URU", "home_score": "1", "away_score": "1", "player_of_the_match_name": "Khalil Mohammed Alowais"}, {"match_id": "39", "date": "2026-06-21", "stage_name": "Group Stage", "stadium_name": "San Francisco Bay Area Stadium (Levi's Stadium)", "city": "Santa Clara", "country": "USA", "home_team_name": "Spain", "home_fifa_code": "ESP", "away_team_name": "Saudi Arabia", "away_fifa_code": "KSA", "home_score": "4", "away_score": "0", "player_of_the_match_name": "Mikel Oyarzabal"}, {"match_id": "40", "date": "2026-06-21", "stage_name": "Group Stage", "stadium_name": "New York New Jersey Stadium (MetLife Stadium)", "city": "East Rutherford", "country": "USA", "home_team_name": "Uruguay", "home_fifa_code": "URU", "away_team_name": "Cabo Verde", "away_fifa_code": "CPV", "home_score": "2", "away_score": "2", "player_of_the_match_name": "Jos\u00e9 Vozinha"}, {"match_id": "63", "date": "2026-06-27", "stage_name": "Group Stage", "stadium_name": "Miami Stadium (Hard Rock Stadium)", "city": "Miami Gardens", "country": "USA", "home_team_name": "Uruguay", "home_fifa_code": "URU", "away_team_name": "Spain", "away_fifa_code": "ESP", "home_score": "0", "away_score": "1", "player_of_the_match_name": "Alejandro Baena"}, {"match_id": "64", "date": "2026-06-27", "stage_name": "Group Stage", "stadium_name": "Philadelphia Stadium (Lincoln Financial Field)", "city": "Philadelphia", "country": "USA", "home_team_name": "Cabo Verde", "home_fifa_code": "CPV", "away_team_name": "Saudi Arabia", "away_fifa_code": "KSA", "home_score": "0", "away_score": "0", "player_of_the_match_name": "Jos\u00e9 Vozinha"}], "rank": 1, "label": "Tightest of the tournament"}, {"group": "G", "avg_margin": 1.0, "draws": 4, "one_goal_games": 4, "blowouts": 1, "pts_spread": 4, "gd_spread": 10, "total_goals": 18, "table": [{"played": 3, "won": 1, "drawn": 2, "lost": 0, "gf": 6, "ga": 2, "pts": 5, "gd": 4, "team": "Belgium", "fifa_code": "BEL"}, {"played": 3, "won": 1, "drawn": 2, "lost": 0, "gf": 5, "ga": 3, "pts": 5, "gd": 2, "team": "Egypt", "fifa_code": "EGY"}, {"played": 3, "won": 0, "drawn": 3, "lost": 0, "gf": 3, "ga": 3, "pts": 3, "gd": 0, "team": "IR Iran", "fifa_code": "IRN"}, {"played": 3, "won": 0, "drawn": 1, "lost": 2, "gf": 4, "ga": 10, "pts": 1, "gd": -6, "team": "New Zealand", "fifa_code": "NZL"}], "matches": [{"match_id": "14", "date": "2026-06-15", "stage_name": "Group Stage", "stadium_name": "Dallas Stadium (AT&T Stadium)", "city": "Arlington", "country": "USA", "home_team_name": "Belgium", "home_fifa_code": "BEL", "away_team_name": "Egypt", "away_fifa_code": "EGY", "home_score": "1", "away_score": "1", "player_of_the_match_name": "Ashour Metwaly Emam"}, {"match_id": "16", "date": "2026-06-15", "stage_name": "Group Stage", "stadium_name": "Vancouver Stadium (BC Place)", "city": "Vancouver", "country": "CAN", "home_team_name": "IR Iran", "home_fifa_code": "IRN", "away_team_name": "New Zealand", "away_fifa_code": "NZL", "home_score": "2", "away_score": "2", "player_of_the_match_name": "Ramin Rezaeian"}, {"match_id": "37", "date": "2026-06-21", "stage_name": "Group Stage", "stadium_name": "Houston Stadium (NRG Stadium)", "city": "Houston", "country": "USA", "home_team_name": "Belgium", "home_fifa_code": "BEL", "away_team_name": "IR Iran", "away_fifa_code": "IRN", "home_score": "0", "away_score": "0", "player_of_the_match_name": "Ali Reza Beiranvand"}, {"match_id": "38", "date": "2026-06-21", "stage_name": "Group Stage", "stadium_name": "Miami Stadium (Hard Rock Stadium)", "city": "Miami Gardens", "country": "USA", "home_team_name": "New Zealand", "home_fifa_code": "NZL", "away_team_name": "Egypt", "away_fifa_code": "EGY", "home_score": "1", "away_score": "3", "player_of_the_match_name": "Hamed Mahrous Mohamed Salah"}, {"match_id": "61", "date": "2026-06-27", "stage_name": "Group Stage", "stadium_name": "Dallas Stadium (AT&T Stadium)", "city": "Arlington", "country": "USA", "home_team_name": "New Zealand", "home_fifa_code": "NZL", "away_team_name": "Belgium", "away_fifa_code": "BEL", "home_score": "1", "away_score": "5", "player_of_the_match_name": "Leandro Trossard"}, {"match_id": "62", "date": "2026-06-27", "stage_name": "Group Stage", "stadium_name": "Monterrey Stadium (Estadio BBVA)", "city": "Guadalupe", "country": "MEX", "home_team_name": "Egypt", "home_fifa_code": "EGY", "away_team_name": "IR Iran", "away_fifa_code": "IRN", "home_score": "1", "away_score": "1", "player_of_the_match_name": "Ramin Rezaeian"}], "rank": 2, "label": "Nearly a dead heat"}, {"group": "L", "avg_margin": 1.17, "draws": 1, "one_goal_games": 4, "blowouts": 0, "pts_spread": 7, "gd_spread": 8, "total_goals": 13, "table": [{"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 6, "ga": 2, "pts": 7, "gd": 4, "team": "England", "fifa_code": "ENG"}, {"played": 3, "won": 2, "drawn": 0, "lost": 1, "gf": 5, "ga": 5, "pts": 6, "gd": 0, "team": "Croatia", "fifa_code": "CRO"}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 2, "ga": 2, "pts": 4, "gd": 0, "team": "Ghana", "fifa_code": "GHA"}, {"played": 3, "won": 0, "drawn": 0, "lost": 3, "gf": 0, "ga": 4, "pts": 0, "gd": -4, "team": "Panama", "fifa_code": "PAN"}], "matches": [{"match_id": "22", "date": "2026-06-17", "stage_name": "Group Stage", "stadium_name": "Miami Stadium (Hard Rock Stadium)", "city": "Miami Gardens", "country": "USA", "home_team_name": "England", "home_fifa_code": "ENG", "away_team_name": "Croatia", "away_fifa_code": "CRO", "home_score": "4", "away_score": "2", "player_of_the_match_name": "Harry Edward Kane"}, {"match_id": "23", "date": "2026-06-17", "stage_name": "Group Stage", "stadium_name": "Houston Stadium (NRG Stadium)", "city": "Houston", "country": "USA", "home_team_name": "Ghana", "home_fifa_code": "GHA", "away_team_name": "Panama", "away_fifa_code": "PAN", "home_score": "1", "away_score": "0", "player_of_the_match_name": "Antoine Serlom Semenyo"}, {"match_id": "47", "date": "2026-06-23", "stage_name": "Group Stage", "stadium_name": "Seattle Stadium (Lumen Field)", "city": "Seattle", "country": "USA", "home_team_name": "England", "home_fifa_code": "ENG", "away_team_name": "Ghana", "away_fifa_code": "GHA", "home_score": "0", "away_score": "0", "player_of_the_match_name": "Nico Oreilly"}, {"match_id": "48", "date": "2026-06-23", "stage_name": "Group Stage", "stadium_name": "Mexico City Stadium (Estadio Azteca)", "city": "Mexico City", "country": "MEX", "home_team_name": "Panama", "home_fifa_code": "PAN", "away_team_name": "Croatia", "away_fifa_code": "CRO", "home_score": "0", "away_score": "1", "player_of_the_match_name": "Ante Budimir"}, {"match_id": "71", "date": "2026-06-28", "stage_name": "Group Stage", "stadium_name": "New York New Jersey Stadium (MetLife Stadium)", "city": "East Rutherford", "country": "USA", "home_team_name": "Panama", "home_fifa_code": "PAN", "away_team_name": "England", "away_fifa_code": "ENG", "home_score": "0", "away_score": "2", "player_of_the_match_name": "Jude Victor William Bellingham"}, {"match_id": "72", "date": "2026-06-28", "stage_name": "Group Stage", "stadium_name": "Philadelphia Stadium (Lincoln Financial Field)", "city": "Philadelphia", "country": "USA", "home_team_name": "Croatia", "home_fifa_code": "CRO", "away_team_name": "Ghana", "away_fifa_code": "GHA", "home_score": "2", "away_score": "1", "player_of_the_match_name": "Petar Sucic"}], "rank": 3, "label": "Razor-thin margins"}, {"group": "A", "avg_margin": 1.33, "draws": 1, "one_goal_games": 4, "blowouts": 1, "pts_spread": 8, "gd_spread": 10, "total_goals": 12, "table": [{"played": 3, "won": 3, "drawn": 0, "lost": 0, "gf": 6, "ga": 0, "pts": 9, "gd": 6, "team": "Mexico", "fifa_code": "MEX"}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 2, "ga": 3, "pts": 4, "gd": -1, "team": "South Africa", "fifa_code": "RSA"}, {"played": 3, "won": 1, "drawn": 0, "lost": 2, "gf": 2, "ga": 3, "pts": 3, "gd": -1, "team": "South Korea", "fifa_code": "KOR"}, {"played": 3, "won": 0, "drawn": 1, "lost": 2, "gf": 2, "ga": 6, "pts": 1, "gd": -4, "team": "Czechia", "fifa_code": "CZE"}], "matches": [{"match_id": "1", "date": "2026-06-11", "stage_name": "Group Stage", "stadium_name": "Mexico City Stadium (Estadio Azteca)", "city": "Mexico City", "country": "MEX", "home_team_name": "Mexico", "home_fifa_code": "MEX", "away_team_name": "South Africa", "away_fifa_code": "RSA", "home_score": "2", "away_score": "0", "player_of_the_match_name": "Juli\u00e1n Andr\u00e9s Quinones"}, {"match_id": "2", "date": "2026-06-11", "stage_name": "Group Stage", "stadium_name": "Guadalajara Stadium (Estadio Akron)", "city": "Zapopan", "country": "MEX", "home_team_name": "South Korea", "home_fifa_code": "KOR", "away_team_name": "Czechia", "away_fifa_code": "CZE", "home_score": "2", "away_score": "1", "player_of_the_match_name": "Inbeom Hwang"}, {"match_id": "25", "date": "2026-06-18", "stage_name": "Group Stage", "stadium_name": "Atlanta Stadium (Mercedes-Benz Stadium)", "city": "Atlanta", "country": "USA", "home_team_name": "Mexico", "home_fifa_code": "MEX", "away_team_name": "South Korea", "away_fifa_code": "KOR", "home_score": "1", "away_score": "0", "player_of_the_match_name": "Luis Francisco Romo"}, {"match_id": "26", "date": "2026-06-18", "stage_name": "Group Stage", "stadium_name": "Los Angeles Stadium (SoFi Stadium)", "city": "Inglewood", "country": "USA", "home_team_name": "Czechia", "home_fifa_code": "CZE", "away_team_name": "South Africa", "away_fifa_code": "RSA", "home_score": "1", "away_score": "1", "player_of_the_match_name": "Michal Sadilek"}, {"match_id": "49", "date": "2026-06-24", "stage_name": "Group Stage", "stadium_name": "Mexico City Stadium (Estadio Azteca)", "city": "Mexico City", "country": "MEX", "home_team_name": "Czechia", "home_fifa_code": "CZE", "away_team_name": "Mexico", "away_fifa_code": "MEX", "home_score": "0", "away_score": "3", "player_of_the_match_name": "Mateo Chavez"}, {"match_id": "50", "date": "2026-06-24", "stage_name": "Group Stage", "stadium_name": "Guadalajara Stadium (Estadio Akron)", "city": "Zapopan", "country": "MEX", "home_team_name": "South Africa", "home_fifa_code": "RSA", "away_team_name": "South Korea", "away_fifa_code": "KOR", "home_score": "1", "away_score": "0", "player_of_the_match_name": "Thapelo Maseko"}], "rank": 4, "label": "Closely fought"}, {"group": "D", "avg_margin": 1.5, "draws": 1, "one_goal_games": 3, "blowouts": 1, "pts_spread": 3, "gd_spread": 6, "total_goals": 15, "table": [{"played": 3, "won": 2, "drawn": 0, "lost": 1, "gf": 8, "ga": 4, "pts": 6, "gd": 4, "team": "USA", "fifa_code": "USA"}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 2, "ga": 2, "pts": 4, "gd": 0, "team": "Australia", "fifa_code": "AUS"}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 2, "ga": 4, "pts": 4, "gd": -2, "team": "Paraguay", "fifa_code": "PAR"}, {"played": 3, "won": 1, "drawn": 0, "lost": 2, "gf": 3, "ga": 5, "pts": 3, "gd": -2, "team": "T\u00fcrkiye", "fifa_code": "TUR"}], "matches": [{"match_id": "4", "date": "2026-06-12", "stage_name": "Group Stage", "stadium_name": "Los Angeles Stadium (SoFi Stadium)", "city": "Inglewood", "country": "USA", "home_team_name": "USA", "home_fifa_code": "USA", "away_team_name": "Paraguay", "away_fifa_code": "PAR", "home_score": "4", "away_score": "1", "player_of_the_match_name": "Folarin Jolaoluwa Balogun"}, {"match_id": "8", "date": "2026-06-13", "stage_name": "Group Stage", "stadium_name": "Seattle Stadium (Lumen Field)", "city": "Seattle", "country": "USA", "home_team_name": "Australia", "home_fifa_code": "AUS", "away_team_name": "T\u00fcrkiye", "away_fifa_code": "TUR", "home_score": "2", "away_score": "0", "player_of_the_match_name": "Nestory Irankunda"}, {"match_id": "31", "date": "2026-06-19", "stage_name": "Group Stage", "stadium_name": "Toronto Stadium (BMO Field)", "city": "Toronto", "country": "CAN", "home_team_name": "USA", "home_fifa_code": "USA", "away_team_name": "Australia", "away_fifa_code": "AUS", "home_score": "2", "away_score": "0", "player_of_the_match_name": "Folarin Jolaoluwa Balogun"}, {"match_id": "32", "date": "2026-06-19", "stage_name": "Group Stage", "stadium_name": "Monterrey Stadium (Estadio BBVA)", "city": "Guadalupe", "country": "MEX", "home_team_name": "T\u00fcrkiye", "home_fifa_code": "TUR", "away_team_name": "Paraguay", "away_fifa_code": "PAR", "home_score": "0", "away_score": "1", "player_of_the_match_name": "Matias Galarza"}, {"match_id": "55", "date": "2026-06-25", "stage_name": "Group Stage", "stadium_name": "Los Angeles Stadium (SoFi Stadium)", "city": "Inglewood", "country": "USA", "home_team_name": "T\u00fcrkiye", "home_fifa_code": "TUR", "away_team_name": "USA", "away_fifa_code": "USA", "home_score": "3", "away_score": "2", "player_of_the_match_name": "Arda Guler"}, {"match_id": "56", "date": "2026-06-25", "stage_name": "Group Stage", "stadium_name": "San Francisco Bay Area Stadium (Levi's Stadium)", "city": "Santa Clara", "country": "USA", "home_team_name": "Paraguay", "home_fifa_code": "PAR", "away_team_name": "Australia", "away_fifa_code": "AUS", "home_score": "0", "away_score": "0", "player_of_the_match_name": "Roberto Junior Fernandez"}], "rank": 5, "label": "Evenly matched"}, {"group": "C", "avg_margin": 1.67, "draws": 1, "one_goal_games": 3, "blowouts": 2, "pts_spread": 7, "gd_spread": 12, "total_goals": 16, "table": [{"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 7, "ga": 1, "pts": 7, "gd": 6, "team": "Brazil", "fifa_code": "BRA"}, {"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 6, "ga": 3, "pts": 7, "gd": 3, "team": "Morocco", "fifa_code": "MAR"}, {"played": 3, "won": 1, "drawn": 0, "lost": 2, "gf": 1, "ga": 4, "pts": 3, "gd": -3, "team": "Scotland", "fifa_code": "SCO"}, {"played": 3, "won": 0, "drawn": 0, "lost": 3, "gf": 2, "ga": 8, "pts": 0, "gd": -6, "team": "Haiti", "fifa_code": "HAI"}], "matches": [{"match_id": "6", "date": "2026-06-13", "stage_name": "Group Stage", "stadium_name": "New York New Jersey Stadium (MetLife Stadium)", "city": "East Rutherford", "country": "USA", "home_team_name": "Brazil", "home_fifa_code": "BRA", "away_team_name": "Morocco", "away_fifa_code": "MAR", "home_score": "1", "away_score": "1", "player_of_the_match_name": "Jos\u00e9 Vinicius"}, {"match_id": "7", "date": "2026-06-13", "stage_name": "Group Stage", "stadium_name": "Philadelphia Stadium (Lincoln Financial Field)", "city": "Philadelphia", "country": "USA", "home_team_name": "Haiti", "home_fifa_code": "HAI", "away_team_name": "Scotland", "away_fifa_code": "SCO", "home_score": "0", "away_score": "1", "player_of_the_match_name": "John McGinn"}, {"match_id": "29", "date": "2026-06-19", "stage_name": "Group Stage", "stadium_name": "New York New Jersey Stadium (MetLife Stadium)", "city": "East Rutherford", "country": "USA", "home_team_name": "Brazil", "home_fifa_code": "BRA", "away_team_name": "Haiti", "away_fifa_code": "HAI", "home_score": "3", "away_score": "0", "player_of_the_match_name": "Matheus Matheus Cunha"}, {"match_id": "30", "date": "2026-06-19", "stage_name": "Group Stage", "stadium_name": "Dallas Stadium (AT&T Stadium)", "city": "Arlington", "country": "USA", "home_team_name": "Scotland", "home_fifa_code": "SCO", "away_team_name": "Morocco", "away_fifa_code": "MAR", "home_score": "0", "away_score": "1", "player_of_the_match_name": "Ismael Saibari"}, {"match_id": "53", "date": "2026-06-25", "stage_name": "Group Stage", "stadium_name": "New York New Jersey Stadium (MetLife Stadium)", "city": "East Rutherford", "country": "USA", "home_team_name": "Scotland", "home_fifa_code": "SCO", "away_team_name": "Brazil", "away_fifa_code": "BRA", "home_score": "0", "away_score": "3", "player_of_the_match_name": "Jos\u00e9 Vinicius"}, {"match_id": "54", "date": "2026-06-25", "stage_name": "Group Stage", "stadium_name": "Boston Stadium (Gillette Stadium)", "city": "Foxborough", "country": "USA", "home_team_name": "Morocco", "home_fifa_code": "MAR", "away_team_name": "Haiti", "away_fifa_code": "HAI", "home_score": "4", "away_score": "2", "player_of_the_match_name": "Achraf Hakimi"}], "rank": 6, "label": "Balanced, few blowouts"}, {"group": "K", "avg_margin": 1.67, "draws": 2, "one_goal_games": 3, "blowouts": 1, "pts_spread": 7, "gd_spread": 14, "total_goals": 16, "table": [{"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 4, "ga": 1, "pts": 7, "gd": 3, "team": "Colombia", "fifa_code": "COL"}, {"played": 3, "won": 1, "drawn": 2, "lost": 0, "gf": 6, "ga": 1, "pts": 5, "gd": 5, "team": "Portugal", "fifa_code": "POR"}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 4, "ga": 3, "pts": 4, "gd": 1, "team": "Congo DR", "fifa_code": "COD"}, {"played": 3, "won": 0, "drawn": 0, "lost": 3, "gf": 2, "ga": 11, "pts": 0, "gd": -9, "team": "Uzbekistan", "fifa_code": "UZB"}], "matches": [{"match_id": "21", "date": "2026-06-17", "stage_name": "Group Stage", "stadium_name": "Atlanta Stadium (Mercedes-Benz Stadium)", "city": "Atlanta", "country": "USA", "home_team_name": "Portugal", "home_fifa_code": "POR", "away_team_name": "Congo DR", "away_fifa_code": "COD", "home_score": "1", "away_score": "1", "player_of_the_match_name": "Pedro Joao Neves"}, {"match_id": "24", "date": "2026-06-17", "stage_name": "Group Stage", "stadium_name": "Seattle Stadium (Lumen Field)", "city": "Seattle", "country": "USA", "home_team_name": "Uzbekistan", "home_fifa_code": "UZB", "away_team_name": "Colombia", "away_fifa_code": "COL", "home_score": "1", "away_score": "3", "player_of_the_match_name": "Luis Fernando Diaz"}, {"match_id": "45", "date": "2026-06-23", "stage_name": "Group Stage", "stadium_name": "Kansas City Stadium (Arrowhead Stadium)", "city": "Kansas City", "country": "USA", "home_team_name": "Portugal", "home_fifa_code": "POR", "away_team_name": "Uzbekistan", "away_fifa_code": "UZB", "home_score": "5", "away_score": "0", "player_of_the_match_name": "Ronaldo Cristiano Ronaldo"}, {"match_id": "46", "date": "2026-06-23", "stage_name": "Group Stage", "stadium_name": "Philadelphia Stadium (Lincoln Financial Field)", "city": "Philadelphia", "country": "USA", "home_team_name": "Colombia", "home_fifa_code": "COL", "away_team_name": "Congo DR", "away_fifa_code": "COD", "home_score": "1", "away_score": "0", "player_of_the_match_name": "Daniel Munoz"}, {"match_id": "69", "date": "2026-06-28", "stage_name": "Group Stage", "stadium_name": "Miami Stadium (Hard Rock Stadium)", "city": "Miami Gardens", "country": "USA", "home_team_name": "Colombia", "home_fifa_code": "COL", "away_team_name": "Portugal", "away_fifa_code": "POR", "home_score": "0", "away_score": "0", "player_of_the_match_name": "Diogo Diogo Costa"}, {"match_id": "70", "date": "2026-06-28", "stage_name": "Group Stage", "stadium_name": "Atlanta Stadium (Mercedes-Benz Stadium)", "city": "Atlanta", "country": "USA", "home_team_name": "Congo DR", "home_fifa_code": "COD", "away_team_name": "Uzbekistan", "away_fifa_code": "UZB", "home_score": "3", "away_score": "1", "player_of_the_match_name": "Yoane Wissa"}], "rank": 7, "label": "Middle of the pack"}, {"group": "J", "avg_margin": 1.67, "draws": 1, "one_goal_games": 2, "blowouts": 1, "pts_spread": 9, "gd_spread": 12, "total_goals": 22, "table": [{"played": 3, "won": 3, "drawn": 0, "lost": 0, "gf": 8, "ga": 1, "pts": 9, "gd": 7, "team": "Argentina", "fifa_code": "ARG"}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 6, "ga": 6, "pts": 4, "gd": 0, "team": "Austria", "fifa_code": "AUT"}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 5, "ga": 7, "pts": 4, "gd": -2, "team": "Algeria", "fifa_code": "ALG"}, {"played": 3, "won": 0, "drawn": 0, "lost": 3, "gf": 3, "ga": 8, "pts": 0, "gd": -5, "team": "Jordan", "fifa_code": "JOR"}], "matches": [{"match_id": "19", "date": "2026-06-16", "stage_name": "Group Stage", "stadium_name": "Los Angeles Stadium (SoFi Stadium)", "city": "Inglewood", "country": "USA", "home_team_name": "Argentina", "home_fifa_code": "ARG", "away_team_name": "Algeria", "away_fifa_code": "ALG", "home_score": "3", "away_score": "0", "player_of_the_match_name": "Lionel Andr\u00e9s Messi"}, {"match_id": "20", "date": "2026-06-16", "stage_name": "Group Stage", "stadium_name": "San Francisco Bay Area Stadium (Levi's Stadium)", "city": "Santa Clara", "country": "USA", "home_team_name": "Austria", "home_fifa_code": "AUT", "away_team_name": "Jordan", "away_fifa_code": "JOR", "home_score": "3", "away_score": "1", "player_of_the_match_name": "Iyad Ali Ali Olwan"}, {"match_id": "43", "date": "2026-06-22", "stage_name": "Group Stage", "stadium_name": "Monterrey Stadium (Estadio BBVA)", "city": "Guadalupe", "country": "MEX", "home_team_name": "Argentina", "home_fifa_code": "ARG", "away_team_name": "Austria", "away_fifa_code": "AUT", "home_score": "2", "away_score": "0", "player_of_the_match_name": "Lionel Andr\u00e9s Messi"}, {"match_id": "44", "date": "2026-06-22", "stage_name": "Group Stage", "stadium_name": "Boston Stadium (Gillette Stadium)", "city": "Foxborough", "country": "USA", "home_team_name": "Jordan", "home_fifa_code": "JOR", "away_team_name": "Algeria", "away_fifa_code": "ALG", "home_score": "1", "away_score": "2", "player_of_the_match_name": "Ibrahim Maza"}, {"match_id": "67", "date": "2026-06-27", "stage_name": "Group Stage", "stadium_name": "San Francisco Bay Area Stadium (Levi's Stadium)", "city": "Santa Clara", "country": "USA", "home_team_name": "Jordan", "home_fifa_code": "JOR", "away_team_name": "Argentina", "away_fifa_code": "ARG", "home_score": "1", "away_score": "3", "player_of_the_match_name": "Lionel Andr\u00e9s Messi"}, {"match_id": "68", "date": "2026-06-27", "stage_name": "Group Stage", "stadium_name": "Los Angeles Stadium (SoFi Stadium)", "city": "Inglewood", "country": "USA", "home_team_name": "Algeria", "home_fifa_code": "ALG", "away_team_name": "Austria", "away_fifa_code": "AUT", "home_score": "3", "away_score": "3", "player_of_the_match_name": "Riyad Karim Mahrez"}], "rank": 8, "label": "A mix of tight and lopsided"}, {"group": "E", "avg_margin": 1.83, "draws": 1, "one_goal_games": 4, "blowouts": 1, "pts_spread": 5, "gd_spread": 14, "total_goals": 17, "table": [{"played": 3, "won": 2, "drawn": 0, "lost": 1, "gf": 10, "ga": 4, "pts": 6, "gd": 6, "team": "Germany", "fifa_code": "GER"}, {"played": 3, "won": 2, "drawn": 0, "lost": 1, "gf": 4, "ga": 2, "pts": 6, "gd": 2, "team": "C\u00f4te d'Ivoire", "fifa_code": "CIV"}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 2, "ga": 2, "pts": 4, "gd": 0, "team": "Ecuador", "fifa_code": "ECU"}, {"played": 3, "won": 0, "drawn": 1, "lost": 2, "gf": 1, "ga": 9, "pts": 1, "gd": -8, "team": "Cura\u00e7ao", "fifa_code": "CUW"}], "matches": [{"match_id": "9", "date": "2026-06-14", "stage_name": "Group Stage", "stadium_name": "Atlanta Stadium (Mercedes-Benz Stadium)", "city": "Atlanta", "country": "USA", "home_team_name": "Germany", "home_fifa_code": "GER", "away_team_name": "Cura\u00e7ao", "away_fifa_code": "CUW", "home_score": "7", "away_score": "1", "player_of_the_match_name": "Kai Lukas Havertz"}, {"match_id": "11", "date": "2026-06-14", "stage_name": "Group Stage", "stadium_name": "Houston Stadium (NRG Stadium)", "city": "Houston", "country": "USA", "home_team_name": "C\u00f4te d'Ivoire", "home_fifa_code": "CIV", "away_team_name": "Ecuador", "away_fifa_code": "ECU", "home_score": "1", "away_score": "0", "player_of_the_match_name": "Yan Diomande"}, {"match_id": "33", "date": "2026-06-20", "stage_name": "Group Stage", "stadium_name": "Boston Stadium (Gillette Stadium)", "city": "Foxborough", "country": "USA", "home_team_name": "Germany", "home_fifa_code": "GER", "away_team_name": "C\u00f4te d'Ivoire", "away_fifa_code": "CIV", "home_score": "2", "away_score": "1", "player_of_the_match_name": "Deniz Undav"}, {"match_id": "34", "date": "2026-06-20", "stage_name": "Group Stage", "stadium_name": "Kansas City Stadium (Arrowhead Stadium)", "city": "Kansas City", "country": "USA", "home_team_name": "Ecuador", "home_fifa_code": "ECU", "away_team_name": "Cura\u00e7ao", "away_fifa_code": "CUW", "home_score": "0", "away_score": "0", "player_of_the_match_name": "Eloy Victor Room"}, {"match_id": "57", "date": "2026-06-26", "stage_name": "Group Stage", "stadium_name": "Atlanta Stadium (Mercedes-Benz Stadium)", "city": "Atlanta", "country": "USA", "home_team_name": "Ecuador", "home_fifa_code": "ECU", "away_team_name": "Germany", "away_fifa_code": "GER", "home_score": "2", "away_score": "1", "player_of_the_match_name": "Nilson David Angulo"}, {"match_id": "58", "date": "2026-06-26", "stage_name": "Group Stage", "stadium_name": "Houston Stadium (NRG Stadium)", "city": "Houston", "country": "USA", "home_team_name": "Cura\u00e7ao", "home_fifa_code": "CUW", "away_team_name": "C\u00f4te d'Ivoire", "away_fifa_code": "CIV", "home_score": "0", "away_score": "2", "player_of_the_match_name": "Nicolas Pepe"}], "rank": 9, "label": "Separation emerging"}, {"group": "B", "avg_margin": 2.0, "draws": 2, "one_goal_games": 3, "blowouts": 2, "pts_spread": 6, "gd_spread": 13, "total_goals": 22, "table": [{"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 7, "ga": 3, "pts": 7, "gd": 4, "team": "Switzerland", "fifa_code": "SUI"}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 8, "ga": 3, "pts": 4, "gd": 5, "team": "Canada", "fifa_code": "CAN"}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 5, "ga": 6, "pts": 4, "gd": -1, "team": "Bosnia and Herzegovina", "fifa_code": "BIH"}, {"played": 3, "won": 0, "drawn": 1, "lost": 2, "gf": 2, "ga": 10, "pts": 1, "gd": -8, "team": "Qatar", "fifa_code": "QAT"}], "matches": [{"match_id": "3", "date": "2026-06-12", "stage_name": "Group Stage", "stadium_name": "Toronto Stadium (BMO Field)", "city": "Toronto", "country": "CAN", "home_team_name": "Canada", "home_fifa_code": "CAN", "away_team_name": "Bosnia and Herzegovina", "away_fifa_code": "BIH", "home_score": "1", "away_score": "1", "player_of_the_match_name": "Isma\u00ebl Kenneth Jordan Kone"}, {"match_id": "5", "date": "2026-06-13", "stage_name": "Group Stage", "stadium_name": "Boston Stadium (Gillette Stadium)", "city": "Foxborough", "country": "USA", "home_team_name": "Qatar", "home_fifa_code": "QAT", "away_team_name": "Switzerland", "away_fifa_code": "SUI", "home_score": "1", "away_score": "1", "player_of_the_match_name": "Ibrahim Mahmoud Abunada"}, {"match_id": "27", "date": "2026-06-18", "stage_name": "Group Stage", "stadium_name": "Vancouver Stadium (BC Place)", "city": "Vancouver", "country": "CAN", "home_team_name": "Canada", "home_fifa_code": "CAN", "away_team_name": "Qatar", "away_fifa_code": "QAT", "home_score": "6", "away_score": "0", "player_of_the_match_name": "Jonathan Christian David"}, {"match_id": "28", "date": "2026-06-18", "stage_name": "Group Stage", "stadium_name": "Mexico City Stadium (Estadio Azteca)", "city": "Mexico City", "country": "MEX", "home_team_name": "Switzerland", "home_fifa_code": "SUI", "away_team_name": "Bosnia and Herzegovina", "away_fifa_code": "BIH", "home_score": "4", "away_score": "1", "player_of_the_match_name": "Johan Kula Manzambi"}, {"match_id": "51", "date": "2026-06-24", "stage_name": "Group Stage", "stadium_name": "Vancouver Stadium (BC Place)", "city": "Vancouver", "country": "CAN", "home_team_name": "Switzerland", "home_fifa_code": "SUI", "away_team_name": "Canada", "away_fifa_code": "CAN", "home_score": "2", "away_score": "1", "player_of_the_match_name": "Johan Kula Manzambi"}, {"match_id": "52", "date": "2026-06-24", "stage_name": "Group Stage", "stadium_name": "Toronto Stadium (BMO Field)", "city": "Toronto", "country": "CAN", "home_team_name": "Bosnia and Herzegovina", "home_fifa_code": "BIH", "away_team_name": "Qatar", "away_fifa_code": "QAT", "home_score": "3", "away_score": "1", "player_of_the_match_name": "Kerim Alajbegovic"}], "rank": 10, "label": "Clear tiers forming"}, {"group": "F", "avg_margin": 2.33, "draws": 2, "one_goal_games": 2, "blowouts": 3, "pts_spread": 7, "gd_spread": 16, "total_goals": 26, "table": [{"played": 3, "won": 2, "drawn": 1, "lost": 0, "gf": 10, "ga": 4, "pts": 7, "gd": 6, "team": "Netherlands", "fifa_code": "NED"}, {"played": 3, "won": 1, "drawn": 2, "lost": 0, "gf": 7, "ga": 3, "pts": 5, "gd": 4, "team": "Japan", "fifa_code": "JPN"}, {"played": 3, "won": 1, "drawn": 1, "lost": 1, "gf": 7, "ga": 7, "pts": 4, "gd": 0, "team": "Sweden", "fifa_code": "SWE"}, {"played": 3, "won": 0, "drawn": 0, "lost": 3, "gf": 2, "ga": 12, "pts": 0, "gd": -10, "team": "Tunisia", "fifa_code": "TUN"}], "matches": [{"match_id": "10", "date": "2026-06-14", "stage_name": "Group Stage", "stadium_name": "San Francisco Bay Area Stadium (Levi's Stadium)", "city": "Santa Clara", "country": "USA", "home_team_name": "Netherlands", "home_fifa_code": "NED", "away_team_name": "Japan", "away_fifa_code": "JPN", "home_score": "2", "away_score": "2", "player_of_the_match_name": "Virgil Van Dijk"}, {"match_id": "12", "date": "2026-06-14", "stage_name": "Group Stage", "stadium_name": "Kansas City Stadium (Arrowhead Stadium)", "city": "Kansas City", "country": "USA", "home_team_name": "Sweden", "home_fifa_code": "SWE", "away_team_name": "Tunisia", "away_fifa_code": "TUN", "home_score": "5", "away_score": "1", "player_of_the_match_name": "Alexander Isak"}, {"match_id": "35", "date": "2026-06-20", "stage_name": "Group Stage", "stadium_name": "Philadelphia Stadium (Lincoln Financial Field)", "city": "Philadelphia", "country": "USA", "home_team_name": "Netherlands", "home_fifa_code": "NED", "away_team_name": "Sweden", "away_fifa_code": "SWE", "home_score": "5", "away_score": "1", "player_of_the_match_name": "Cody Math\u00e8s Gakpo"}, {"match_id": "36", "date": "2026-06-20", "stage_name": "Group Stage", "stadium_name": "Seattle Stadium (Lumen Field)", "city": "Seattle", "country": "USA", "home_team_name": "Tunisia", "home_fifa_code": "TUN", "away_team_name": "Japan", "away_fifa_code": "JPN", "home_score": "0", "away_score": "4", "player_of_the_match_name": "Ayase Ueda"}, {"match_id": "59", "date": "2026-06-26", "stage_name": "Group Stage", "stadium_name": "Kansas City Stadium (Arrowhead Stadium)", "city": "Kansas City", "country": "USA", "home_team_name": "Tunisia", "home_fifa_code": "TUN", "away_team_name": "Netherlands", "away_fifa_code": "NED", "home_score": "1", "away_score": "3", "player_of_the_match_name": "Brian Ebenezer Adjei Brobbey"}, {"match_id": "60", "date": "2026-06-26", "stage_name": "Group Stage", "stadium_name": "Seattle Stadium (Lumen Field)", "city": "Seattle", "country": "USA", "home_team_name": "Japan", "home_fifa_code": "JPN", "away_team_name": "Sweden", "away_fifa_code": "SWE", "home_score": "1", "away_score": "1", "player_of_the_match_name": "Daizen Maeda"}], "rank": 11, "label": "Heavily one-sided"}, {"group": "I", "avg_margin": 2.83, "draws": 0, "one_goal_games": 1, "blowouts": 4, "pts_spread": 9, "gd_spread": 19, "total_goals": 27, "table": [{"played": 3, "won": 3, "drawn": 0, "lost": 0, "gf": 10, "ga": 2, "pts": 9, "gd": 8, "team": "France", "fifa_code": "FRA"}, {"played": 3, "won": 2, "drawn": 0, "lost": 1, "gf": 8, "ga": 7, "pts": 6, "gd": 1, "team": "Norway", "fifa_code": "NOR"}, {"played": 3, "won": 1, "drawn": 0, "lost": 2, "gf": 8, "ga": 6, "pts": 3, "gd": 2, "team": "Senegal", "fifa_code": "SEN"}, {"played": 3, "won": 0, "drawn": 0, "lost": 3, "gf": 1, "ga": 12, "pts": 0, "gd": -11, "team": "Iraq", "fifa_code": "IRQ"}], "matches": [{"match_id": "17", "date": "2026-06-16", "stage_name": "Group Stage", "stadium_name": "New York New Jersey Stadium (MetLife Stadium)", "city": "East Rutherford", "country": "USA", "home_team_name": "France", "home_fifa_code": "FRA", "away_team_name": "Senegal", "away_fifa_code": "SEN", "home_score": "3", "away_score": "1", "player_of_the_match_name": "Michael Akpovie Olise"}, {"match_id": "18", "date": "2026-06-16", "stage_name": "Group Stage", "stadium_name": "Boston Stadium (Gillette Stadium)", "city": "Foxborough", "country": "USA", "home_team_name": "Iraq", "home_fifa_code": "IRQ", "away_team_name": "Norway", "away_fifa_code": "NOR", "home_score": "1", "away_score": "4", "player_of_the_match_name": "Erling Braut Haaland"}, {"match_id": "41", "date": "2026-06-22", "stage_name": "Group Stage", "stadium_name": "Dallas Stadium (AT&T Stadium)", "city": "Arlington", "country": "USA", "home_team_name": "France", "home_fifa_code": "FRA", "away_team_name": "Iraq", "away_fifa_code": "IRQ", "home_score": "3", "away_score": "0", "player_of_the_match_name": "Kylian Mbappe"}, {"match_id": "42", "date": "2026-06-22", "stage_name": "Group Stage", "stadium_name": "Toronto Stadium (BMO Field)", "city": "Toronto", "country": "CAN", "home_team_name": "Norway", "home_fifa_code": "NOR", "away_team_name": "Senegal", "away_fifa_code": "SEN", "home_score": "3", "away_score": "2", "player_of_the_match_name": "Erling Braut Haaland"}, {"match_id": "65", "date": "2026-06-26", "stage_name": "Group Stage", "stadium_name": "Boston Stadium (Gillette Stadium)", "city": "Foxborough", "country": "USA", "home_team_name": "Norway", "home_fifa_code": "NOR", "away_team_name": "France", "away_fifa_code": "FRA", "home_score": "1", "away_score": "4", "player_of_the_match_name": "Masour Ousmane Dembele"}, {"match_id": "66", "date": "2026-06-26", "stage_name": "Group Stage", "stadium_name": "New York New Jersey Stadium (MetLife Stadium)", "city": "East Rutherford", "country": "USA", "home_team_name": "Senegal", "home_fifa_code": "SEN", "away_team_name": "Iraq", "away_fifa_code": "IRQ", "home_score": "5", "away_score": "0", "player_of_the_match_name": "Iliman Cheikh Baroy Ndiaye"}], "rank": 12, "label": "Most lopsided group"}];
+</script>
+<script>
+// GROUPS is already ranked 1 (tightest) -> 12 (most lopsided)
+
+function accentColor(rank, total) {
+  // interpolate teal -> amber -> red across rank 1..total
+  const t = (rank - 1) / (total - 1);
+  const stops = [
+    [45, 212, 191],   // teal
+    [245, 184, 61],   // amber
+    [239, 87, 87],    // red
+  ];
+  const seg = t * (stops.length - 1);
+  const i = Math.min(Math.floor(seg), stops.length - 2);
+  const localT = seg - i;
+  const a = stops[i], b = stops[i + 1];
+  const rgb = a.map((v, idx) => Math.round(v + (b[idx] - v) * localT));
+  return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+}
+
+function fmtDate(d) {
+  const dt = new Date(d + 'T00:00:00');
+  return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+const maxAvgMargin = Math.max(...GROUPS.map(g => g.avg_margin));
+const maxMatchMargin = 3; // cap visual scale; anything >=3 fills the bar
+
+// ---------- Overview chart ----------
+const overviewChart = document.getElementById('overviewChart');
+GROUPS.forEach(g => {
+  const color = accentColor(g.rank, GROUPS.length);
+  const row = document.createElement('div');
+  row.className = 'ov-row';
+  row.dataset.target = `group-${g.group}`;
+  row.innerHTML = `
+    <div class="ov-rank">${String(g.rank).padStart(2, '0')}</div>
+    <div class="ov-group">Group ${g.group}</div>
+    <div class="ov-bar-track"><div class="ov-bar-fill" data-width="${(g.avg_margin / maxAvgMargin) * 100}" style="background:${color}"></div></div>
+    <div class="ov-val">${g.avg_margin.toFixed(2)} avg</div>
+  `;
+  row.addEventListener('click', () => scrollToId(`group-${g.group}`));
+  overviewChart.appendChild(row);
+});
+
+// ---------- Group sections ----------
+const groupSectionsRoot = document.getElementById('groupSections');
+GROUPS.forEach(g => {
+  const color = accentColor(g.rank, GROUPS.length);
+  const section = document.createElement('section');
+  section.className = 'panel group-panel';
+  section.id = `group-${g.group}`;
+  section.style.setProperty('--gaccent', color);
+  section.style.setProperty('--gaccent-10', color.replace('rgb', 'rgba').replace(')', ', 0.14)'));
+
+  const top2Codes = new Set(g.table.slice(0, 2).map(t => t.fifa_code));
+
+  const standingsRows = g.table.map(t => `
+    <tr class="${top2Codes.has(t.fifa_code) ? 'top2' : ''}">
+      <td class="team-cell">${t.team}</td>
+      <td>${t.played}</td>
+      <td>${t.won}-${t.drawn}-${t.lost}</td>
+      <td>${t.gd > 0 ? '+' + t.gd : t.gd}</td>
+      <td>${t.pts}</td>
+    </tr>
+  `).join('');
+
+  const sortedMatches = [...g.matches].sort((a, b) => a.date.localeCompare(b.date));
+  const matchCards = sortedMatches.map(m => {
+    const margin = Math.abs(m.home_score - m.away_score);
+    const pct = Math.min(margin / maxMatchMargin, 1) * 100;
+    const homeWin = m.home_score > m.away_score;
+    const awayWin = m.away_score > m.home_score;
+    return `
+      <div class="match-card">
+        <div class="match-row">
+          <span class="home" style="opacity:${awayWin ? 0.55 : 1}">${m.home_team_name}</span>
+          <span class="match-score">${m.home_score} – ${m.away_score}</span>
+          <span class="away" style="opacity:${homeWin ? 0.55 : 1}">${m.away_team_name}</span>
+        </div>
+        <div class="margin-track"><div class="margin-fill" data-width="${pct}" style="background:${color}"></div></div>
+        <div class="match-meta">
+          <span>${fmtDate(m.date)} · ${m.city}</span>
+          <span>${margin === 0 ? 'Draw' : margin + '-goal margin'}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  section.innerHTML = `
+    <div class="group-inner">
+      <div class="group-head">
+        <span class="group-rank-badge">#${g.rank} of 12 · ${g.rank <= 4 ? 'Closely Fought' : g.rank <= 8 ? 'Mid-Table' : 'Lopsided'}</span>
+      </div>
+      <div class="group-letter">${g.group}</div>
+      <p class="group-label">${g.label}</p>
+      <div class="group-grid">
+        <div class="standings-col">
+          <div class="gstats">
+            <div class="gstat"><strong>${g.avg_margin.toFixed(2)}</strong><span>Avg. goal margin</span></div>
+            <div class="gstat"><strong>${g.total_goals}</strong><span>Goals scored</span></div>
+            <div class="gstat"><strong>${g.draws}</strong><span>Draws</span></div>
+            <div class="gstat"><strong>${g.blowouts}</strong><span>Blowouts (3+)</span></div>
+          </div>
+          <table class="standings">
+            <thead><tr><th>Team</th><th>P</th><th>W-D-L</th><th>GD</th><th>Pts</th></tr></thead>
+            <tbody>${standingsRows}</tbody>
+          </table>
+          <p class="standings-note">Top two (marked) automatically advance to the Round of 32; third-place qualification is decided across all 12 groups and isn't scored here.</p>
+        </div>
+        <div class="matches-col">
+          <h3>All 6 group matches</h3>
+          ${matchCards}
+        </div>
+      </div>
+    </div>
+  `;
+  groupSectionsRoot.appendChild(section);
+});
+
+// ---------- Closing strip ----------
+const closingStrip = document.getElementById('closingStrip');
+GROUPS.forEach(g => {
+  const color = accentColor(g.rank, GROUPS.length);
+  const chip = document.createElement('div');
+  chip.className = 'strip-chip';
+  chip.style.background = color;
+  chip.textContent = g.group;
+  chip.addEventListener('click', () => scrollToId(`group-${g.group}`));
+  closingStrip.appendChild(chip);
+});
+
+// ---------- Rail nav ----------
+const railGroups = document.getElementById('railGroups');
+GROUPS.forEach(g => {
+  const dot = document.createElement('button');
+  dot.className = 'rail-dot';
+  dot.dataset.target = `group-${g.group}`;
+  dot.setAttribute('aria-label', `Group ${g.group}`);
+  dot.addEventListener('click', () => scrollToId(`group-${g.group}`));
+  railGroups.appendChild(dot);
+});
+document.querySelectorAll('.railnav .rail-dot[data-target="hero"], .railnav .rail-dot[data-target="overview"], .railnav .rail-dot[data-target="closing"]').forEach(btn => {
+  btn.addEventListener('click', () => scrollToId(btn.dataset.target));
+});
+
+function scrollToId(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ---------- Hero stat counters ----------
+function countUp(el, target, suffix = '') {
+  const dur = 1200;
+  const start = performance.now();
+  function tick(now) {
+    const p = Math.min((now - start) / dur, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(eased * target) + suffix;
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+const totalGoals = GROUPS.reduce((s, g) => s + g.total_goals, 0);
+const totalOneGoal = GROUPS.reduce((s, g) => s + g.one_goal_games, 0);
+let heroAnimated = false;
+
+// ---------- Scroll reveal + active nav ----------
+const allSections = document.querySelectorAll('.panel');
+const railDots = document.querySelectorAll('.railnav .rail-dot');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-active');
+      entry.target.querySelectorAll('[data-width]').forEach(bar => {
+        bar.style.width = bar.dataset.width + '%';
+      });
+      if (entry.target.id === 'hero' && !heroAnimated) {
+        heroAnimated = true;
+        countUp(document.getElementById('statGoals'), totalGoals);
+        countUp(document.getElementById('statOneGoal'), totalOneGoal);
+      }
+      const id = entry.target.id;
+      railDots.forEach(d => d.classList.toggle('active', d.dataset.target === id));
+    }
+  });
+}, { threshold: 0.35 });
+
+allSections.forEach(s => observer.observe(s));
+
+// ---------- Dark/light toggle ----------
+const darkToggle = document.getElementById('darkToggle');
+darkToggle.addEventListener('click', () => {
+  document.documentElement.classList.toggle('light');
+  darkToggle.textContent = document.documentElement.classList.contains('light') ? '☾' : '☀';
+});
+
+</script>
+</body>
+</html>

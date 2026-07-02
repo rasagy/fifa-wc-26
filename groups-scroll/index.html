@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Groups Scroll | 2026 FIFA World Cup group-stage margins</title>
+  <meta name="description" content="A scrollytelling explainer about the 2026 FIFA World Cup group-stage matches that were closest, most one-sided, and most consequential." />
+  <meta name="theme-color" content="#0b0b18" />
+  <meta property="og:title" content="Groups Scroll | 2026 FIFA World Cup group-stage margins" />
+  <meta property="og:description" content="A neon scrollytelling explainer about the closest games, biggest blowouts, and table drama in the 2026 FIFA World Cup group stage." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <style>
+    :root {
+      --bg: #070812;
+      --bg2: #101226;
+      --panel: rgba(12, 14, 28, 0.72);
+      --panel-strong: rgba(13, 15, 33, 0.92);
+      --line: rgba(255, 255, 255, 0.12);
+      --text: #f6f7ff;
+      --muted: rgba(246, 247, 255, 0.68);
+      --faint: rgba(246, 247, 255, 0.42);
+      --cyan: #46f5ff;
+      --lime: #c8ff4d;
+      --yellow: #ffe86b;
+      --orange: #ff8f52;
+      --pink: #ff5fcf;
+      --hot: #ff365f;
+      --shadow: 0 26px 80px rgba(0, 0, 0, 0.55);
+      --radius: 28px;
+      --radius-sm: 18px;
+      --display: "Bodoni 72", "Didot", "Iowan Old Style", "Palatino Linotype", serif;
+      --sans: "Avenir Next Condensed", "Gill Sans", "Trebuchet MS", sans-serif;
+      --mono: "SFMono-Regular", "Menlo", "Consolas", monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: var(--sans);
+      background:
+        radial-gradient(circle at 20% 10%, rgba(70, 245, 255, 0.15), transparent 24%),
+        radial-gradient(circle at 80% 20%, rgba(255, 95, 207, 0.13), transparent 24%),
+        radial-gradient(circle at 70% 85%, rgba(200, 255, 77, 0.10), transparent 26%),
+        linear-gradient(160deg, #04050a 0%, #090b14 38%, #131226 70%, #0b0c14 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px) 0 0 / 100% 4px,
+        radial-gradient(circle at 50% 0%, rgba(255,255,255,0.06), transparent 24%);
+      opacity: 0.28;
+      mix-blend-mode: screen;
+      z-index: 0;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 999px;
+      filter: blur(24px);
+      opacity: 0.45;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb.one {
+      width: 26vw;
+      height: 26vw;
+      left: -8vw;
+      top: 8vh;
+      background: rgba(70, 245, 255, 0.18);
+    }
+    .orb.two {
+      width: 20vw;
+      height: 20vw;
+      right: -4vw;
+      top: 24vh;
+      background: rgba(255, 95, 207, 0.18);
+    }
+    .orb.three {
+      width: 18vw;
+      height: 18vw;
+      left: 48vw;
+      bottom: -10vh;
+      background: rgba(200, 255, 77, 0.14);
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      width: min(1280px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 20px 0 64px;
+    }
+
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      align-items: end;
+      grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.7fr);
+      gap: 28px;
+      padding: 28px 0 32px;
+    }
+
+    .hero-copy {
+      padding: 18vh 0 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      color: var(--cyan);
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 12ch;
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(3.25rem, 10vw, 8.3rem);
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      text-wrap: balance;
+      text-shadow: 0 0 30px rgba(70, 245, 255, 0.12);
+    }
+
+    .dek {
+      margin: 20px 0 0;
+      max-width: 62ch;
+      font-size: clamp(1rem, 2vw, 1.22rem);
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .hero-note {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 26px;
+      max-width: 720px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+      color: var(--text);
+      font-size: 0.93rem;
+      line-height: 1.1;
+    }
+
+    .pill strong {
+      color: var(--yellow);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hero-card {
+      align-self: stretch;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 16px;
+      padding: 20px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(180deg, rgba(18, 20, 41, 0.86), rgba(8, 10, 20, 0.92));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero-card h2, .board-title, .chapter h3, .section-title {
+      margin: 0;
+      font-family: var(--display);
+      letter-spacing: -0.02em;
+      line-height: 0.95;
+    }
+
+    .hero-card h2 {
+      font-size: clamp(1.5rem, 3vw, 2.3rem);
+    }
+
+    .hero-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .hero-figure {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .figure-chip {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+
+    .figure-chip strong {
+      display: block;
+      color: var(--text);
+      font-size: 1.03rem;
+      font-weight: 700;
+    }
+
+    .figure-chip span {
+      color: var(--muted);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.06fr) minmax(320px, 0.94fr);
+      gap: 22px;
+      align-items: start;
+      margin-top: 16px;
+    }
+
+    .board {
+      position: sticky;
+      top: 18px;
+      display: grid;
+      gap: 14px;
+      min-height: calc(100vh - 40px);
+      padding: 18px;
+      border-radius: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(180deg, rgba(17, 19, 38, 0.88), rgba(7, 8, 18, 0.96));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(24px);
+    }
+
+    .board-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .board-kicker {
+      margin: 0;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.72rem;
+    }
+
+    .board-status {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      text-align: right;
+      max-width: 34ch;
+    }
+
+    .views {
+      position: relative;
+      min-height: 640px;
+    }
+
+    .view {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: translateY(14px) scale(0.985);
+      pointer-events: none;
+      transition: opacity 380ms ease, transform 380ms ease;
+    }
+
+    .view.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .spectrum-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.75fr) minmax(0, 1fr);
+      gap: 14px;
+      height: 100%;
+    }
+
+    .lane {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .lane-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 2px;
+    }
+
+    .lane-head h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .lane-head small {
+      color: var(--faint);
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .match-card {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)),
+        linear-gradient(90deg, hsla(var(--h), 95%, 60%, 0.18), transparent 48%);
+      color: var(--text);
+      padding: 12px 12px 11px;
+      display: grid;
+      gap: 10px;
+      min-height: 92px;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease, opacity 180ms ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .match-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(140deg, rgba(255,255,255,0.10), transparent 34%);
+      opacity: 0.38;
+      pointer-events: none;
+    }
+
+    .match-card:hover,
+    .match-card:focus-visible,
+    .match-card.selected {
+      transform: translateY(-2px);
+      border-color: hsla(var(--h), 95%, 66%, 0.58);
+      box-shadow:
+        0 0 0 1px hsla(var(--h), 95%, 66%, 0.2),
+        0 16px 42px rgba(0, 0, 0, 0.4),
+        0 0 28px hsla(var(--h), 95%, 60%, 0.22);
+      outline: none;
+    }
+
+    .match-top, .match-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .match-top {
+      font-size: 0.73rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--faint);
+    }
+
+    .match-name {
+      position: relative;
+      z-index: 1;
+      font-size: 1rem;
+      line-height: 1.18;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .score {
+      font-family: var(--display);
+      font-size: 1.32rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .margin {
+      font-family: var(--mono);
+      color: rgba(246,247,255,0.72);
+      font-size: 0.82rem;
+      align-self: end;
+    }
+
+    .bar {
+      height: 8px;
+      border-radius: 999px;
+      background:
+        linear-gradient(90deg, hsla(var(--h), 96%, 64%, 0.95), hsla(var(--h), 96%, 64%, 0.2));
+      width: calc((var(--m) / 6) * 100%);
+      min-width: 10%;
+      box-shadow: 0 0 18px hsla(var(--h), 96%, 64%, 0.35);
+      position: relative;
+      z-index: 1;
+    }
+
+    .track {
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+      z-index: 1;
+    }
+
+    .dial {
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 12px;
+      align-content: start;
+      padding: 16px;
+      border-radius: 26px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)),
+        radial-gradient(circle at 50% 0%, rgba(70,245,255,0.16), transparent 55%),
+        radial-gradient(circle at 50% 100%, rgba(255,95,207,0.12), transparent 46%);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .dial h3 {
+      font-size: 1.8rem;
+    }
+
+    .scale {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 10px 0 0;
+      margin: 0;
+      color: var(--faint);
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.06em;
+    }
+
+    .dial-hero {
+      display: grid;
+      align-content: center;
+      gap: 10px;
+      padding: 10px 0 14px;
+      min-height: 220px;
+    }
+
+    .dial-number {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(3.5rem, 8vw, 6.4rem);
+      line-height: 0.88;
+      letter-spacing: -0.06em;
+      color: #ffffff;
+      text-shadow: 0 0 20px rgba(70,245,255,0.16);
+    }
+
+    .dial-number span {
+      color: var(--cyan);
+    }
+
+    .dial-copy {
+      margin: 0;
+      max-width: 38ch;
+      color: var(--muted);
+      line-height: 1.58;
+    }
+
+    .detail {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .detail-label {
+      margin: 0;
+      color: var(--lime);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.68rem;
+    }
+
+    .detail h4 {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(1.65rem, 3.5vw, 2.6rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+    }
+
+    .detail p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .mini {
+      padding: 10px 10px 11px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .mini b {
+      display: block;
+      font-size: 1.08rem;
+      font-family: var(--display);
+      line-height: 0.98;
+      margin-bottom: 4px;
+    }
+
+    .mini span {
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    .ribbon-wrap {
+      display: grid;
+      gap: 14px;
+      align-content: start;
+      height: 100%;
+      padding-top: 8px;
+    }
+
+    .ribbon-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+    }
+
+    .ribbon-head h3 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    .ribbon-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+      max-width: 36ch;
+      text-align: right;
+    }
+
+    .ribbon {
+      display: grid;
+      gap: 12px;
+      overflow: auto hidden;
+      padding-bottom: 6px;
+      scrollbar-color: rgba(255,255,255,0.28) transparent;
+      scrollbar-width: thin;
+    }
+
+    .ribbon-track {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(170px, 1fr);
+      gap: 10px;
+      min-width: max-content;
+      padding: 8px 2px 20px;
+    }
+
+    .ribbon-pill {
+      display: grid;
+      gap: 8px;
+      align-content: start;
+      min-height: 130px;
+      padding: 12px 12px 11px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)),
+        linear-gradient(90deg, hsla(var(--h), 96%, 60%, 0.2), transparent 60%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .ribbon-pill .date {
+      color: var(--faint);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .ribbon-pill .teams {
+      font-size: 1rem;
+      line-height: 1.16;
+      font-weight: 700;
+    }
+
+    .ribbon-pill .meta {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: end;
+    }
+
+    .groups-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-content: start;
+      height: 100%;
+      padding-top: 6px;
+    }
+
+    .group-card {
+      padding: 14px;
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)),
+        radial-gradient(circle at 0% 0%, hsla(var(--h), 96%, 60%, 0.2), transparent 44%);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .group-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: baseline;
+    }
+
+    .group-top strong {
+      font-size: 1.4rem;
+      font-family: var(--display);
+    }
+
+    .group-top span {
+      color: var(--faint);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+    }
+
+    .table-lines {
+      display: grid;
+      gap: 8px;
+    }
+
+    .table-line {
+      display: grid;
+      grid-template-columns: 1.4fr 0.52fr 0.52fr;
+      gap: 8px;
+      align-items: center;
+      font-size: 0.92rem;
+      line-height: 1.2;
+    }
+
+    .table-line .name {
+      color: var(--text);
+    }
+
+    .table-line .value {
+      color: var(--muted);
+      text-align: right;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+    }
+
+    .group-note {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 0.95rem;
+    }
+
+    .chapter {
+      margin-bottom: 18px;
+      padding: 20px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(11, 13, 25, 0.84), rgba(9, 10, 18, 0.92));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow);
+      transition: border-color 220ms ease, transform 220ms ease, background 220ms ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chapter::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(70,245,255,0.09), transparent 36%),
+        radial-gradient(circle at 100% 0%, rgba(255,95,207,0.09), transparent 34%);
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .chapter.active {
+      border-color: rgba(70,245,255,0.32);
+      transform: translateY(-1px);
+      background: linear-gradient(180deg, rgba(13, 16, 31, 0.94), rgba(9, 10, 18, 0.95));
+    }
+
+    .chapter .kicker {
+      margin: 0 0 12px;
+      position: relative;
+      z-index: 1;
+      color: var(--lime);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.7rem;
+    }
+
+    .chapter h3 {
+      position: relative;
+      z-index: 1;
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    .chapter p, .chapter li {
+      position: relative;
+      z-index: 1;
+      color: var(--muted);
+      line-height: 1.64;
+      font-size: 1rem;
+    }
+
+    .chapter ul {
+      margin: 12px 0 0;
+      padding-left: 18px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .story-card {
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .insight-strip {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .insight {
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      min-height: 92px;
+    }
+
+    .insight strong {
+      display: block;
+      font-size: 1.45rem;
+      font-family: var(--display);
+      line-height: 0.96;
+      margin-bottom: 6px;
+    }
+
+    .insight span {
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.4;
+    }
+
+    .summary-box {
+      margin-top: 18px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .stacked {
+      display: grid;
+      gap: 8px;
+    }
+
+    .stacked-row {
+      display: grid;
+      grid-template-columns: 110px 1fr 56px;
+      gap: 10px;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+
+    .stacked-row .label {
+      color: var(--text);
+      letter-spacing: 0.04em;
+    }
+
+    .stacked-row .value {
+      color: var(--muted);
+      text-align: right;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+    }
+
+    .bar-stack {
+      position: relative;
+      height: 14px;
+      display: flex;
+      overflow: hidden;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .bucket {
+      height: 100%;
+    }
+
+    .bucket.draw { background: linear-gradient(90deg, rgba(70,245,255,0.95), rgba(70,245,255,0.58)); }
+    .bucket.one { background: linear-gradient(90deg, rgba(200,255,77,0.95), rgba(200,255,77,0.58)); }
+    .bucket.two { background: linear-gradient(90deg, rgba(255,232,107,0.95), rgba(255,232,107,0.58)); }
+    .bucket.three { background: linear-gradient(90deg, rgba(255,143,82,0.95), rgba(255,143,82,0.58)); }
+    .bucket.four { background: linear-gradient(90deg, rgba(255,95,207,0.95), rgba(255,95,207,0.58)); }
+
+    footer {
+      margin-top: 28px;
+      padding: 16px 2px 0;
+      color: var(--faint);
+      font-size: 0.86rem;
+      line-height: 1.6;
+    }
+
+    footer a {
+      color: var(--cyan);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 1080px) {
+      .hero, .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-copy {
+        padding-top: 12vh;
+      }
+
+      .board {
+        position: relative;
+        top: auto;
+        min-height: auto;
+      }
+
+      .views {
+        min-height: 620px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .wrap { width: min(100vw - 18px, 1280px); }
+      .hero-note, .detail-grid, .insight-strip, .groups-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .spectrum-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .lane:nth-child(2) {
+        order: -1;
+      }
+
+      .views {
+        min-height: 980px;
+      }
+
+      .board-top, .ribbon-head {
+        flex-direction: column;
+        align-items: start;
+      }
+
+      .board-status, .ribbon-head p {
+        text-align: left;
+      }
+
+      .stacked-row {
+        grid-template-columns: 88px 1fr 46px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+  <div class="orb three"></div>
+
+  <div class="wrap">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">2026 FIFA World Cup group stage</p>
+        <h1>Close games, loud games</h1>
+        <p class="dek">
+          A scrollytelling explainer built from verified group-stage results. It starts with the 3-3 finish that needed a tiebreak,
+          moves through the biggest blowouts, and ends with the tables that hid the real separation.
+        </p>
+        <div class="hero-note" aria-label="Key facts">
+          <div class="pill"><strong>3-3</strong> Algeria vs Austria was the most consequential draw in the set.</div>
+          <div class="pill"><strong>6-0</strong> Canada vs Qatar was the biggest margin.</div>
+          <div class="pill"><strong>50%</strong> of the spotlight matches finished level or by one goal.</div>
+          <div class="pill"><strong>3</strong> groups in this set ended with a perfect 9-point winner.</div>
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <h2>What the margin says</h2>
+        <div class="hero-figure">
+          <div class="figure-chip">
+            <div>
+              <strong>Closest finish</strong>
+              <span>Algeria 3-3 Austria on June 27, 2026. The table needed overall goal difference after a head-to-head tie.</span>
+            </div>
+            <span>0 margin, 6 goals</span>
+          </div>
+          <div class="figure-chip">
+            <div>
+              <strong>Most one-sided</strong>
+              <span>Canada 6-0 Qatar on June 18, 2026. One match, one clean break.</span>
+            </div>
+            <span>6 margin, 6 goals</span>
+          </div>
+          <div class="figure-chip">
+            <div>
+              <strong>Table drama</strong>
+              <span>Brazil and Morocco both finished Group C on 7 points. Spain kept a clean sheet in Group H. France scored 10 and conceded 2 in Group I.</span>
+            </div>
+            <span>tight tables</span>
+          </div>
+        </div>
+      </aside>
+    </header>
+
+    <main class="layout">
+      <section class="board" aria-label="Interactive data board">
+        <div class="board-top">
+          <p class="board-kicker" id="boardKicker">Live margin spectrum</p>
+          <p class="board-status" id="boardStatus">
+            Scroll the story cards to swap the visual mode. Hover or focus any match card to inspect the scoreline.
+          </p>
+        </div>
+
+        <div class="views">
+          <div class="view active" id="view-spectrum" aria-live="polite"></div>
+          <div class="view" id="view-ribbon" aria-live="polite"></div>
+          <div class="view" id="view-groups" aria-live="polite"></div>
+        </div>
+
+        <aside class="detail" id="detail">
+          <p class="detail-label" id="detailLabel">Selected match</p>
+          <h4 id="detailTitle">Algeria 3-3 Austria</h4>
+          <p id="detailText">A draw with real consequence. Six goals, no margin, and a tiebreak that had to look beyond the scoreline.</p>
+          <div class="detail-grid" id="detailGrid">
+            <div class="mini"><b>Group J</b><span>June 27, 2026</span></div>
+            <div class="mini"><b>0</b><span>goal margin</span></div>
+            <div class="mini"><b>6</b><span>total goals</span></div>
+          </div>
+        </aside>
+      </section>
+
+      <section aria-label="Story spine">
+        <article class="chapter active" data-phase="spectrum" data-match="algeria-austria">
+          <p class="kicker">Chapter 1</p>
+          <h3>The 3-3 that bent the table</h3>
+          <p>
+            The opening question is not how many goals were scored. It is what a game can still decide when the score is level.
+            Algeria and Austria finished 3-3, and the group still had to be separated by overall goal difference after the head-to-head tie.
+          </p>
+          <ul>
+            <li>In this spotlight set, 12 matches finished level and 8 more were decided by one goal.</li>
+            <li>That means half the matches were either draws or one-goal finishes.</li>
+            <li>Zero-margin games were not always quiet: 3-3, 2-2, and 1-1 all showed up.</li>
+          </ul>
+        </article>
+
+        <article class="chapter" data-phase="ribbon" data-match="canada-qatar">
+          <p class="kicker">Chapter 2</p>
+          <h3>Then the floor gave way</h3>
+          <p>
+            The other side of the spectrum is cleaner. Canada 6-0 Qatar was the biggest margin in the set.
+            Portugal 5-0 Uzbekistan and Senegal 5-0 Iraq sat just behind it.
+          </p>
+          <ul>
+            <li>Only four matches in the spotlight set crossed a 4-goal margin.</li>
+            <li>The biggest jumps were not spread evenly; they arrived as a small cluster of outliers.</li>
+            <li>On the timeline, the biggest gaps light up like broken neon.</li>
+          </ul>
+        </article>
+
+        <article class="chapter" data-phase="groups" data-match="spain-cape-verde">
+          <p class="kicker">Chapter 3</p>
+          <h3>The tables hid the real difference</h3>
+          <p>
+            Some groups were defined less by one headline score than by the shape of the table.
+            Brazil and Morocco both finished Group C on 7 points. Spain finished Group H without conceding. France scored 10 and allowed only 2.
+          </p>
+          <div class="story-card">
+            <p>
+              The interesting part is not just who won. It is how much room they left behind:
+              Mexico reached 9 points with no goals conceded in Group A, Spain kept a clean sheet in Group H,
+              and France turned Group I into the most lopsided attack-vs-defense profile in this set.
+            </p>
+          </div>
+        </article>
+
+        <article class="chapter" data-phase="summary" data-match="overview">
+          <p class="kicker">Chapter 4</p>
+          <h3>The sentence the data keeps saying</h3>
+          <p>
+            Close matches made the drama. Blowouts made the contrast. The tournament tables were where both of those stories met.
+          </p>
+          <div class="summary-box">
+            <div class="stacked" id="stackedBars" aria-label="Margin distribution"></div>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      Verified against the 2026 FIFA World Cup tournament page and the group pages for A, B, C, H, I, J, and K on July 3, 2026.
+      Source links:
+      <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup" target="_blank" rel="noreferrer">Tournament</a>,
+      <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_Group_A" target="_blank" rel="noreferrer">Group A</a>,
+      <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_Group_B" target="_blank" rel="noreferrer">Group B</a>,
+      <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_Group_C" target="_blank" rel="noreferrer">Group C</a>,
+      <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_Group_H" target="_blank" rel="noreferrer">Group H</a>,
+      <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_Group_I" target="_blank" rel="noreferrer">Group I</a>,
+      <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_Group_J" target="_blank" rel="noreferrer">Group J</a>,
+      <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_Group_K" target="_blank" rel="noreferrer">Group K</a>.
+    </footer>
+  </div>
+
+  <script>
+    const matches = [
+      { id: "algeria-austria", group: "J", date: "2026-06-27", label: "Algeria vs Austria", score: "3-3", home: "Algeria", away: "Austria", homeGoals: 3, awayGoals: 3, note: "Level on points and level on the board. The tie had to be broken by overall goal difference." },
+      { id: "canada-qatar", group: "B", date: "2026-06-18", label: "Canada vs Qatar", score: "6-0", home: "Canada", away: "Qatar", homeGoals: 6, awayGoals: 0, note: "The largest margin in the set and the cleanest break." },
+      { id: "portugal-uzbekistan", group: "K", date: "2026-06-23", label: "Portugal vs Uzbekistan", score: "5-0", home: "Portugal", away: "Uzbekistan", homeGoals: 5, awayGoals: 0, note: "One of the two five-goal blowouts in the spotlight set." },
+      { id: "senegal-iraq", group: "I", date: "2026-06-24", label: "Senegal vs Iraq", score: "5-0", home: "Senegal", away: "Iraq", homeGoals: 5, awayGoals: 0, note: "Another five-goal spread, identical margin, different group." },
+      { id: "spain-saudi", group: "H", date: "2026-06-21", label: "Spain vs Saudi Arabia", score: "4-0", home: "Spain", away: "Saudi Arabia", homeGoals: 4, awayGoals: 0, note: "A clean-sheet rout that kept Spain's defense spotless." },
+      { id: "newzealand-belgium", group: "I", date: "2026-06-26", label: "New Zealand vs Belgium", score: "1-5", home: "New Zealand", away: "Belgium", homeGoals: 1, awayGoals: 5, note: "A four-goal margin with six total goals." },
+      { id: "brazil-haiti", group: "C", date: "2026-06-19", label: "Brazil vs Haiti", score: "3-0", home: "Brazil", away: "Haiti", homeGoals: 3, awayGoals: 0, note: "Brazil added control rather than chaos." },
+      { id: "scotland-brazil", group: "C", date: "2026-06-24", label: "Scotland vs Brazil", score: "0-3", home: "Scotland", away: "Brazil", homeGoals: 0, awayGoals: 3, note: "Same margin, opposite direction." },
+      { id: "switzerland-bosnia", group: "B", date: "2026-06-18", label: "Switzerland vs Bosnia and Herzegovina", score: "4-1", home: "Switzerland", away: "Bosnia and Herzegovina", homeGoals: 4, awayGoals: 1, note: "A three-goal margin, but not quite a blowout." },
+      { id: "argentina-algeria", group: "J", date: "2026-06-16", label: "Argentina vs Algeria", score: "3-0", home: "Argentina", away: "Algeria", homeGoals: 3, awayGoals: 0, note: "A perfect start to a perfect group stage." },
+      { id: "morocco-haiti", group: "C", date: "2026-06-24", label: "Morocco vs Haiti", score: "4-2", home: "Morocco", away: "Haiti", homeGoals: 4, awayGoals: 2, note: "Six goals, but a two-goal margin." },
+      { id: "austria-jordan", group: "J", date: "2026-06-16", label: "Austria vs Jordan", score: "3-1", home: "Austria", away: "Jordan", homeGoals: 3, awayGoals: 1, note: "A tidy two-goal win that mattered later in the group." },
+      { id: "france-senegal", group: "I", date: "2026-06-16", label: "France vs Senegal", score: "3-1", home: "France", away: "Senegal", homeGoals: 3, awayGoals: 1, note: "France's attack kept the group on its terms." },
+      { id: "mexico-southafrica", group: "A", date: "2026-06-11", label: "Mexico vs South Africa", score: "2-0", home: "Mexico", away: "South Africa", homeGoals: 2, awayGoals: 0, note: "The co-host started the set with a clean sheet." },
+      { id: "southkorea-czech", group: "A", date: "2026-06-11", label: "South Korea vs Czech Republic", score: "2-1", home: "South Korea", away: "Czech Republic", homeGoals: 2, awayGoals: 1, note: "A one-goal margin that stayed tight to the whistle." },
+      { id: "southafrica-southkorea", group: "A", date: "2026-06-24", label: "South Africa vs South Korea", score: "1-0", home: "South Africa", away: "South Korea", homeGoals: 1, awayGoals: 0, note: "A one-goal result that shifted the group's second place." },
+      { id: "czech-mexico", group: "A", date: "2026-06-27", label: "Czech Republic vs Mexico", score: "0-3", home: "Czech Republic", away: "Mexico", homeGoals: 0, awayGoals: 3, note: "Mexico finished the group with a perfect record." },
+      { id: "canada-bosnia", group: "B", date: "2026-06-12", label: "Canada vs Bosnia and Herzegovina", score: "1-1", home: "Canada", away: "Bosnia and Herzegovina", homeGoals: 1, awayGoals: 1, note: "A draw that later mattered in the group arithmetic." },
+      { id: "qatar-switzerland", group: "B", date: "2026-06-13", label: "Qatar vs Switzerland", score: "1-1", home: "Qatar", away: "Switzerland", homeGoals: 1, awayGoals: 1, note: "Another level game, another point shared." },
+      { id: "canada-switzerland", group: "B", date: "2026-06-24", label: "Canada vs Switzerland", score: "2-1", home: "Canada", away: "Switzerland", homeGoals: 2, awayGoals: 1, note: "One-goal, but with higher stakes than the scoreline shows." },
+      { id: "bosnia-qatar", group: "B", date: "2026-06-24", label: "Bosnia and Herzegovina vs Qatar", score: "3-1", home: "Bosnia and Herzegovina", away: "Qatar", homeGoals: 3, awayGoals: 1, note: "A three-goal margin that finished Qatar's group." },
+      { id: "brazil-morocco", group: "C", date: "2026-06-13", label: "Brazil vs Morocco", score: "1-1", home: "Brazil", away: "Morocco", homeGoals: 1, awayGoals: 1, note: "The top of Group C stayed unresolved until the table did the math." },
+      { id: "haiti-scotland", group: "C", date: "2026-06-13", label: "Haiti vs Scotland", score: "0-1", home: "Haiti", away: "Scotland", homeGoals: 0, awayGoals: 1, note: "A slim edge that mattered more than it looked." },
+      { id: "scotland-morocco", group: "C", date: "2026-06-19", label: "Scotland vs Morocco", score: "0-1", home: "Scotland", away: "Morocco", homeGoals: 0, awayGoals: 1, note: "A one-goal game inside a tight group." },
+      { id: "spain-capeverde", group: "H", date: "2026-06-15", label: "Spain vs Cape Verde", score: "0-0", home: "Spain", away: "Cape Verde", homeGoals: 0, awayGoals: 0, note: "No margin, no goals, but plenty of defensive control." },
+      { id: "saudi-uruguay", group: "H", date: "2026-06-15", label: "Saudi Arabia vs Uruguay", score: "1-1", home: "Saudi Arabia", away: "Uruguay", homeGoals: 1, awayGoals: 1, note: "A shared point in a group that stayed compressed." },
+      { id: "uruguay-capeverde", group: "H", date: "2026-06-21", label: "Uruguay vs Cape Verde", score: "2-2", home: "Uruguay", away: "Cape Verde", homeGoals: 2, awayGoals: 2, note: "Four goals, zero margin." },
+      { id: "capeverde-saudi", group: "H", date: "2026-06-26", label: "Cape Verde vs Saudi Arabia", score: "0-0", home: "Cape Verde", away: "Saudi Arabia", homeGoals: 0, awayGoals: 0, note: "Another scoreless line that still carried real table weight." },
+      { id: "uruguay-spain", group: "H", date: "2026-06-26", label: "Uruguay vs Spain", score: "0-1", home: "Uruguay", away: "Spain", homeGoals: 0, awayGoals: 1, note: "Spain kept the clean sheet streak alive." },
+      { id: "iraq-norway", group: "I", date: "2026-06-16", label: "Iraq vs Norway", score: "1-4", home: "Iraq", away: "Norway", homeGoals: 1, awayGoals: 4, note: "A one-sided game that still featured a consolation goal." },
+      { id: "belgium-iran", group: "I", date: "2026-06-21", label: "Belgium vs Iran", score: "0-0", home: "Belgium", away: "Iran", homeGoals: 0, awayGoals: 0, note: "A clean, level line in a narrow group race." },
+      { id: "newzealand-egypt", group: "I", date: "2026-06-21", label: "New Zealand vs Egypt", score: "1-3", home: "New Zealand", away: "Egypt", homeGoals: 1, awayGoals: 3, note: "A three-goal margin that put Egypt in the mix." },
+      { id: "egypt-iran", group: "I", date: "2026-06-26", label: "Egypt vs Iran", score: "1-1", home: "Egypt", away: "Iran", homeGoals: 1, awayGoals: 1, note: "The group stayed alive to the end." },
+      { id: "newzealand-belgium2", group: "I", date: "2026-06-26", label: "New Zealand vs Belgium", score: "1-5", home: "New Zealand", away: "Belgium", homeGoals: 1, awayGoals: 5, note: "The biggest one-way move in Group I." },
+      { id: "jordan-algeria", group: "J", date: "2026-06-22", label: "Jordan vs Algeria", score: "1-2", home: "Jordan", away: "Algeria", homeGoals: 1, awayGoals: 2, note: "A one-goal swing that kept the group crowded." },
+      { id: "argentina-austria", group: "J", date: "2026-06-22", label: "Argentina vs Austria", score: "2-0", home: "Argentina", away: "Austria", homeGoals: 2, awayGoals: 0, note: "Argentina tightened the grip after the opening win." },
+      { id: "jordan-argentina", group: "J", date: "2026-06-27", label: "Jordan vs Argentina", score: "1-3", home: "Jordan", away: "Argentina", homeGoals: 1, awayGoals: 3, note: "Another controlled win for the perfect group leader." },
+      { id: "portugal-drcongo", group: "K", date: "2026-06-17", label: "Portugal vs DR Congo", score: "1-1", home: "Portugal", away: "DR Congo", homeGoals: 1, awayGoals: 1, note: "A point each at the start of a compact group." },
+      { id: "uzbekistan-colombia", group: "K", date: "2026-06-17", label: "Uzbekistan vs Colombia", score: "1-3", home: "Uzbekistan", away: "Colombia", homeGoals: 1, awayGoals: 3, note: "Colombia opened with a two-goal cushion." },
+      { id: "colombia-drcongo", group: "K", date: "2026-06-23", label: "Colombia vs DR Congo", score: "1-0", home: "Colombia", away: "DR Congo", homeGoals: 1, awayGoals: 0, note: "A one-goal game that kept the group tight." },
+      { id: "drcongo-uzbekistan", group: "K", date: "2026-06-27", label: "DR Congo vs Uzbekistan", score: "3-1", home: "DR Congo", away: "Uzbekistan", homeGoals: 3, awayGoals: 1, note: "A late push from DR Congo, while Portugal and Colombia stayed ahead." },
+      { id: "colombia-portugal", group: "K", date: "2026-06-27", label: "Colombia vs Portugal", score: "0-0", home: "Colombia", away: "Portugal", homeGoals: 0, awayGoals: 0, note: "The cleanest possible way to split the points." }
+    ].map(match => ({
+      ...match,
+      margin: Math.abs(match.homeGoals - match.awayGoals),
+      totalGoals: match.homeGoals + match.awayGoals,
+      dateLabel: new Date(match.date + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })
+    }));
+
+    const groupCards = [
+      { group: "A", h: 168, title: "Mexico", points: 9, gf: 6, ga: 0, note: "Perfect 9 points, no goals conceded, and the only co-host to finish the group cleanly." , table: [["Mexico", "9", "+6"], ["South Africa", "4", "-1"], ["South Korea", "3", "-1"], ["Czech Republic", "1", "-4"]] },
+      { group: "B", h: 186, title: "Switzerland", points: 7, gf: 7, ga: 3, note: "Canada and Bosnia and Herzegovina both reached 4 points; head-to-head and goal difference did the sorting." , table: [["Switzerland", "7", "+4"], ["Canada", "4", "+5"], ["Bosnia and Herzegovina", "4", "-1"], ["Qatar", "1", "-8"]] },
+      { group: "C", h: 202, title: "Brazil", points: 7, gf: 7, ga: 1, note: "Brazil and Morocco finished level on points. Their 1-1 draw, then goal difference, kept the group tense." , table: [["Brazil", "7", "+6"], ["Morocco", "7", "+3"], ["Scotland", "3", "-3"], ["Haiti", "0", "-6"]] },
+      { group: "H", h: 308, title: "Spain", points: 7, gf: 5, ga: 0, note: "Spain's clean sheet record gave the group its clearest defensive profile." , table: [["Spain", "7", "+5"], ["Cape Verde", "3", "0"], ["Uruguay", "2", "-1"], ["Saudi Arabia", "2", "-4"]] },
+      { group: "I", h: 330, title: "France", points: 9, gf: 10, ga: 2, note: "France paired the highest goal total in this set with one of the best defensive numbers." , table: [["France", "9", "+8"], ["Norway", "6", "+1"], ["Senegal", "3", "+2"], ["Iraq", "0", "-11"]] },
+      { group: "J", h: 344, title: "Argentina", points: 9, gf: 8, ga: 1, note: "Argentina and Austria needed extra tie logic after their 3-3. The group stayed tense until the final whistle." , table: [["Argentina", "9", "+7"], ["Austria", "4", "0"], ["Algeria", "4", "-2"], ["Jordan", "0", "-5"]] },
+      { group: "K", h: 20, title: "Colombia", points: 7, gf: 4, ga: 1, note: "A compact group with small edges: Portugal, DR Congo, and Colombia all stayed in reach until late." , table: [["Colombia", "7", "+3"], ["Portugal", "5", "+5"], ["DR Congo", "4", "+1"], ["Uzbekistan", "0", "-9"]] }
+    ];
+
+    const detail = {
+      "algeria-austria": {
+        label: "Selected match",
+        title: "Algeria 3-3 Austria",
+        text: "A draw with real consequence. Six goals, no margin, and a tiebreak that had to look beyond the scoreline.",
+        grid: [["Group J", "June 27, 2026"], ["0", "goal margin"], ["6", "total goals"]]
+      },
+      "canada-qatar": {
+        label: "Selected match",
+        title: "Canada 6-0 Qatar",
+        text: "The sharpest break in the set. A six-goal margin turned one match into the visual outlier of the whole story.",
+        grid: [["Group B", "June 18, 2026"], ["6", "goal margin"], ["6", "total goals"]]
+      },
+      "spain-cape-verde": {
+        label: "Selected group",
+        title: "Spain, Brazil, France, Mexico",
+        text: "These tables show the other kind of separation: a clean sheet, a perfect record, and a dominant goal count can matter as much as any blowout.",
+        grid: [["Spain H", "0 conceded"], ["Mexico A", "9 points"], ["France I", "10 for"]]
+      },
+      "overview": {
+        label: "Overview",
+        title: "What the spotlight set says",
+        text: "The story is balanced in a strange way: half the matches were either draws or one-goal games, but the biggest outliers still reshaped the tone of the groups.",
+        grid: [["40 matches", "verified spotlight set"], ["20", "draws or one-goal"], ["4", "matches at 4+ margin"]]
+      }
+    };
+
+    const viewSpectrum = document.getElementById("view-spectrum");
+    const viewRibbon = document.getElementById("view-ribbon");
+    const viewGroups = document.getElementById("view-groups");
+    const boardStatus = document.getElementById("boardStatus");
+    const boardKicker = document.getElementById("boardKicker");
+    const detailLabel = document.getElementById("detailLabel");
+    const detailTitle = document.getElementById("detailTitle");
+    const detailText = document.getElementById("detailText");
+    const detailGrid = document.getElementById("detailGrid");
+    const stackedBars = document.getElementById("stackedBars");
+    const chapterEls = [...document.querySelectorAll(".chapter")];
+
+    const sorted = [...matches].sort((a, b) => {
+      if (a.margin !== b.margin) return a.margin - b.margin;
+      if (a.totalGoals !== b.totalGoals) return a.totalGoals - b.totalGoals;
+      return a.date.localeCompare(b.date);
+    });
+
+    const closeMatches = sorted.filter(m => m.margin <= 1).slice(0, 8);
+    const oneSided = [...matches]
+      .filter(m => m.margin >= 2)
+      .sort((a, b) => b.margin - a.margin || b.totalGoals - a.totalGoals || a.date.localeCompare(b.date))
+      .slice(0, 8);
+
+    const byDate = [...matches].sort((a, b) => a.date.localeCompare(b.date) || b.margin - a.margin);
+
+    const bucketCounts = [
+      { label: "Draws", key: "draw", count: matches.filter(m => m.margin === 0).length, cls: "draw" },
+      { label: "One-goal", key: "one", count: matches.filter(m => m.margin === 1).length, cls: "one" },
+      { label: "Two-goal", key: "two", count: matches.filter(m => m.margin === 2).length, cls: "two" },
+      { label: "Three-goal", key: "three", count: matches.filter(m => m.margin === 3).length, cls: "three" },
+      { label: "Four+", key: "four", count: matches.filter(m => m.margin >= 4).length, cls: "four" }
+    ];
+
+    function setDetail(matchOrKey) {
+      const payload = typeof matchOrKey === "string" ? detail[matchOrKey] : null;
+      if (payload) {
+        detailLabel.textContent = payload.label;
+        detailTitle.textContent = payload.title;
+        detailText.textContent = payload.text;
+        detailGrid.innerHTML = payload.grid.map(([a, b]) => `<div class="mini"><b>${escapeHtml(a)}</b><span>${escapeHtml(b)}</span></div>`).join("");
+        return;
+      }
+
+      const match = matchOrKey;
+      if (!match) return;
+      detailLabel.textContent = "Selected match";
+      detailTitle.textContent = `${match.home} ${match.score} ${match.away}`;
+      detailText.textContent = match.note;
+      detailGrid.innerHTML = `
+        <div class="mini"><b>Group ${match.group}</b><span>${escapeHtml(match.dateLabel)}</span></div>
+        <div class="mini"><b>${match.margin}</b><span>goal margin</span></div>
+        <div class="mini"><b>${match.totalGoals}</b><span>total goals</span></div>
+      `;
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function makeMatchCard(match) {
+      const hue = marginHue(match.margin);
+      return `
+        <button class="match-card" data-id="${match.id}" data-margin="${match.margin}" style="--h:${hue}; --m:${match.margin};" type="button" aria-label="${match.label}, score ${match.score}">
+          <div class="match-top">
+            <span>Group ${match.group}</span>
+            <span>${match.dateLabel}</span>
+          </div>
+          <div class="match-name">${escapeHtml(match.label)}</div>
+          <div class="track"><span class="bar"></span></div>
+          <div class="match-bottom">
+            <span class="score">${escapeHtml(match.score)}</span>
+            <span class="margin">${match.margin === 0 ? "0 margin" : "+" + match.margin}</span>
+          </div>
+        </button>
+      `;
+    }
+
+    function renderSpectrum() {
+      viewSpectrum.innerHTML = `
+        <div class="spectrum-grid">
+          <div class="lane">
+            <div class="lane-head">
+              <h3>Closest finishes</h3>
+              <small>0-1 goal margin</small>
+            </div>
+            ${closeMatches.map(makeMatchCard).join("")}
+          </div>
+
+          <div class="dial" aria-label="Margin scale">
+            <p class="board-kicker" style="margin:0;">Margin scale</p>
+            <div class="dial-hero">
+              <p class="dial-number">0 <span>&rarr;</span> 6</p>
+              <p class="dial-copy">
+                The chart reads from total parity to total separation. In this spotlight set, the middle is crowded and the edges still flash.
+              </p>
+            </div>
+            <div>
+              <p class="scale" aria-hidden="true">
+                <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+              </p>
+              <div class="story-card" style="margin-top:10px;">
+                <p id="spectrumCaption" style="margin:0; color: var(--text);">
+                  Algeria 3-3 Austria sits at the center of the story. Six goals, no margin, and a tiebreak that had to go one layer deeper.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="lane">
+            <div class="lane-head">
+              <h3>Most one-sided</h3>
+              <small>2+ goal margin</small>
+            </div>
+            ${oneSided.map(makeMatchCard).join("")}
+          </div>
+        </div>
+      `;
+      bindCards(viewSpectrum);
+    }
+
+    function renderRibbon() {
+      const pills = byDate.map(match => `
+        <button class="ribbon-pill" data-id="${match.id}" type="button" style="--h:${marginHue(match.margin)}">
+          <div class="date">${escapeHtml(match.dateLabel)}</div>
+          <div class="teams">${escapeHtml(match.label)}</div>
+          <div class="meta">
+            <span class="score">${escapeHtml(match.score)}</span>
+            <span class="margin">${match.margin === 0 ? "0 margin" : "+" + match.margin}</span>
+          </div>
+        </button>
+      `).join("");
+
+      viewRibbon.innerHTML = `
+        <div class="ribbon-wrap">
+          <div class="ribbon-head">
+            <h3>Matchday heat ribbon</h3>
+            <p>Chronological chips, tinted by margin. The sharpest break is still Canada 6-0 Qatar. The most crowded center is the run of draws and one-goal games.</p>
+          </div>
+          <div class="ribbon" aria-label="Chronological match ribbon">
+            <div class="ribbon-track">
+              ${pills}
+            </div>
+          </div>
+        </div>
+      `;
+      bindCards(viewRibbon);
+    }
+
+    function renderGroups() {
+      viewGroups.innerHTML = `
+        <div class="groups-grid">
+          ${groupCards.map(group => `
+            <section class="group-card" style="--h:${group.h};">
+              <div class="group-top">
+                <strong>Group ${group.group}</strong>
+                <span>${group.title}</span>
+              </div>
+              <p class="group-note">${escapeHtml(group.note)}</p>
+              <div class="table-lines" aria-label="Group ${group.group} table summary">
+                ${group.table.map(([name, pts, gd]) => `
+                  <div class="table-line">
+                    <div class="name">${escapeHtml(name)}</div>
+                    <div class="value">${escapeHtml(pts)} pts</div>
+                    <div class="value">${escapeHtml(gd)}</div>
+                  </div>
+                `).join("")}
+              </div>
+            </section>
+          `).join("")}
+        </div>
+      `;
+      bindCards(viewGroups);
+    }
+
+    function renderSummary() {
+      stackedBars.innerHTML = bucketCounts.map(bucket => {
+        const width = Math.max(8, (bucket.count / matches.length) * 100);
+        return `
+          <div class="stacked-row">
+            <div class="label">${escapeHtml(bucket.label)}</div>
+            <div class="bar-stack">
+              <div class="bucket ${bucket.cls}" style="width:${width}%"></div>
+            </div>
+            <div class="value">${bucket.count}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function bindCards(container) {
+      container.querySelectorAll("[data-id]").forEach(card => {
+        const match = matches.find(m => m.id === card.dataset.id);
+        if (!match) return;
+        card.addEventListener("mouseenter", () => highlightMatch(card, match));
+        card.addEventListener("focus", () => highlightMatch(card, match));
+        card.addEventListener("click", () => highlightMatch(card, match, true));
+      });
+    }
+
+    function highlightMatch(card, match, commit = false) {
+      document.querySelectorAll(".match-card, .ribbon-pill").forEach(el => el.classList.remove("selected"));
+      const activeCard = card;
+      if (activeCard) activeCard.classList.add("selected");
+      setDetail(match);
+      if (commit) {
+        boardStatus.textContent = `${match.label} is pinned. The detail panel stays on this match until another card is selected.`;
+      }
+    }
+
+    function marginHue(margin) {
+      const palette = [188, 186, 165, 40, 320, 340, 350];
+      return palette[Math.min(margin, palette.length - 1)];
+    }
+
+    function setPhase(phase, matchKey) {
+      boardKicker.textContent =
+        phase === "spectrum" ? "Live margin spectrum" :
+        phase === "ribbon" ? "Matchday heat ribbon" :
+        phase === "groups" ? "Group balance board" :
+        "Margin summary";
+
+      boardStatus.textContent =
+        phase === "spectrum"
+          ? "The story starts with the closest results and the game that needed a tiebreak."
+          : phase === "ribbon"
+          ? "The timeline shifts from close games to blowouts and back again."
+          : phase === "groups"
+          ? "The final board moves from match margins to group shape."
+          : "The margin buckets show how evenly this spotlight set splits between tight and decisive games.";
+
+      document.querySelectorAll(".view").forEach(el => el.classList.remove("active"));
+      if (phase === "spectrum") viewSpectrum.classList.add("active");
+      if (phase === "ribbon") viewRibbon.classList.add("active");
+      if (phase === "groups" || phase === "summary") viewGroups.classList.add("active");
+
+      chapterEls.forEach(ch => ch.classList.toggle("active", ch.dataset.phase === phase));
+      if (matchKey && detail[matchKey]) {
+        setDetail(matchKey);
+      }
+      if (phase === "summary") {
+        renderSummary();
+        setDetail("overview");
+      }
+      updateActiveCards(matchKey, phase);
+    }
+
+    function updateActiveCards(matchKey, phase) {
+      const selectedId = phase === "summary" ? null : (matchKey || "algeria-austria");
+      document.querySelectorAll("[data-id]").forEach(el => {
+        el.classList.toggle("selected", el.dataset.id === selectedId);
+      });
+      const spectrumCaption = document.getElementById("spectrumCaption");
+      if (spectrumCaption && selectedId === "algeria-austria") {
+        spectrumCaption.textContent = "Algeria 3-3 Austria sits at the center of the story. Six goals, no margin, and a tiebreak that had to go one layer deeper.";
+      }
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries
+        .filter(entry => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      const phase = visible.target.dataset.phase;
+      const matchKey = visible.target.dataset.match;
+      setPhase(phase, matchKey);
+    }, {
+      rootMargin: "-30% 0px -30% 0px",
+      threshold: [0.15, 0.3, 0.45, 0.6, 0.75]
+    });
+
+    chapterEls.forEach(el => observer.observe(el));
+
+    renderSpectrum();
+    renderRibbon();
+    renderGroups();
+    renderSummary();
+    setPhase("spectrum", "algeria-austria");
+
+    // Keep the currently selected match synced to the nearest visible card.
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") {
+        setPhase("spectrum", "algeria-austria");
+        boardStatus.textContent = "Reset to the opening match. Scroll to continue the story.";
+      }
+    });
+  </script>
+</body>
+</html>
