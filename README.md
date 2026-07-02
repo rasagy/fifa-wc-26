@@ -1,5 +1,5 @@
-# fifa-wc-26
-Collection of Data Stories about FIFA World Cup 2026 Group Stages.
+# FIFA World Cup 2026; Data Stories
+Collection of Data Stories created using AI (Claude & Codex) about FIFA World Cup 2026 Group Stages.
 
 ## Stories
 
