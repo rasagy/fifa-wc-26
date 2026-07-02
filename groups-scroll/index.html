@@ -241,9 +241,10 @@
     .board {
       position: sticky;
       top: 18px;
+      align-self: start;
       display: grid;
       gap: 14px;
-      min-height: calc(100vh - 40px);
+      height: fit-content;
       padding: 18px;
       border-radius: 34px;
       border: 1px solid rgba(255, 255, 255, 0.12);
@@ -280,22 +281,17 @@
 
     .views {
       position: relative;
-      min-height: 640px;
+      display: grid;
+      gap: 0;
     }
 
     .view {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transform: translateY(14px) scale(0.985);
-      pointer-events: none;
-      transition: opacity 380ms ease, transform 380ms ease;
+      display: none;
+      position: relative;
     }
 
     .view.active {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      pointer-events: auto;
+      display: block;
     }
 
     .spectrum-grid {
@@ -899,11 +895,7 @@
       .board {
         position: relative;
         top: auto;
-        min-height: auto;
-      }
-
-      .views {
-        min-height: 620px;
+        height: auto;
       }
     }
 
@@ -919,10 +911,6 @@
 
       .lane:nth-child(2) {
         order: -1;
-      }
-
-      .views {
-        min-height: 980px;
       }
 
       .board-top, .ribbon-head {
