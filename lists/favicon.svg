@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Ranked list">
+  <rect width="64" height="64" rx="14" fill="#1a1a19"/>
+  <rect x="14" y="16" width="36" height="7" rx="2" fill="#2a78d6"/>
+  <rect x="14" y="28" width="30" height="7" rx="2" fill="#0ca30c"/>
+  <rect x="14" y="40" width="22" height="7" rx="2" fill="#2a78d6"/>
+</svg>
